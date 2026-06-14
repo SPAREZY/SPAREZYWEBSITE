@@ -328,7 +328,7 @@ export default function StoreApp() {
                 </div>
                 <div>
                   <div className="part-row part-head" aria-hidden="true">
-                    <span className="ph-label">Part</span>
+                    <span />
                     <span className="ph-label">Qty *</span>
                     <span />
                   </div>
@@ -342,9 +342,9 @@ export default function StoreApp() {
                       />
                       <input
                         className="p-qty"
-                        type="number"
-                        min={1}
+                        type="text"
                         inputMode="numeric"
+                        pattern="[0-9]*"
                         aria-label="Quantity"
                         value={p.qty}
                         onChange={(e) => updatePart(i, { qty: e.target.value.replace(/[^0-9]/g, "") })}
