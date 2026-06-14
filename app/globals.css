@@ -173,7 +173,7 @@
   align-items: start;
 }
 .imgpanel {
-  background: var(--panel);
+  background: #0f2349;
   position: relative;
   height: calc(100dvh - 84px - 68px);
   min-height: 420px;
@@ -1425,6 +1425,121 @@
   .box-tile .pc-box .pc-svg {
     width: 28px;
     height: 28px;
+  }
+}
+
+/* ===== parts panel (drifting parts + featured collage) ===== */
+.parts-panel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(120% 100% at 50% 0%, #284b93 0%, #1b3a7e 55%, #0f2349 100%);
+}
+.pp-drift {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+.pp-drift.dim {
+  opacity: 0.3;
+}
+.pp-drift-icon {
+  position: absolute;
+  color: #fff;
+  opacity: 0.13;
+  animation: ppFloat var(--dur, 8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+.pp-drift-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+@keyframes ppFloat {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  50% {
+    transform: translate(5px, -12px) rotate(6deg);
+  }
+}
+.pp-hint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  padding: 20px;
+}
+.pp-hint-title {
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(8, 18, 45, 0.55);
+}
+.pp-hint-sub {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+.pp-collage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 18px 24px;
+  padding: 26px;
+}
+.pp-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.pp-cell-icon {
+  color: #fff;
+  filter: drop-shadow(0 8px 18px rgba(0, 148, 255, 0.5));
+}
+.pp-cell-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.pp-cell-label {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(8, 18, 45, 0.6);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pp-drift-icon {
+    animation: none;
+  }
+}
+@media (max-width: 920px) {
+  .pp-hint-title {
+    font-size: 1.05rem;
+  }
+  .pp-collage {
+    gap: 14px 18px;
+    padding: 18px;
   }
 }
 

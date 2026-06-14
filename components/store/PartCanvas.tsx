@@ -2,74 +2,28 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { matchPart } from "@/lib/part-icons";
+import { matchPart, SHOWCASE_ICONS } from "@/lib/part-icons";
 
-function BoxBack() {
-  return (
-    <svg className="box-svg" viewBox="0 0 260 200" fill="none">
-      <defs>
-        <linearGradient id="cbInner" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#6E512E" />
-          <stop offset="1" stopColor="#3C2B16" />
-        </linearGradient>
-        <linearGradient id="cbFlapB" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#F1DBAE" />
-          <stop offset="1" stopColor="#D9B074" />
-        </linearGradient>
-      </defs>
-      {/* interior */}
-      <path d="M48 92 H182 L198 64 H64 Z" fill="url(#cbInner)" />
-      {/* back flap up */}
-      <path d="M64 64 H198 L208 36 H54 Z" fill="url(#cbFlapB)" stroke="#b78a4f" strokeWidth="2.5" strokeLinejoin="round" />
-      {/* left flap splayed */}
-      <path d="M48 92 L64 64 L36 52 L18 80 Z" fill="url(#cbFlapB)" stroke="#b78a4f" strokeWidth="2.5" strokeLinejoin="round" />
-      {/* right flap splayed */}
-      <path d="M182 92 L198 64 L226 56 L214 86 Z" fill="url(#cbFlapB)" stroke="#b78a4f" strokeWidth="2.5" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function BoxFront() {
-  return (
-    <svg className="box-svg" viewBox="0 0 260 200" fill="none">
-      <defs>
-        <linearGradient id="cbFront" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#EAC893" />
-          <stop offset="1" stopColor="#C2904F" />
-        </linearGradient>
-        <linearGradient id="cbSide" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#C2904F" />
-          <stop offset="1" stopColor="#9A6A36" />
-        </linearGradient>
-        <linearGradient id="cbFlap" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#F1DBAE" />
-          <stop offset="1" stopColor="#DDB57C" />
-        </linearGradient>
-        <linearGradient id="cbTape" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#F6ECD3" />
-          <stop offset="1" stopColor="#E4D2A6" />
-        </linearGradient>
-      </defs>
-      {/* right side face (depth) */}
-      <path d="M182 92 L210 74 L204 156 L176 174 Z" fill="url(#cbSide)" stroke="#8f6231" strokeWidth="2.5" strokeLinejoin="round" />
-      {/* front face */}
-      <path d="M48 92 H182 L176 174 H54 Z" fill="url(#cbFront)" stroke="#9A6A36" strokeWidth="2.5" strokeLinejoin="round" />
-      {/* front flap folded toward viewer */}
-      <path d="M48 92 H182 L177 120 H53 Z" fill="url(#cbFlap)" stroke="#9A6A36" strokeWidth="2.5" strokeLinejoin="round" />
-      <path d="M53 120 H177" stroke="#b07f44" strokeWidth="1.5" opacity="0.55" />
-      {/* tape seam */}
-      <path d="M115 120 V174" stroke="#cda564" strokeWidth="2" opacity="0.7" />
-      {/* shipping label */}
-      <rect x="95" y="132" width="46" height="27" rx="2.5" fill="url(#cbTape)" stroke="#bd8d55" strokeWidth="2" />
-      <path d="M102 140h32M102 146h24M102 152h28" stroke="#b07f44" strokeWidth="2" strokeLinecap="round" />
-      {/* top edge highlight */}
-      <path d="M49 93 H181" stroke="#F8E9C6" strokeWidth="2" opacity="0.85" />
-    </svg>
-  );
-}
+// fixed scatter for the gently drifting parts background
+const DRIFT = [
+  { left: "10%", top: "14%", size: 30, dur: 7, delay: 0 },
+  { left: "33%", top: "8%", size: 26, dur: 9, delay: 1.2 },
+  { left: "58%", top: "12%", size: 34, dur: 8, delay: 0.5 },
+  { left: "82%", top: "18%", size: 28, dur: 10, delay: 2 },
+  { left: "16%", top: "40%", size: 32, dur: 8.5, delay: 1.8 },
+  { left: "45%", top: "36%", size: 26, dur: 9.5, delay: 0.3 },
+  { left: "70%", top: "42%", size: 30, dur: 7.5, delay: 1 },
+  { left: "88%", top: "50%", size: 24, dur: 11, delay: 2.4 },
+  { left: "8%", top: "66%", size: 28, dur: 9, delay: 0.8 },
+  { left: "31%", top: "72%", size: 32, dur: 8, delay: 1.5 },
+  { left: "55%", top: "68%", size: 26, dur: 10, delay: 0.2 },
+  { left: "77%", top: "74%", size: 30, dur: 8.5, delay: 1.9 },
+  { left: "22%", top: "90%", size: 26, dur: 9, delay: 1.1 },
+  { left: "65%", top: "90%", size: 28, dur: 9.5, delay: 2.2 },
+];
 
 export default function PartCanvas({ names }: { names: string[] }) {
-  // settle the icons a beat after the customer stops typing
+  // settle a beat after the customer stops typing
   const signature = names.join("|");
   const [settled, setSettled] = useState<string[]>(names);
   useEffect(() => {
@@ -82,68 +36,62 @@ export default function PartCanvas({ names }: { names: string[] }) {
     .map((n, i) => ({ raw: n.trim(), i }))
     .filter((t) => t.raw.length >= 2)
     .map((t) => ({ ...t, ...matchPart(t.raw) }));
-  const hasTiles = tiles.length > 0;
+  const n = tiles.length;
+
+  // featured icon size shrinks as more parts are added (collage fills the panel)
+  const size = n <= 1 ? 168 : n <= 2 ? 132 : n <= 4 ? 108 : n <= 6 ? 90 : n <= 9 ? 74 : 60;
 
   return (
-    <div className="box-canvas">
-      <div className="box-stage">
-        <div className="box-glow" />
-
-        <div className="box-layer box-back">
-          <BoxBack />
-        </div>
-
-        <div className="box-items">
-          {!hasTiles ? (
-            <motion.div className="box-hint" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
-              <div className="box-hint-title">ANY PART · ANY CAR</div>
-              <div className="box-hint-sub">Type a part — we&apos;ll unpack it.</div>
-            </motion.div>
-          ) : (
-            <AnimatePresence mode="popLayout">
-              {tiles.map((t, idx) => (
-                <motion.div
-                  key={`${t.i}-${t.key}`}
-                  layout
-                  initial={{ y: 64, scale: 0.4, opacity: 0, rotate: -12 }}
-                  animate={{ y: 0, scale: 1, opacity: 1, rotate: 0 }}
-                  exit={{ y: 54, scale: 0.35, opacity: 0, transition: { duration: 0.16 } }}
-                  transition={{ type: "spring", stiffness: 360, damping: 16, delay: idx * 0.015 }}
-                  className="box-tile"
-                >
-                  <div className="pc-box">
-                    <span className="pc-glow" />
-                    {t.icon}
-                  </div>
-                  <div className="pc-label">{t.label}</div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          )}
-        </div>
-
-        <motion.div
-          key={tiles.length}
-          initial={{ scaleY: 0.9, scaleX: 1.03 }}
-          animate={{ scaleY: 1, scaleX: 1 }}
-          transition={{ type: "spring", stiffness: 500, damping: 13 }}
-          style={{ transformOrigin: "bottom center" }}
-          className="box-layer box-front"
-        >
-          <BoxFront />
-        </motion.div>
-
-        {hasTiles && (
-          <>
-            <span className="spark spark-1" />
-            <span className="spark spark-2" />
-            <span className="spark spark-3" />
-            <span className="spark spark-4" />
-          </>
-        )}
-
-        <div className="box-floor" />
+    <div className="parts-panel">
+      <div className={`pp-drift ${n > 0 ? "dim" : ""}`} aria-hidden="true">
+        {DRIFT.map((d, i) => {
+          const Icon = SHOWCASE_ICONS[i % SHOWCASE_ICONS.length].Icon;
+          return (
+            <span
+              key={i}
+              className="pp-drift-icon"
+              style={{
+                left: d.left,
+                top: d.top,
+                width: d.size,
+                height: d.size,
+                ["--dur" as string]: `${d.dur}s`,
+                ["--delay" as string]: `${d.delay}s`,
+              }}
+            >
+              <Icon />
+            </span>
+          );
+        })}
       </div>
+
+      {n === 0 ? (
+        <motion.div className="pp-hint" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+          <div className="pp-hint-title">ANY PART · ANY CAR</div>
+          <div className="pp-hint-sub">Type a part — see it here.</div>
+        </motion.div>
+      ) : (
+        <div className="pp-collage">
+          <AnimatePresence mode="popLayout">
+            {tiles.map((t) => (
+              <motion.div
+                key={`${t.i}-${t.key}`}
+                layout
+                initial={{ scale: 0, opacity: 0, rotate: -10 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                exit={{ scale: 0, opacity: 0, transition: { duration: 0.16 } }}
+                transition={{ type: "spring", stiffness: 380, damping: 18 }}
+                className="pp-cell"
+              >
+                <span className="pp-cell-icon" style={{ width: size, height: size }}>
+                  {t.icon}
+                </span>
+                <span className="pp-cell-label">{t.label}</span>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      )}
     </div>
   );
 }
