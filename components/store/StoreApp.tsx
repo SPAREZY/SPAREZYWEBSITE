@@ -283,7 +283,6 @@ export default function StoreApp() {
                     maxLength={17}
                     value={vin}
                     onChange={(e) => setVin(e.target.value.toUpperCase())}
-                    placeholder="JTEBU14R78K123456"
                   />
                   {vinErr && (
                     <div className="err-msg">
@@ -291,23 +290,18 @@ export default function StoreApp() {
                       and Q are never used).
                     </div>
                   )}
-                  <div className="hint">
-                    On your Mulkiya, the dashboard near the windshield, or the driver&apos;s door
-                    frame.
-                  </div>
                 </div>
 
                 <div className="grid3">
                   <div className="f">
                     <label>Make</label>
-                    <input value={make} onChange={(e) => setMake(e.target.value)} placeholder="Toyota, GMC, BYD" />
+                    <input value={make} onChange={(e) => setMake(e.target.value)} />
                   </div>
                   <div className="f">
                     <label>Model</label>
                     <input
                       value={model}
                       onChange={(e) => setModel(e.target.value)}
-                      placeholder="Land Cruiser, Altima, S-Class"
                     />
                   </div>
                   <div className="f">
@@ -316,7 +310,6 @@ export default function StoreApp() {
                       value={year}
                       maxLength={4}
                       onChange={(e) => setYear(e.target.value.replace(/[^0-9]/g, ""))}
-                      placeholder="2018, 1998, 2026"
                     />
                   </div>
                 </div>
@@ -329,7 +322,6 @@ export default function StoreApp() {
                     <div className="part-row" key={i}>
                       <input
                         className="p-name"
-                        placeholder="Front brake pads, Engine oil, Headlights"
                         value={p.name}
                         onChange={(e) => updatePart(i, { name: e.target.value })}
                       />
