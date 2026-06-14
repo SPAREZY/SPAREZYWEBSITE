@@ -1,0 +1,48 @@
+export type QuoteT = {
+  id: string;
+  requestId: string;
+  price: number;
+  currency: string;
+  condition: string;
+  warranty: string | null;
+  eta: string | null;
+  note: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Lead = {
+  id: string;
+  humanId: string;
+  partName: string;
+  category: string;
+  position: string | null;
+  partsJson: string | null;
+  partNumber: string | null;
+  photoUrl: string | null;
+  customerNote: string | null;
+  aiTranscript: string | null;
+  vin: string;
+  make: string | null;
+  model: string | null;
+  year: number | null;
+  customerName: string;
+  phone: string | null;
+  email: string | null;
+  city: string | null;
+  country: string | null;
+  address: string | null;
+  contactPref: string;
+  partPreference: string;
+  status: string;
+  receivedAt: string;
+  sourcingAt: string | null;
+  quotedAt: string | null;
+  confirmedAt: string | null;
+  completedAt: string | null;
+  declinedAt: string | null;
+  declineReason: string | null;
+  quote: QuoteT | null;
+  createdAt: string;
+  updatedAt: string;
+};

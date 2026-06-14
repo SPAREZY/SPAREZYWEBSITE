@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PartRequest {
+  id      String @id @default(cuid())
+  humanId String @unique // SPZ-YYYY-NNNN, generated server-side
+
+  // Primary part summary (denormalized from partsJson[0] for quick display)
+  partName String
+  category String  @default("Multiple")
+  position String?
+
+  // Full multi-part list — the source of truth for the order
+  partsJson String? // JSON: [{ name, qty, condition }]
+
+  // Optional power-ups
+  partNumber   String?
+  photoUrl     String?
+  customerNote String?
+  aiTranscript String?
+
+  // Car
+  vin   String
+  make  String?
+  model String?
+  year  Int?
+
+  // Customer
+  customerName   String
+  phone          String? // at least one of phone/email required
+  email          String?
+  city           String?
+  country        String?
+  address        String?
+  contactPref    String // whatsapp | call | email
+  partPreference String @default("any") // genuine | oem | aftermarket | any
+
+  // Lead funnel status
+  status String @default("RECEIVED") // RECEIVED | SOURCING | QUOTED | CONFIRMED | COMPLETED | DECLINED
+
+  receivedAt    DateTime  @default(now())
+  sourcingAt    DateTime?
+  quotedAt      DateTime?
+  confirmedAt   DateTime?
+  completedAt   DateTime?
+  declinedAt    DateTime?
+  declineReason String?
+
+  quote     Quote?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Quote {
+  id        String      @id @default(cuid())
+  requestId String      @unique
+  request   PartRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  price     Float
+  currency  String      @default("AED")
+  condition String // genuine | oem | aftermarket
+  warranty  String?
+  eta       String?
+  note      String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}

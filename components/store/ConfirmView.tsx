@@ -1,0 +1,76 @@
+import type { OrderRecap } from "@/lib/store-types";
+import { carLabel } from "@/lib/store-types";
+
+export default function ConfirmView({
+  recap,
+  onBack,
+}: {
+  recap: OrderRecap | null;
+  onBack: () => void;
+}) {
+  if (!recap) return null;
+  return (
+    <div className="confirm-wrap">
+      <h2>Consider It Done</h2>
+      <div className="order-no">{recap.humanIds.join(" · ")}</div>
+      <p className="body">
+        ON IT. YOUR PARTS ARE BEING TRACKED DOWN AS WE SPEAK. WE&apos;LL CONFIRM AND ARRANGE DELIVERY
+        WITHIN 24 HOURS.
+      </p>
+
+      <a
+        href={recap.waLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ display: "block", textDecoration: "none", color: "inherit" }}
+      >
+        <span className="rowbtn" style={{ display: "flex" }}>
+          <span>Send This Order via WhatsApp</span>
+          <span className="dot" />
+        </span>
+      </a>
+
+      <button className="rowbtn secondary" onClick={onBack}>
+        <span>Back to Store</span>
+        <span className="dot" />
+      </button>
+
+      <div className="confirm-list">
+        {recap.vehicles.map((it, i) => (
+          <div className="vrow" key={i}>
+            <div className="vh">
+              <span className="vt">
+                Vehicle {i + 1}
+                {recap.humanIds[i] ? ` — ${recap.humanIds[i]}` : ""}
+              </span>
+              <span className="vin">{it.vin}</span>
+            </div>
+            {carLabel(it) && <div className="car">{carLabel(it)}</div>}
+            <ul>
+              {it.parts.map((p, j) => (
+                <li key={j}>
+                  <span>{p.name}</span>
+                  <span className="q">× {p.qty}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <div className="vrow">
+          <div className="car">
+            <strong style={{ color: "#fff" }}>{recap.name}</strong> · {recap.phone} · {recap.city}
+            {recap.country ? `, ${recap.country}` : ""}
+            <br />
+            {recap.address}
+            {recap.notes ? (
+              <>
+                <br />
+                Note: {recap.notes}
+              </>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
