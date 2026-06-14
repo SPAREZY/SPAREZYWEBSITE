@@ -259,9 +259,6 @@ export default function StoreApp() {
                 <div className="imgpanel">
                   <div className="mbox-wrap" />
                 </div>
-                <div className="mbox-cap" style={{ textAlign: "center", marginTop: 14 }}>
-                  ANY PART · ANY CAR · WE HAVE IT
-                </div>
               </div>
 
               <div className="info">
