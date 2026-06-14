@@ -28,15 +28,21 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-[calc(100dvh-4rem)] items-center justify-center px-5">
-      <form
-        onSubmit={submit}
-        className="w-full max-w-sm border border-white/15 bg-white/5 p-8"
-      >
-        <h1 className="font-display text-3xl tracking-tightest">SPAREZY</h1>
-        <p className="mt-1 text-[0.75rem] font-bold uppercase tracking-wider2 text-white/55">Admin</p>
+    <div className="flex min-h-[100dvh] items-center justify-center px-5">
+      <form onSubmit={submit} className="w-full max-w-sm border border-white/15 bg-white/5 p-8">
+        <div className="flex items-end justify-center gap-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/sparezy-logo-white.png"
+            alt="Sparezy Parts"
+            className="h-12 w-auto select-none"
+          />
+          <span className="pb-1 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-white/55">
+            Admin
+          </span>
+        </div>
 
-        <label className="mt-7 block">
+        <label className="mt-8 block">
           <span className="field-label">Password</span>
           <input
             type="password"
