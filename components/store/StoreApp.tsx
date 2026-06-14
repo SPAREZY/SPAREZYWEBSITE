@@ -323,12 +323,9 @@ export default function StoreApp() {
                   </div>
                 </div>
 
-                <div className="f">
-                  <label>Parts needed for this car *</label>
-                </div>
                 <div>
-                  <div className="part-row part-head" aria-hidden="true">
-                    <span />
+                  <div className="part-row part-head">
+                    <span className="ph-label">Parts needed for this car *</span>
                     <span className="ph-label">Qty *</span>
                     <span />
                   </div>
