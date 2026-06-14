@@ -173,7 +173,7 @@
   align-items: start;
 }
 .imgpanel {
-  background: #0f2349;
+  background: var(--panel);
   position: relative;
   height: calc(100dvh - 84px - 68px);
   min-height: 420px;
