@@ -30,14 +30,29 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-[100dvh] items-center justify-center px-5">
       <form onSubmit={submit} className="w-full max-w-sm border border-white/15 bg-white/5 p-8">
-        <div className="flex items-end justify-center gap-2">
+        {/* Logo sits at the top-center of the box; ADMIN continues right after
+            "PARTS" (which ends at 86.3% of the logo width) and is baseline-aligned
+            to the AUTO SPARE PARTS line at the bottom of the logo. */}
+        <div className="relative mx-auto w-[150px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/sparezy-logo-white.png"
-            alt="Sparezy Parts"
-            className="h-12 w-auto select-none"
+            alt="Sparezy Auto Spare Parts"
+            className="block w-full select-none"
+            draggable={false}
           />
-          <span className="pb-1 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-white/55">
+          <span
+            className="absolute font-bold uppercase text-white/60"
+            style={{
+              left: "86.3%",
+              bottom: "-0.2em",
+              marginLeft: "0.4rem",
+              lineHeight: 1,
+              fontSize: "0.82rem",
+              letterSpacing: "0.2em",
+              whiteSpace: "nowrap",
+            }}
+          >
             Admin
           </span>
         </div>
