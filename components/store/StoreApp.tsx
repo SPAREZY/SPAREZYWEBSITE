@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { isValidVin } from "@/lib/utils";
-import type { CartItem, CartPart, CheckoutData, OrderRecap } from "@/lib/store-types";
+import { isValidChassis } from "@/lib/utils";
+import type { CartItem, CheckoutData, OrderRecap } from "@/lib/store-types";
 import { carLabel } from "@/lib/store-types";
 import BackgroundGrid from "./BackgroundGrid";
 import WhatsAppFab from "./WhatsAppFab";
@@ -11,6 +11,9 @@ import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
 
 type View = "home" | "checkout" | "confirm" | "contact";
+// qty is kept as a string in the form so the field can start empty (customer
+// must type it); it is parsed to a number when the item is added to the cart.
+type FormPart = { name: string; qty: string };
 const STORAGE_KEY = "sparezy_cart_v1";
 const BUSINESS_WA = "971522250600";
 const PREF_MAP: Record<string, "whatsapp" | "call" | "email"> = {
@@ -35,9 +38,10 @@ export default function StoreApp() {
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
-  const [parts, setParts] = useState<CartPart[]>([{ name: "", qty: 1 }]);
+  const [parts, setParts] = useState<FormPart[]>([{ name: "", qty: "" }]);
   const [vinErr, setVinErr] = useState(false);
   const [partsErr, setPartsErr] = useState(false);
+  const [qtyErr, setQtyErr] = useState(false);
 
   const addBarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -93,31 +97,34 @@ export default function StoreApp() {
     setMake("");
     setModel("");
     setYear("");
-    setParts([{ name: "", qty: 1 }]);
+    setParts([{ name: "", qty: "" }]);
     setVinErr(false);
     setPartsErr(false);
+    setQtyErr(false);
   }
 
-  function updatePart(i: number, patch: Partial<CartPart>) {
+  function updatePart(i: number, patch: Partial<FormPart>) {
     setParts((prev) => prev.map((p, idx) => (idx === i ? { ...p, ...patch } : p)));
   }
   function addPartRow() {
-    setParts((prev) => [...prev, { name: "", qty: 1 }]);
+    setParts((prev) => [...prev, { name: "", qty: "" }]);
   }
   function removePartRow(i: number) {
     setParts((prev) => (prev.length === 1 ? prev : prev.filter((_, idx) => idx !== i)));
   }
 
   function saveItem(direct: boolean) {
-    const vinNorm = vin.replace(/\s/g, "").toUpperCase();
+    const vinNorm = vin.trim().toUpperCase();
     const cleanParts = parts
-      .map((p) => ({ name: p.name.trim(), qty: Math.max(1, Number(p.qty) || 1) }))
+      .map((p) => ({ name: p.name.trim(), qty: parseInt(p.qty, 10) }))
       .filter((p) => p.name);
-    const badVin = !isValidVin(vinNorm);
+    const badVin = !isValidChassis(vinNorm);
     const badParts = cleanParts.length === 0;
+    const badQty = cleanParts.some((p) => !Number.isFinite(p.qty) || p.qty < 1);
     setVinErr(badVin);
     setPartsErr(badParts);
-    if (badVin || badParts) return;
+    setQtyErr(!badParts && badQty);
+    if (badVin || badParts || badQty) return;
 
     const item: CartItem = { vin: vinNorm, make, model, year, parts: cleanParts };
     setCart((prev) => {
@@ -142,9 +149,14 @@ export default function StoreApp() {
     setMake(it.make);
     setModel(it.model);
     setYear(it.year);
-    setParts(it.parts.length ? it.parts.map((p) => ({ ...p })) : [{ name: "", qty: 1 }]);
+    setParts(
+      it.parts.length
+        ? it.parts.map((p) => ({ name: p.name, qty: String(p.qty) }))
+        : [{ name: "", qty: "" }],
+    );
     setVinErr(false);
     setPartsErr(false);
+    setQtyErr(false);
     closeCart();
     setView("home");
   }
@@ -280,15 +292,12 @@ export default function StoreApp() {
                   <label>Chassis / VIN number *</label>
                   <input
                     className={`vin-input ${vinErr ? "err" : ""}`}
-                    maxLength={17}
+                    maxLength={32}
                     value={vin}
                     onChange={(e) => setVin(e.target.value.toUpperCase())}
                   />
                   {vinErr && (
-                    <div className="err-msg">
-                      That doesn&apos;t look like a valid VIN — it must be 17 letters/numbers (I, O
-                      and Q are never used).
-                    </div>
+                    <div className="err-msg">Please enter the chassis / VIN number.</div>
                   )}
                 </div>
 
@@ -318,10 +327,16 @@ export default function StoreApp() {
                   <label>Parts needed for this car *</label>
                 </div>
                 <div>
+                  <div className="part-row part-head" aria-hidden="true">
+                    <span className="ph-label">Part</span>
+                    <span className="ph-label">Qty *</span>
+                    <span />
+                  </div>
                   {parts.map((p, i) => (
                     <div className="part-row" key={i}>
                       <input
                         className="p-name"
+                        aria-label="Part name"
                         value={p.name}
                         onChange={(e) => updatePart(i, { name: e.target.value })}
                       />
@@ -329,9 +344,10 @@ export default function StoreApp() {
                         className="p-qty"
                         type="number"
                         min={1}
+                        inputMode="numeric"
+                        aria-label="Quantity"
                         value={p.qty}
-                        title="Qty"
-                        onChange={(e) => updatePart(i, { qty: Math.max(1, Number(e.target.value) || 1) })}
+                        onChange={(e) => updatePart(i, { qty: e.target.value.replace(/[^0-9]/g, "") })}
                       />
                       <button className="del" title="Remove" onClick={() => removePartRow(i)}>
                         ✕
@@ -340,6 +356,7 @@ export default function StoreApp() {
                   ))}
                 </div>
                 {partsErr && <div className="err-msg">Please describe at least one part.</div>}
+                {qtyErr && <div className="err-msg">Please enter a quantity for every part.</div>}
                 <button className="addpart" onClick={addPartRow}>
                   + Add another part
                 </button>

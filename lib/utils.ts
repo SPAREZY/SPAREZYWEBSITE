@@ -1,9 +1,11 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-// VIN: 17 chars, no I/O/Q
-export function isValidVin(vin: string): boolean {
-  return /^[A-HJ-NPR-Z0-9]{17}$/.test(vin.trim().toUpperCase());
+// Chassis / VIN: accept any real-world format — 17-char VINs, JDM chassis codes
+// (e.g. "GF-BH5"), short chassis numbers, etc. Require a few alphanumerics so a
+// blank or stray keystroke is still rejected.
+export function isValidChassis(value: string): boolean {
+  return (value.match(/[A-Za-z0-9]/g) || []).length >= 3;
 }
 
 // UAE phone: accepts +9715XXXXXXXX, 9715XXXXXXXX, 05XXXXXXXX

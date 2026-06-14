@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyCustomer } from "@/lib/notify";
-import { isValidVin, isValidUaePhone, isValidEmail, nextHumanId } from "@/lib/utils";
+import { isValidChassis, isValidUaePhone, isValidEmail, nextHumanId } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -35,9 +35,9 @@ export async function POST(req: Request) {
     customerNote,
   } = body as Record<string, any>;
 
-  if (typeof vin !== "string" || !isValidVin(vin)) {
+  if (typeof vin !== "string" || !isValidChassis(vin)) {
     return NextResponse.json(
-      { error: "Invalid VIN — must be 17 characters, letters I/O/Q not allowed." },
+      { error: "Chassis / VIN number is required." },
       { status: 400 },
     );
   }
@@ -75,12 +75,15 @@ export async function POST(req: Request) {
   const parts = (partsJson as PartInput[])
     .map((p) => ({
       name: String(p?.name ?? "").trim(),
-      qty: Math.max(1, Number(p?.qty) || 1),
+      qty: Math.trunc(Number(p?.qty)),
       condition: CONDITIONS.includes(String(p?.condition)) ? String(p?.condition) : "any",
     }))
     .filter((p) => p.name.length >= 2);
   if (parts.length === 0) {
     return NextResponse.json({ error: "At least one part with a name is required." }, { status: 400 });
+  }
+  if (parts.some((p) => !Number.isFinite(p.qty) || p.qty < 1)) {
+    return NextResponse.json({ error: "Each part needs a quantity of at least 1." }, { status: 400 });
   }
 
   const yearNum = year === undefined || year === null || year === "" ? null : Number(year);

@@ -348,6 +348,17 @@
 .part-row .del:hover {
   color: #fff;
 }
+.part-head {
+  margin-top: 10px;
+  align-items: end;
+}
+.part-head .ph-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
 .addpart {
   background: none;
   border: none;
