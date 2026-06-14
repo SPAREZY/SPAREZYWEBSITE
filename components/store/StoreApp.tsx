@@ -5,6 +5,7 @@ import { isValidVin } from "@/lib/utils";
 import type { CartItem, CartPart, CheckoutData, OrderRecap } from "@/lib/store-types";
 import { carLabel } from "@/lib/store-types";
 import BackgroundGrid from "./BackgroundGrid";
+import PartCanvas from "./PartCanvas";
 import WhatsAppFab from "./WhatsAppFab";
 import CheckoutView from "./CheckoutView";
 import ConfirmView from "./ConfirmView";
@@ -257,7 +258,7 @@ export default function StoreApp() {
             <div className="pdp">
               <div>
                 <div className="imgpanel">
-                  <div className="mbox-wrap" />
+                  <PartCanvas names={parts.map((p) => p.name)} />
                 </div>
                 <div className="mbox-cap" style={{ textAlign: "center", marginTop: 14 }}>
                   ANY PART · ANY CAR · WE HAVE IT

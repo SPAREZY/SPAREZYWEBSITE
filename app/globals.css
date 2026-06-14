@@ -1013,6 +1013,149 @@
   }
 }
 
+/* ===== live part-icon canvas (white product panel) ===== */
+.part-canvas {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+.pc-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px 24px;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+.pc-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 96px;
+  animation: pcFloat 4.5s ease-in-out infinite;
+}
+.pc-tile:nth-child(3n) {
+  animation-delay: -1.5s;
+}
+.pc-tile:nth-child(3n + 1) {
+  animation-delay: -3s;
+}
+.pc-box {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(150deg, #2b52a8 0%, #1b3a7e 68%, #122a5e 100%);
+  box-shadow: 0 14px 28px rgba(27, 58, 126, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+.pc-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+.pc-box .pc-svg {
+  width: 46px;
+  height: 46px;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+.pc-glow {
+  position: absolute;
+  top: -35%;
+  left: -25%;
+  width: 85%;
+  height: 85%;
+  background: radial-gradient(circle, rgba(0, 148, 255, 0.45), transparent 70%);
+  filter: blur(8px);
+  z-index: 0;
+}
+.pc-label {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 800;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1b3a7e;
+  text-align: center;
+}
+.pc-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+.pc-empty-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef2fb;
+  color: #2b52a8;
+  box-shadow: inset 0 0 0 1px #dce4f5;
+}
+.pc-empty-badge svg {
+  width: 30px;
+  height: 30px;
+}
+.pc-empty-text {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  color: #8a98b8;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+@keyframes pcFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pc-tile {
+    animation: none;
+  }
+}
+@media (max-width: 920px) {
+  .part-canvas {
+    padding: 20px;
+  }
+  .pc-grid {
+    gap: 16px 18px;
+  }
+  .pc-tile {
+    width: 82px;
+  }
+  .pc-box {
+    width: 76px;
+    height: 76px;
+    border-radius: 17px;
+  }
+  .pc-box .pc-svg {
+    width: 40px;
+    height: 40px;
+  }
+}
+
 /* floating whatsapp button (all views) */
 .wa-float {
   position: fixed;
