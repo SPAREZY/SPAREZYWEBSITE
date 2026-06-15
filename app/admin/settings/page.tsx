@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import { isAdmin } from "@/lib/admin";
 import { prisma } from "@/lib/prisma";
 import { getOrderPattern } from "@/lib/settings";
@@ -15,13 +14,9 @@ export default async function AdminSettingsPage() {
   const count = await prisma.partRequest.count({ where: { createdAt: { gte: startOfYear } } });
 
   return (
-    <main className="mx-auto max-w-[1400px] px-5 py-8">
-      <Link
-        href="/admin"
-        className="text-[0.72rem] font-bold uppercase tracking-wider2 text-white/50 hover:text-white"
-      >
-        ← Back to board
-      </Link>
+    <main className="mx-auto max-w-[1400px] px-5 py-6">
+      <h1 className="font-display text-2xl tracking-tightest sm:text-3xl">Settings</h1>
+      <p className="mt-1 text-[0.8rem] text-white/50">Configure how the storefront and ERP behave.</p>
       <div className="mt-6">
         <OrderNumberSettings initialPattern={pattern} previewSeq={count + 1} />
       </div>
