@@ -90,16 +90,16 @@
 .nav {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 34px;
-  display: flex;
+  padding: 14px 34px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  height: 100px;
   position: relative;
 }
 .nav-l {
   display: flex;
   gap: 28px;
+  justify-self: start;
   position: relative;
   z-index: 95;
 }
@@ -121,6 +121,7 @@
   border: none;
   font-weight: 700;
   font-size: 0.95rem;
+  justify-self: end;
   position: relative;
   z-index: 95;
   text-transform: uppercase;
@@ -129,17 +130,13 @@
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-/* animated logo, absolutely centered on the bar so it sits exactly between
-   the Contact and Cart links without affecting the nav's height/layout.
-   It doubles as the "home" button, so it strips default button chrome. */
+/* animated logo sits in the grid's centre column, so it is perfectly
+   centred between the side links and the header auto-sizes to it at any
+   resolution. It doubles as the "home" button, so it strips button chrome. */
 .nav-logo {
-  position: absolute;
-  left: 50%;
-  top: calc(50% + 12px);
-  transform: translate(-50%, -50%);
+  justify-self: center;
   width: 285px;
   max-width: 52.25vw;
-  z-index: 90;
   background: none;
   border: none;
   padding: 0;
@@ -1069,8 +1066,7 @@
     gap: 12px;
   }
   .nav {
-    height: 84px;
-    padding: 0 18px;
+    padding: 14px 18px;
   }
   .nav-l {
     gap: 16px;
@@ -1368,19 +1364,10 @@
   }
 }
 
-/* phones: the header now holds only the logo (nav links moved to the
-   bottom bar), so center it in normal flow with breathing room instead
-   of absolute-positioning it on a short fixed-height bar */
+/* phones: nav links live in the bottom bar, so the grid's empty side
+   columns just centre the logo; trim the header padding a touch. */
 @media (max-width: 640px) {
   .nav {
-    height: auto;
-    justify-content: center;
-    padding: 16px 18px;
-  }
-  .nav-logo {
-    position: static;
-    transform: none;
-    left: auto;
-    top: auto;
+    padding: 14px 18px;
   }
 }
