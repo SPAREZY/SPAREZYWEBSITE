@@ -134,6 +134,7 @@
    centred between the side links and the header auto-sizes to it at any
    resolution. It doubles as the "home" button, so it strips button chrome. */
 .nav-logo {
+  grid-column: 2;
   justify-self: center;
   width: 285px;
   max-width: 52.25vw;
