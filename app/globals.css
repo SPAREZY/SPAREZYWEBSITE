@@ -90,11 +90,17 @@
 .nav {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 10px 34px;
+  padding: 14px 34px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   position: relative;
+}
+/* desktop only: compact the header so the storefront fits one screen */
+@media (min-width: 921px) {
+  .nav {
+    padding: 9px 34px;
+  }
 }
 .nav-l {
   display: flex;
@@ -136,26 +142,33 @@
 .nav-logo {
   grid-column: 2;
   justify-self: center;
-  width: 172px;
-  max-width: 44vw;
+  width: 285px;
+  max-width: 52.25vw;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+/* desktop only: shrink the header logo (mobile keeps its original size) */
+@media (min-width: 921px) {
+  .nav-logo {
+    width: 172px;
+  }
+  .nav-logo .sz-logo {
+    width: 172px !important;
+    max-width: 44vw !important;
+  }
+}
 /* On phones, trim the header logo so it fits cleanly inside the shorter
    mobile nav bar (52.25vw -> 44.65vw). Header only — the login logo
    isn't inside .nav-logo, so it's unaffected. */
 @media (max-width: 640px) {
   .nav-logo {
-    max-width: 40vw;
+    max-width: 44.65vw;
   }
   .nav-logo .sz-logo {
-    max-width: 40vw !important;
-  }
-  .nav {
-    padding: 8px 18px;
+    max-width: 44.65vw !important;
   }
 }
 
@@ -1383,69 +1396,72 @@
    columns just centre the logo; trim the header padding a touch. */
 @media (max-width: 640px) {
   .nav {
-    padding: 8px 18px;
+    padding: 14px 18px;
   }
 }
 
 /* ============================================================
-   ONE-SCREEN PRODUCT PAGE — the storefront fits the viewport
-   with no scrolling. Scoped to .view-home so other views
-   (checkout / orders / contact) keep their normal scroll.
+   ONE-SCREEN PRODUCT PAGE (DESKTOP ONLY) — on desktop the
+   storefront fits the viewport with no scrolling. Everything is
+   gated behind min-width:921px so the phone/tablet layout is
+   completely untouched (it scrolls exactly as before).
    ============================================================ */
-.view-home {
-  overflow: hidden;
-}
-.view-home .pdp {
-  height: 100%;
-  padding: 14px 34px;
-  gap: 40px;
-  align-items: center;
-}
-.view-home .imgpanel {
-  height: calc(100dvh - 150px);
-  min-height: 0;
-}
-.view-home .info {
-  padding-top: 0;
-}
-.view-home .desc {
-  margin-top: 12px;
-  font-size: 0.9rem;
-  line-height: 1.45;
-}
-.view-home .desc p {
-  margin-bottom: 0;
-}
-.view-home .price {
-  margin-top: 6px;
-}
-.view-home .f {
-  margin-top: 10px;
-}
-.view-home .f input,
-.view-home .f select,
-.view-home .part-row input {
-  padding: 6px 0;
-}
-.view-home .part-head {
-  margin-top: 10px;
-}
-.view-home .vin-upload {
-  margin-top: 8px;
-  padding: 9px 14px;
-}
-.view-home .vin-help-toggle {
-  padding: 4px 0 0;
-}
-.view-home .addpart {
-  margin-top: 10px;
-}
-.view-home .pdp-actions {
-  margin-top: 14px;
-  gap: 8px;
-}
-.view-home .rowbtn {
-  padding: 14px 18px;
+@media (min-width: 921px) {
+  .view-home {
+    overflow: hidden;
+  }
+  .view-home .pdp {
+    height: 100%;
+    padding: 14px 34px;
+    gap: 40px;
+    align-items: center;
+  }
+  .view-home .imgpanel {
+    height: calc(100dvh - 150px);
+    min-height: 0;
+  }
+  .view-home .info {
+    padding-top: 0;
+  }
+  .view-home .desc {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+  .view-home .desc p {
+    margin-bottom: 0;
+  }
+  .view-home .price {
+    margin-top: 6px;
+  }
+  .view-home .f {
+    margin-top: 10px;
+  }
+  .view-home .f input,
+  .view-home .f select,
+  .view-home .part-row input {
+    padding: 6px 0;
+  }
+  .view-home .part-head {
+    margin-top: 10px;
+  }
+  .view-home .vin-upload {
+    margin-top: 8px;
+    padding: 9px 14px;
+  }
+  .view-home .vin-help-toggle {
+    padding: 4px 0 0;
+  }
+  .view-home .addpart {
+    margin-top: 10px;
+  }
+  .view-home .pdp-actions {
+    margin-top: 14px;
+    gap: 8px;
+  }
+  .view-home .rowbtn {
+    padding: 14px 18px;
+  }
 }
 
 /* shorter desktop/laptop screens — compact a little more so the
@@ -1474,38 +1490,6 @@
   }
   .view-home .rowbtn {
     padding: 11px 18px;
-  }
-}
-
-/* phones: drop the (empty) white image panel and keep Make/Model/Year on
-   one compact row so the whole form fits above the bottom tab bar */
-@media (max-width: 920px) {
-  .view-home .pdp {
-    grid-template-columns: 1fr;
-    height: 100%;
-    padding: 10px 18px;
-    gap: 0;
-    align-content: start;
-    align-items: start;
-  }
-  .view-home .imgpanel {
-    display: none;
-  }
-  .view-home > .pdp > div:first-child {
-    display: none;
-  }
-  .view-home .desc {
-    margin-top: 8px;
-    font-size: 0.82rem;
-    line-height: 1.38;
-    max-width: none;
-  }
-  .view-home .grid3 {
-    grid-template-columns: 1.2fr 1.2fr 0.7fr;
-    gap: 12px;
-  }
-  .view-home .f {
-    margin-top: 8px;
   }
 }
 

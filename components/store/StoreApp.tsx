@@ -437,7 +437,7 @@ export default function StoreApp() {
               onClick={goHome}
               aria-label="SPAREZY — go to home"
             >
-              <SparezyLogo width={172} maxWidth="44vw" />
+              <SparezyLogo />
             </button>
             <button className="cartlink" onClick={toggleCart}>
               Cart ( {cart.length} )
