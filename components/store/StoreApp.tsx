@@ -472,7 +472,7 @@ export default function StoreApp() {
                 </div>
 
                 <div className="f">
-                  <label>Chassis / VIN number *</label>
+                  <label>Enter VIN / Chassis or upload a photo *</label>
                   <div className="f-field">
                     <input
                       className={`vin-input ${vinErr ? "err" : ""}`}
