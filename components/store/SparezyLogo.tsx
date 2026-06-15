@@ -51,7 +51,17 @@ const layerBase: CSSProperties = {
   height: "100%",
 };
 
-export default function SparezyLogo() {
+type SparezyLogoProps = {
+  /** Rendered width of the logo. Defaults to the header size. */
+  width?: number | string;
+  /** Upper bound so it stays responsive in narrow containers. */
+  maxWidth?: number | string;
+};
+
+export default function SparezyLogo({
+  width = 285,
+  maxWidth = "52.25vw",
+}: SparezyLogoProps = {}) {
   return (
     <div style={{ textAlign: "center", background: "transparent", perspective: "850px" }}>
       <div
@@ -59,8 +69,8 @@ export default function SparezyLogo() {
         style={{
           display: "inline-block",
           position: "relative",
-          width: 285,
-          maxWidth: "52.25vw",
+          width,
+          maxWidth,
           aspectRatio: "1200 / 430",
           transformStyle: "preserve-3d",
           transformOrigin: "center center",

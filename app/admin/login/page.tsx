@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import SparezyLogo from "@/components/store/SparezyLogo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,16 +31,8 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-[100dvh] items-center justify-center px-5">
       <form onSubmit={submit} className="w-full max-w-sm border border-white/15 bg-white/5 p-8">
-        {/* Logo centered at the top of the box */}
-        <div className="mx-auto w-[180px]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/sparezy-logo-white.png"
-            alt="Sparezy Auto Spare Parts"
-            className="block w-full select-none"
-            draggable={false}
-          />
-        </div>
+        {/* Animated 3D logo centered at the top of the box */}
+        <SparezyLogo width={180} maxWidth="100%" />
 
         <label className="mt-8 block">
           <span className="field-label">Password</span>
