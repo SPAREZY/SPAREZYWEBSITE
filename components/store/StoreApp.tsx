@@ -320,64 +320,77 @@ export default function StoreApp() {
                   </p>
                 </div>
 
-                <div className="f">
-                  <label>Chassis / VIN number *</label>
+                <div className="ff">
                   <input
+                    id="f-vin"
                     className={`vin-input ${vinErr ? "err" : ""}`}
+                    placeholder=" "
                     maxLength={32}
                     value={vin}
                     onChange={(e) => setVin(e.target.value.toUpperCase())}
                   />
-                  {vinErr && (
-                    <div className="err-msg">Please enter the chassis / VIN number.</div>
-                  )}
+                  <label htmlFor="f-vin">Chassis / VIN number *</label>
                 </div>
+                {vinErr && <div className="err-msg">Please enter the chassis / VIN number.</div>}
 
                 <div className="grid3">
-                  <div className="f">
-                    <label>Make</label>
-                    <input value={make} onChange={(e) => setMake(e.target.value)} />
-                  </div>
-                  <div className="f">
-                    <label>Model</label>
+                  <div className="ff">
                     <input
+                      id="f-make"
+                      placeholder=" "
+                      value={make}
+                      onChange={(e) => setMake(e.target.value)}
+                    />
+                    <label htmlFor="f-make">Make</label>
+                  </div>
+                  <div className="ff">
+                    <input
+                      id="f-model"
+                      placeholder=" "
                       value={model}
                       onChange={(e) => setModel(e.target.value)}
                     />
+                    <label htmlFor="f-model">Model</label>
                   </div>
-                  <div className="f">
-                    <label>Year</label>
+                  <div className="ff">
                     <input
-                      value={year}
+                      id="f-year"
+                      placeholder=" "
                       maxLength={4}
+                      value={year}
                       onChange={(e) => setYear(e.target.value.replace(/[^0-9]/g, ""))}
                     />
+                    <label htmlFor="f-year">Year</label>
                   </div>
                 </div>
 
-                <div>
-                  <div className="part-row part-head">
-                    <span className="ph-label">Parts needed for this car *</span>
-                    <span className="ph-label">Qty *</span>
-                    <span />
-                  </div>
+                <div className="parts-block">
+                  <div className="parts-heading">Parts needed for this car *</div>
                   {parts.map((p, i) => (
                     <div className="part-row" key={i}>
-                      <input
-                        className="p-name"
-                        aria-label="Part name"
-                        value={p.name}
-                        onChange={(e) => updatePart(i, { name: e.target.value })}
-                      />
-                      <input
-                        className="p-qty"
-                        type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        aria-label="Quantity"
-                        value={p.qty}
-                        onChange={(e) => updatePart(i, { qty: e.target.value.replace(/[^0-9]/g, "") })}
-                      />
+                      <div className="ff ff-inrow">
+                        <input
+                          id={`f-pn-${i}`}
+                          className="p-name"
+                          placeholder=" "
+                          value={p.name}
+                          onChange={(e) => updatePart(i, { name: e.target.value })}
+                        />
+                        <label htmlFor={`f-pn-${i}`}>Part name</label>
+                      </div>
+                      <div className="ff ff-inrow">
+                        <input
+                          id={`f-pq-${i}`}
+                          className="p-qty"
+                          type="text"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          placeholder=" "
+                          value={p.qty}
+                          onChange={(e) => updatePart(i, { qty: e.target.value.replace(/[^0-9]/g, "") })}
+                        />
+                        <label htmlFor={`f-pq-${i}`}>Qty</label>
+                      </div>
                       <button className="del" title="Remove" onClick={() => removePartRow(i)}>
                         ✕
                       </button>
@@ -526,6 +539,68 @@ export default function StoreApp() {
 
       <div className={`addbar ${addBar ? "show" : ""}`}>PRODUCT ADDED TO CART</div>
       <div className={`toast ${toast ? "show" : ""}`}>{toast}</div>
+
+      {/* Mobile bottom tab bar (hidden on desktop via CSS) */}
+      <nav className="botnav" aria-label="Primary">
+        <button
+          type="button"
+          className={`botnav-item ${view === "contact" ? "active" : ""}`}
+          onClick={() => go("contact")}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          <span>Contact</span>
+        </button>
+        <button
+          type="button"
+          className={`botnav-item ${view === "orders" ? "active" : ""}`}
+          onClick={() => go("orders")}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+            <rect x="9" y="3" width="6" height="4" rx="1" />
+            <path d="M9 12h6M9 16h6" />
+          </svg>
+          <span>Orders</span>
+        </button>
+        <button
+          type="button"
+          className={`botnav-item ${cartOpen ? "active" : ""}`}
+          onClick={toggleCart}
+        >
+          <span className="botnav-ico-wrap">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <path d="M3 6h18" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            {cart.length > 0 && <span className="botnav-badge">{cart.length}</span>}
+          </span>
+          <span>Cart</span>
+        </button>
+      </nav>
     </div>
   );
 }
