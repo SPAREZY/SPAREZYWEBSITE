@@ -5,6 +5,7 @@ import { isValidChassis } from "@/lib/utils";
 import type { CartItem, CheckoutData, OrderRecap } from "@/lib/store-types";
 import { carLabel } from "@/lib/store-types";
 import BackgroundGrid from "./BackgroundGrid";
+import SparezyLogo from "./SparezyLogo";
 import WhatsAppFab from "./WhatsAppFab";
 import CheckoutView from "./CheckoutView";
 import ConfirmView from "./ConfirmView";
@@ -256,6 +257,9 @@ export default function StoreApp() {
               <button className="lnk" onClick={() => go("contact")}>
                 Contact
               </button>
+            </div>
+            <div className="nav-logo">
+              <SparezyLogo />
             </div>
             <button className="cartlink" onClick={toggleCart}>
               Cart ( {cart.length} )
