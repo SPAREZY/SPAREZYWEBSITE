@@ -489,30 +489,33 @@ export default function StoreApp() {
                   {vinErr && (
                     <div className="err-msg">Please enter the chassis / VIN number.</div>
                   )}
-                  <div className="vin-tools">
-                    <button
-                      type="button"
-                      className="vin-help-toggle"
-                      onClick={() => setVinHelpOpen((o) => !o)}
-                    >
-                      {vinHelpOpen ? "▲" : "▼"} Where do I find my VIN?
-                    </button>
-                    {photo ? (
-                      <div className="vin-thumb">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={photo} alt="Registration card" />
-                        <button type="button" className="vin-thumb-x" onClick={() => setPhoto("")}>✕</button>
-                      </div>
-                    ) : (
-                      <label className={`vin-upload ${photoBusy ? "busy" : ""}`}>
-                        <input type="file" accept="image/*" onChange={onPickPhoto} hidden disabled={photoBusy} />
-                        {photoBusy ? "Processing…" : "📷 Upload reg. card"}
-                      </label>
-                    )}
-                  </div>
+                  {photo ? (
+                    <div className="vin-thumb">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={photo} alt="Registration card" />
+                      <button type="button" className="vin-thumb-x" onClick={() => setPhoto("")}>✕</button>
+                    </div>
+                  ) : (
+                    <label className={`vin-upload ${photoBusy ? "busy" : ""}`}>
+                      <input type="file" accept="image/*" onChange={onPickPhoto} hidden disabled={photoBusy} />
+                      {photoBusy ? "Processing…" : "📷 Upload a photo of the chassis / reg. card"}
+                    </label>
+                  )}
+                  <button
+                    type="button"
+                    className="vin-help-toggle"
+                    onClick={() => setVinHelpOpen((o) => !o)}
+                  >
+                    {vinHelpOpen ? "▲" : "▼"} Where do I find my VIN / Chassis?
+                  </button>
                   {vinHelpOpen && (
                     <div className="vin-help">
-                      <p>17-character code (or shorter on some GCC models). Look for it on your dashboard (driver side, visible through the windshield), the sticker inside the driver&apos;s door jamb, or your car registration card.</p>
+                      <p>It&apos;s a 17-character code — or a shorter chassis number on GCC models. Find it on:</p>
+                      <ul>
+                        <li>The dashboard, driver side — visible through the windshield</li>
+                        <li>The sticker inside the driver&apos;s door jamb</li>
+                        <li>Your car registration card</li>
+                      </ul>
                     </div>
                   )}
                 </div>

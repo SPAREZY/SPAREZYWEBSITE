@@ -1451,30 +1451,28 @@
 }
 
 
-/* ===== VIN field tools row (helper toggle + reg card upload) ===== */
-.vin-tools {
+/* ===== VIN field: reg-card upload + helper ===== */
+.vin-upload {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 4px;
-}
-.vin-upload {
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 10px;
   background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-  padding: 5px 13px;
-  font-size: 0.75rem;
+  border: 1.5px dashed rgba(255, 255, 255, 0.26);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 0.82rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.78);
   cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
+  text-align: center;
   transition: background 0.14s, border-color 0.14s, color 0.14s;
 }
 .vin-upload:hover {
-  background: rgba(255, 255, 255, 0.13);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.45);
   color: #fff;
 }
 .vin-upload.busy {
@@ -1483,27 +1481,28 @@
 }
 .vin-thumb {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  flex-shrink: 0;
+  display: inline-block;
+  margin-top: 10px;
+  max-width: 100%;
 }
 .vin-thumb img {
-  height: 42px;
-  border-radius: 6px;
-  border: 1.5px solid rgba(255, 255, 255, 0.22);
   display: block;
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
 }
 .vin-thumb-x {
   position: absolute;
-  top: -6px;
-  right: -6px;
+  top: -8px;
+  right: -8px;
   background: var(--blue-darkest);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   color: #fff;
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  font-size: 0.55rem;
+  width: 22px;
+  height: 22px;
+  font-size: 0.65rem;
   font-weight: 800;
   display: flex;
   align-items: center;
