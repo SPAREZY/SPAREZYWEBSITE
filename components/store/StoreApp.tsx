@@ -4,14 +4,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { isValidChassis } from "@/lib/utils";
 import type { CartItem, CheckoutData, OrderRecap } from "@/lib/store-types";
 import { carLabel } from "@/lib/store-types";
+import { rememberOrders } from "@/lib/tracked-orders";
 import BackgroundGrid from "./BackgroundGrid";
 import SparezyLogo from "./SparezyLogo";
 import WhatsAppFab from "./WhatsAppFab";
 import CheckoutView from "./CheckoutView";
 import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
+import OrdersView from "./OrdersView";
 
-type View = "home" | "checkout" | "confirm" | "contact";
+type View = "home" | "checkout" | "confirm" | "contact" | "orders";
 // qty is kept as a string in the form so the field can start empty (customer
 // must type it); it is parsed to a number when the item is added to the cart.
 type FormPart = { name: string; qty: string };
@@ -236,6 +238,8 @@ export default function StoreApp() {
 
       const snapshot = JSON.parse(JSON.stringify(cart)) as CartItem[];
       const waLink = buildOrderWaLink(humanIds, snapshot, data);
+      // Remember these orders on this device so they appear on the Orders page.
+      rememberOrders(humanIds, data.phone);
       setRecap({
         humanIds,
         vehicles: snapshot,
@@ -269,6 +273,9 @@ export default function StoreApp() {
             <div className="nav-l">
               <button className="lnk" onClick={() => go("contact")}>
                 Contact
+              </button>
+              <button className="lnk" onClick={() => go("orders")}>
+                Orders
               </button>
             </div>
             <button
@@ -430,6 +437,11 @@ export default function StoreApp() {
           {/* CONTACT */}
           <div className={`view ${view === "contact" ? "active" : ""}`}>
             <ContactView />
+          </div>
+
+          {/* ORDERS */}
+          <div className={`view ${view === "orders" ? "active" : ""}`}>
+            <OrdersView active={view === "orders"} />
           </div>
         </div>
       </div>

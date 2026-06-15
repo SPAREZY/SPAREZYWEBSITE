@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyCustomer } from "@/lib/notify";
-import { isValidChassis, isValidUaePhone, isValidEmail, nextHumanId } from "@/lib/utils";
+import { isValidChassis, isValidUaePhone, isValidEmail } from "@/lib/utils";
+import { getOrderPattern } from "@/lib/settings";
+import { renderOrderNumber } from "@/lib/order-number";
 
 export const dynamic = "force-dynamic";
 
@@ -90,8 +92,9 @@ export async function POST(req: Request) {
   const validYear = yearNum !== null && Number.isFinite(yearNum) ? Math.trunc(yearNum) : null;
   const pref = CONDITIONS.includes(String(partPreference)) ? String(partPreference) : "any";
 
-  const yearForId = new Date().getFullYear();
-  const startOfYear = new Date(yearForId, 0, 1);
+  const now = new Date();
+  const startOfYear = new Date(now.getFullYear(), 0, 1);
+  const orderPattern = await getOrderPattern();
 
   try {
     let created = null;
@@ -99,7 +102,7 @@ export async function POST(req: Request) {
       const countThisYear = await prisma.partRequest.count({
         where: { createdAt: { gte: startOfYear } },
       });
-      const humanId = nextHumanId(countThisYear + 1 + attempt, yearForId);
+      const humanId = renderOrderNumber(orderPattern, countThisYear + 1 + attempt, now);
       try {
         created = await prisma.partRequest.create({
           data: {

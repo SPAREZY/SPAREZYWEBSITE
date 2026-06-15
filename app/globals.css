@@ -1140,3 +1140,104 @@
     background-position: 130% 0;
   }
 }
+
+/* ===== customer orders / tracking ===== */
+.ord-intro {
+  margin-top: 8px;
+  color: var(--txt-dim);
+  opacity: 0.75;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 480px;
+}
+.ord-lookup {
+  margin-top: 22px;
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+.ord-phone {
+  flex: 1;
+  background: transparent;
+  border: 1.5px solid var(--line);
+  color: #fff;
+  padding: 12px 14px;
+  font-weight: 700;
+  border-radius: 6px;
+}
+.ord-phone::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+}
+.ord-phone:focus {
+  outline: none;
+  border-color: var(--line-strong);
+}
+.ord-track {
+  background: var(--green);
+  border: none;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0 22px;
+  border-radius: 6px;
+}
+.ord-track:disabled {
+  opacity: 0.6;
+}
+.ord-list {
+  margin-top: 26px;
+}
+.ord-status {
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  white-space: nowrap;
+}
+.ord-status.st-received {
+  color: #cdd9ff;
+}
+.ord-status.st-sourcing {
+  color: #ffd9a0;
+}
+.ord-status.st-quoted {
+  color: #ffe27a;
+}
+.ord-status.st-confirmed,
+.ord-status.st-completed {
+  color: #8ef0b6;
+}
+.ord-status.st-declined {
+  color: var(--red);
+}
+.ord-quote {
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #8ef0b6;
+  letter-spacing: 0.02em;
+}
+
+/* phones: keep the three nav links clear of the centered logo */
+@media (max-width: 640px) {
+  .nav button.lnk,
+  .cartlink {
+    font-size: 0.66rem;
+    white-space: nowrap;
+  }
+  .nav-l {
+    gap: 8px;
+  }
+  .ord-lookup {
+    flex-direction: column;
+  }
+  .ord-track {
+    padding: 12px;
+  }
+}

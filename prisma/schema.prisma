@@ -70,3 +70,11 @@ model Quote {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 }
+
+// Simple key/value store for admin-configurable settings
+// (e.g. the order-number pattern).
+model Setting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
