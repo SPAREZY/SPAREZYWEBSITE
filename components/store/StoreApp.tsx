@@ -258,9 +258,14 @@ export default function StoreApp() {
                 Contact
               </button>
             </div>
-            <div className="nav-logo">
+            <button
+              type="button"
+              className="nav-logo"
+              onClick={() => go("home")}
+              aria-label="SPAREZY — go to home"
+            >
               <SparezyLogo />
-            </div>
+            </button>
             <button className="cartlink" onClick={toggleCart}>
               Cart ( {cart.length} )
             </button>

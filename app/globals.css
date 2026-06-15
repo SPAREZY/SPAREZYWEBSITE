@@ -100,6 +100,8 @@
 .nav-l {
   display: flex;
   gap: 28px;
+  position: relative;
+  z-index: 95;
 }
 .nav button.lnk {
   background: none;
@@ -128,7 +130,8 @@
   text-underline-offset: 4px;
 }
 /* animated logo, absolutely centered on the bar so it sits exactly between
-   the Contact and Cart links without affecting the nav's height/layout */
+   the Contact and Cart links without affecting the nav's height/layout.
+   It doubles as the "home" button, so it strips default button chrome. */
 .nav-logo {
   position: absolute;
   left: 50%;
@@ -137,7 +140,11 @@
   width: 285px;
   max-width: 52.25vw;
   z-index: 90;
-  pointer-events: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* stage + views */
