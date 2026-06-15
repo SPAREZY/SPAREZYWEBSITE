@@ -303,12 +303,14 @@ export default function StoreApp() {
                 </div>
                 <div className="desc">
                   <p>
-                    <strong>What you get:</strong> Finding car parts usually means driving into
-                    sketchy industrial areas, getting random prices, second-guessing whether
-                    they&apos;re original or copies, and ending up with the wrong part that looks
-                    exactly the same. We&apos;ve fixed all of it. Just enter your VIN/chassis and
-                    your parts list — we source the exact match for your car and bring it to your
-                    door. No hassle, no guesswork: just your car ready and running perfectly.
+                    <strong>What you get:</strong> Finding car parts usually means driving into{" "}
+                    <span className="flag">sketchy industrial areas</span>, getting{" "}
+                    <span className="flag">random prices</span>, second-guessing whether
+                    they&apos;re original or <span className="flag">copies</span>, and ending up
+                    with the <span className="flag">wrong part</span> that looks exactly the same.
+                    We&apos;ve fixed all of it. Just enter your VIN/chassis and your parts list —
+                    we source the exact match for your car and bring it to your door. No hassle, no
+                    guesswork: just your car ready and running perfectly.
                   </p>
                 </div>
 
