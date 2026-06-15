@@ -105,12 +105,6 @@ const makeKey = (make: string) =>
 const YEAR_OPTIONS: string[] = [];
 for (let y = new Date().getFullYear() + 1; y >= 1990; y--) YEAR_OPTIONS.push(String(y));
 
-const COMMON_PARTS = [
-  "Oil filter", "Air filter", "Brake pads", "Spark plugs",
-  "Wiper blades", "Battery", "Headlight", "Alternator",
-  "Shock absorber", "Radiator",
-];
-
 // Resize + compress a chosen image to a small JPEG data URL so the
 // registration card can be stored/sent without any blob storage.
 async function fileToCompressedDataUrl(file: File, maxDim = 1280, quality = 0.68): Promise<string> {
@@ -280,17 +274,6 @@ export default function StoreApp() {
   }
   function removePartRow(i: number) {
     setParts((prev) => (prev.length === 1 ? prev : prev.filter((_, idx) => idx !== i)));
-  }
-  function addChipPart(name: string) {
-    setParts((prev) => {
-      if (prev.some((p) => p.name.toLowerCase() === name.toLowerCase())) return prev;
-      const emptyIdx = prev.findIndex((p) => p.name.trim() === "");
-      if (emptyIdx >= 0) {
-        return prev.map((p, i) => i === emptyIdx ? { ...p, name, qty: p.qty || "1" } : p);
-      }
-      return [...prev, { name, qty: "1" }];
-    });
-    if (partsErr) setPartsErr(false);
   }
 
   function saveItem(direct: boolean) {
@@ -506,44 +489,32 @@ export default function StoreApp() {
                   {vinErr && (
                     <div className="err-msg">Please enter the chassis / VIN number.</div>
                   )}
-                  <button
-                    type="button"
-                    className="vin-help-toggle"
-                    onClick={() => setVinHelpOpen((o) => !o)}
-                  >
-                    {vinHelpOpen ? "▲" : "▼"} Where do I find my VIN / chassis number?
-                  </button>
+                  <div className="vin-tools">
+                    <button
+                      type="button"
+                      className="vin-help-toggle"
+                      onClick={() => setVinHelpOpen((o) => !o)}
+                    >
+                      {vinHelpOpen ? "▲" : "▼"} Where do I find my VIN?
+                    </button>
+                    {photo ? (
+                      <div className="vin-thumb">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={photo} alt="Registration card" />
+                        <button type="button" className="vin-thumb-x" onClick={() => setPhoto("")}>✕</button>
+                      </div>
+                    ) : (
+                      <label className={`vin-upload ${photoBusy ? "busy" : ""}`}>
+                        <input type="file" accept="image/*" onChange={onPickPhoto} hidden disabled={photoBusy} />
+                        {photoBusy ? "Processing…" : "📷 Upload reg. card"}
+                      </label>
+                    )}
+                  </div>
                   {vinHelpOpen && (
                     <div className="vin-help">
-                      <p>It&apos;s a 17-character code — or a shorter chassis number on GCC models. Find it:</p>
-                      <ul>
-                        <li>Dashboard (driver side), visible through the windshield</li>
-                        <li>Sticker inside the driver&apos;s door jamb</li>
-                        <li>Your car registration card</li>
-                      </ul>
+                      <p>17-character code (or shorter on some GCC models). Look for it on your dashboard (driver side, visible through the windshield), the sticker inside the driver&apos;s door jamb, or your car registration card.</p>
                     </div>
                   )}
-                </div>
-
-                <div className="f">
-                  <label>Registration card photo (optional)</label>
-                  {photo ? (
-                    <div className="reg-preview">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={photo} alt="Registration card" />
-                      <button type="button" className="reg-remove" onClick={() => setPhoto("")}>
-                        Remove
-                      </button>
-                    </div>
-                  ) : (
-                    <label className={`reg-drop ${photoBusy ? "busy" : ""}`}>
-                      <input type="file" accept="image/*" onChange={onPickPhoto} hidden disabled={photoBusy} />
-                      {photoBusy ? "Processing…" : "📷  Upload or take a photo"}
-                    </label>
-                  )}
-                  <div className="reg-hint">
-                    Snap your registration card — we&apos;ll confirm the exact car for you.
-                  </div>
                 </div>
 
                 <div className="grid3">
@@ -587,18 +558,6 @@ export default function StoreApp() {
                     <span className="ph-label">Parts needed for this car *</span>
                     <span className="ph-label">Qty *</span>
                     <span />
-                  </div>
-                  <div className="part-chips">
-                    {COMMON_PARTS.map((c) => (
-                      <button
-                        key={c}
-                        type="button"
-                        className={`part-chip ${parts.some((p) => p.name.toLowerCase() === c.toLowerCase()) ? "active" : ""}`}
-                        onClick={() => addChipPart(c)}
-                      >
-                        {c}
-                      </button>
-                    ))}
                   </div>
                   {parts.map((p, i) => (
                     <div className="part-row" key={i}>
