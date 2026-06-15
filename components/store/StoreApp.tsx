@@ -468,9 +468,11 @@ export default function StoreApp() {
                     <span className="flag">random prices</span>, second-guessing whether
                     they&apos;re original or <span className="flag">copies</span>, and ending up
                     with the <span className="flag">wrong part</span> that looks exactly the same.
-                    We&apos;ve fixed all of it. Just enter your VIN/chassis and your parts list —
-                    we source the exact match for your car and bring it to your door. No hassle, no
-                    guesswork: just your car ready and running perfectly.
+                    We&apos;ve fixed all of it. Just enter your VIN/chassis and your parts list —{" "}
+                    <span className="flag-good">we source the exact match</span> for your car and
+                    bring it <span className="flag-good">to your door</span>. No hassle, no
+                    guesswork: just <span className="flag-good">your car ready</span> and running
+                    perfectly.
                   </p>
                 </div>
 

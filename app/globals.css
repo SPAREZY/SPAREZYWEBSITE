@@ -292,6 +292,18 @@
   background: rgba(255, 59, 48, 0.14);
   box-shadow: 0 0 8px rgba(255, 59, 48, 0.45);
 }
+/* positive counterpart to .flag — green-outlined highlight that marks out
+   the benefits the service delivers */
+.desc .flag-good {
+  display: inline-block;
+  border: 2px solid #2fe08a;
+  border-radius: 5px;
+  padding: 1px 6px;
+  line-height: 1.2;
+  font-weight: 800;
+  background: rgba(47, 224, 138, 0.16);
+  box-shadow: 0 0 8px rgba(47, 224, 138, 0.45);
+}
 
 /* minimal underline fields */
 .f {
