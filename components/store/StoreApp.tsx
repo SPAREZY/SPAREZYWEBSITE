@@ -510,7 +510,6 @@ export default function StoreApp() {
                   </button>
                   {vinHelpOpen && (
                     <div className="vin-help">
-                      <p>It&apos;s a 17-character code — or a shorter chassis number on GCC models. Find it on:</p>
                       <ul>
                         <li>The dashboard, driver side — visible through the windshield</li>
                         <li>The sticker inside the driver&apos;s door jamb</li>
