@@ -605,27 +605,35 @@ export default function StoreApp() {
                   + Add another part
                 </button>
 
-                <button className="rowbtn" onClick={() => saveItem(false)}>
-                  <span>{editing ? "Save Changes" : "Add to Cart"}</span>
-                  <span className="dot" />
-                </button>
-                {!editing && (
-                  <button className="rowbtn secondary" onClick={() => saveItem(true)}>
-                    <span>Order Now — Straight to Checkout</span>
+                <div className="pdp-actions">
+                  {/* Green "press-in" effect is reserved for the conversion
+                      action (going to checkout); Add to Cart is the calmer
+                      outline button. In edit mode Save Changes is primary. */}
+                  <button
+                    className={`rowbtn ${editing ? "" : "secondary"}`}
+                    onClick={() => saveItem(false)}
+                  >
+                    <span>{editing ? "Save Changes" : "Add to Cart"}</span>
                     <span className="dot" />
                   </button>
-                )}
-                {editing && (
-                  <button className="rowbtn secondary" onClick={cancelEdit}>
-                    <span>Cancel Editing</span>
-                    <span className="dot" />
-                  </button>
-                )}
-                {editing && (
-                  <div className="hint" style={{ marginTop: 12 }}>
-                    Editing vehicle {editIndex! + 1} — save with the button above.
-                  </div>
-                )}
+                  {!editing && (
+                    <button className="rowbtn" onClick={() => saveItem(true)}>
+                      <span>Order Now — Straight to Checkout</span>
+                      <span className="dot" />
+                    </button>
+                  )}
+                  {editing && (
+                    <button className="rowbtn secondary" onClick={cancelEdit}>
+                      <span>Cancel Editing</span>
+                      <span className="dot" />
+                    </button>
+                  )}
+                  {editing && (
+                    <div className="hint">
+                      Editing vehicle {editIndex! + 1} — save with the button above.
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

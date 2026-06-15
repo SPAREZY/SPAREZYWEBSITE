@@ -461,6 +461,17 @@
 .rowbtn.secondary:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+/* Action stack on the product page — uniform spacing regardless of which
+   button is the green primary vs the outline secondary. */
+.pdp-actions {
+  margin-top: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pdp-actions .rowbtn {
+  margin-top: 0;
+}
 
 /* generic minimal sheets (confirm/contact) */
 .sheet {
