@@ -12,10 +12,10 @@ export default function ConfirmView({
   return (
     <div className="confirm-wrap">
       <h2>Consider It Done</h2>
+      <div className="order-no-label">Order Number</div>
       <div className="order-no">{recap.humanIds.join(" · ")}</div>
       <p className="body">
-        ON IT. YOUR PARTS ARE BEING TRACKED DOWN AS WE SPEAK. WE&apos;LL CONFIRM AND ARRANGE DELIVERY
-        WITHIN 24 HOURS.
+        ON IT. YOUR PARTS ARE BEING TRACKED DOWN. WE&apos;LL CONFIRM AND CONTACT YOU SOON.
       </p>
 
       <a
