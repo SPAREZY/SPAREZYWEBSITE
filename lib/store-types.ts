@@ -6,6 +6,7 @@ export type CartItem = {
   model: string;
   year: string;
   parts: CartPart[];
+  photo?: string; // data URL of the registration card photo (optional)
 };
 
 export type CheckoutData = {

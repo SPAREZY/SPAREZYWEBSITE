@@ -12,6 +12,7 @@ import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
 import OrdersView from "./OrdersView";
 import RotatingPlaceholder from "./RotatingPlaceholder";
+import AutoCompleteField from "./AutoCompleteField";
 
 type View = "home" | "checkout" | "confirm" | "contact" | "orders";
 
@@ -59,11 +60,86 @@ const ALL_MAKES = [
   "Chery", "Geely", "HAVAL", "Daihatsu", "Foton", "JAC", "Mahindra",
 ];
 
+// Popular models per make (UAE market) used for Model autocomplete; when the
+// make isn't recognised we fall back to a flat popular-models list.
+const MAKE_MODELS: Record<string, string[]> = {
+  Toyota: ["Land Cruiser", "Prado", "Hilux", "Corolla", "Camry", "Fortuner", "Yaris", "RAV4", "Avalon", "Rush", "Avanza", "Hiace", "Innova", "Land Cruiser 70", "Coaster", "FJ Cruiser", "Previa"],
+  Nissan: ["Patrol", "Altima", "Sunny", "X-Trail", "Kicks", "Pathfinder", "Navara", "Sentra", "Maxima", "Patrol Safari", "Urvan", "Tiida", "Armada", "Juke"],
+  GMC: ["Yukon", "Yukon XL", "Sierra", "Acadia", "Terrain", "Savana"],
+  BYD: ["Atto 3", "Seal", "Dolphin", "Han", "Tang", "Song Plus", "Yuan Plus"],
+  Mitsubishi: ["Pajero", "Montero Sport", "Lancer", "L200", "Outlander", "ASX", "Attrage", "Eclipse Cross", "Xpander"],
+  Lexus: ["LX", "GX", "RX", "ES", "LS", "NX", "IS", "LC", "UX"],
+  Honda: ["Civic", "Accord", "CR-V", "City", "Pilot", "HR-V", "Odyssey"],
+  Hyundai: ["Tucson", "Santa Fe", "Elantra", "Accent", "Sonata", "Creta", "Palisade", "Kona", "H1", "Azera"],
+  Kia: ["Sportage", "Sorento", "Cerato", "Pegas", "Seltos", "Carnival", "Picanto", "Telluride", "K5"],
+  "Land Rover": ["Range Rover", "Range Rover Sport", "Range Rover Evoque", "Range Rover Velar", "Defender", "Discovery", "Discovery Sport"],
+  Ford: ["F-150", "Explorer", "Edge", "Expedition", "Mustang", "Ranger", "Escape", "Territory", "Taurus", "Bronco"],
+  Chevrolet: ["Tahoe", "Silverado", "Malibu", "Captiva", "Trailblazer", "Traverse", "Suburban", "Camaro", "Spark", "Groove"],
+  BMW: ["3 Series", "5 Series", "7 Series", "X1", "X3", "X5", "X6", "X7", "2 Series", "4 Series"],
+  "Mercedes-Benz": ["C-Class", "E-Class", "S-Class", "GLC", "GLE", "GLS", "G-Class", "A-Class", "CLA", "GLA"],
+  Audi: ["A3", "A4", "A6", "A8", "Q3", "Q5", "Q7", "Q8", "e-tron"],
+  Volkswagen: ["Golf", "Passat", "Tiguan", "Teramont", "Jetta", "Touareg", "Polo"],
+  Jeep: ["Wrangler", "Grand Cherokee", "Cherokee", "Compass", "Gladiator", "Wagoneer", "Renegade"],
+  Dodge: ["Charger", "Challenger", "Durango", "Ram"],
+  RAM: ["1500", "2500", "3500"],
+  Infiniti: ["QX80", "QX60", "QX50", "Q50", "QX70", "Q70"],
+  Mazda: ["CX-5", "CX-9", "Mazda3", "Mazda6", "CX-30", "CX-90", "MX-5"],
+  Suzuki: ["Swift", "Vitara", "Jimny", "Ciaz", "Baleno", "Ertiga", "Grand Vitara"],
+  Subaru: ["Forester", "Outback", "XV", "Impreza", "Legacy"],
+  Isuzu: ["D-Max", "MU-X", "NPR"],
+  Porsche: ["Cayenne", "Macan", "Panamera", "911", "Taycan"],
+  Cadillac: ["Escalade", "XT5", "XT6", "CT5", "XT4"],
+  Genesis: ["GV80", "GV70", "G80", "G70", "GV60"],
+  MG: ["MG5", "MG6", "ZS", "HS", "RX5", "RX8"],
+  Chery: ["Tiggo 4", "Tiggo 7", "Tiggo 8", "Arrizo 5", "Arrizo 6"],
+  HAVAL: ["H6", "Jolion", "Dargo", "H9"],
+};
+const POPULAR_MODELS = [
+  "Land Cruiser", "Patrol", "Prado", "Hilux", "Corolla", "Camry", "Pajero",
+  "Civic", "Accord", "Tucson", "Sportage", "Range Rover", "F-150", "Tahoe",
+];
+const makeKey = (make: string) =>
+  Object.keys(MAKE_MODELS).find((k) => k.toLowerCase() === make.trim().toLowerCase());
+
+// Year suggestions from next model year back to 1990.
+const YEAR_OPTIONS: string[] = [];
+for (let y = new Date().getFullYear() + 1; y >= 1990; y--) YEAR_OPTIONS.push(String(y));
+
 const COMMON_PARTS = [
   "Oil filter", "Air filter", "Brake pads", "Spark plugs",
   "Wiper blades", "Battery", "Headlight", "Alternator",
   "Shock absorber", "Radiator",
 ];
+
+// Resize + compress a chosen image to a small JPEG data URL so the
+// registration card can be stored/sent without any blob storage.
+async function fileToCompressedDataUrl(file: File, maxDim = 1280, quality = 0.68): Promise<string> {
+  const dataUrl: string = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(new Error("read failed"));
+    reader.readAsDataURL(file);
+  });
+  const img: HTMLImageElement = await new Promise((resolve, reject) => {
+    const im = new Image();
+    im.onload = () => resolve(im);
+    im.onerror = () => reject(new Error("decode failed"));
+    im.src = dataUrl;
+  });
+  let { width, height } = img;
+  if (Math.max(width, height) > maxDim) {
+    const scale = maxDim / Math.max(width, height);
+    width = Math.round(width * scale);
+    height = Math.round(height * scale);
+  }
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return dataUrl;
+  ctx.drawImage(img, 0, 0, width, height);
+  return canvas.toDataURL("image/jpeg", quality);
+}
 // qty is kept as a string in the form so the field can start empty (customer
 // must type it); it is parsed to a number when the item is added to the cart.
 type FormPart = { name: string; qty: string };
@@ -92,6 +168,8 @@ export default function StoreApp() {
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
   const [parts, setParts] = useState<FormPart[]>([{ name: "", qty: "" }]);
+  const [photo, setPhoto] = useState("");
+  const [photoBusy, setPhotoBusy] = useState(false);
   const [vinErr, setVinErr] = useState(false);
   const [partsErr, setPartsErr] = useState(false);
   const [qtyErr, setQtyErr] = useState(false);
@@ -99,8 +177,6 @@ export default function StoreApp() {
   const addBarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const homeViewRef = useRef<HTMLDivElement>(null);
-  const makeRef = useRef<HTMLDivElement>(null);
-  const [makeOpen, setMakeOpen] = useState(false);
   const [vinHelpOpen, setVinHelpOpen] = useState(false);
 
   // load + persist cart
@@ -114,7 +190,12 @@ export default function StoreApp() {
     setHydrated(true);
   }, []);
   useEffect(() => {
-    if (hydrated) localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    if (!hydrated) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    } catch {
+      /* storage quota (e.g. large card photos) — keep the cart in memory */
+    }
   }, [cart, hydrated]);
 
   const openCart = useCallback(() => setCartOpen(true), []);
@@ -123,18 +204,10 @@ export default function StoreApp() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") { setCartOpen(false); setMakeOpen(false); }
+      if (e.key === "Escape") setCartOpen(false);
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, []);
-
-  useEffect(() => {
-    function onOutside(e: MouseEvent) {
-      if (makeRef.current && !makeRef.current.contains(e.target as Node)) setMakeOpen(false);
-    }
-    document.addEventListener("mousedown", onOutside);
-    return () => document.removeEventListener("mousedown", onOutside);
   }, []);
 
   function go(v: View) {
@@ -175,9 +248,28 @@ export default function StoreApp() {
     setModel("");
     setYear("");
     setParts([{ name: "", qty: "" }]);
+    setPhoto("");
     setVinErr(false);
     setPartsErr(false);
     setQtyErr(false);
+  }
+
+  async function onPickPhoto(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // allow re-picking the same file later
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      showToast("Please choose an image file.");
+      return;
+    }
+    setPhotoBusy(true);
+    try {
+      setPhoto(await fileToCompressedDataUrl(file));
+    } catch {
+      showToast("Couldn't read that image. Try a JPG or PNG.");
+    } finally {
+      setPhotoBusy(false);
+    }
   }
 
   function updatePart(i: number, patch: Partial<FormPart>) {
@@ -214,7 +306,7 @@ export default function StoreApp() {
     setQtyErr(!badParts && badQty);
     if (badVin || badParts || badQty) return;
 
-    const item: CartItem = { vin: vinNorm, make, model, year, parts: cleanParts };
+    const item: CartItem = { vin: vinNorm, make, model, year, parts: cleanParts, photo: photo || undefined };
     setCart((prev) => {
       if (editIndex !== null) {
         const copy = [...prev];
@@ -242,6 +334,7 @@ export default function StoreApp() {
         ? it.parts.map((p) => ({ name: p.name, qty: String(p.qty) }))
         : [{ name: "", qty: "" }],
     );
+    setPhoto(it.photo ?? "");
     setVinErr(false);
     setPartsErr(false);
     setQtyErr(false);
@@ -296,6 +389,7 @@ export default function StoreApp() {
             contactPref,
             partPreference: "any",
             partsJson: it.parts.map((p) => ({ name: p.name, qty: p.qty, condition: "any" })),
+            photoUrl: it.photo || undefined,
             customerNote: data.notes || undefined,
           }),
         });
@@ -334,10 +428,7 @@ export default function StoreApp() {
   }
 
   const editing = editIndex !== null;
-  const makeSuggestions =
-    makeOpen && make.trim().length > 0
-      ? ALL_MAKES.filter((m) => m.toLowerCase().startsWith(make.toLowerCase()))
-      : [];
+  const modelOptions = makeKey(make) ? MAKE_MODELS[makeKey(make)!] : POPULAR_MODELS;
 
   return (
     <div className="store">
@@ -428,56 +519,66 @@ export default function StoreApp() {
                       <ul>
                         <li>Dashboard (driver side), visible through the windshield</li>
                         <li>Sticker inside the driver&apos;s door jamb</li>
-                        <li>Car registration card or Mulkiya</li>
+                        <li>Your car registration card</li>
                       </ul>
                     </div>
                   )}
                 </div>
 
+                <div className="f">
+                  <label>Registration card photo (optional)</label>
+                  {photo ? (
+                    <div className="reg-preview">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={photo} alt="Registration card" />
+                      <button type="button" className="reg-remove" onClick={() => setPhoto("")}>
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <label className={`reg-drop ${photoBusy ? "busy" : ""}`}>
+                      <input type="file" accept="image/*" onChange={onPickPhoto} hidden disabled={photoBusy} />
+                      {photoBusy ? "Processing…" : "📷  Upload or take a photo"}
+                    </label>
+                  )}
+                  <div className="reg-hint">
+                    Snap your registration card — we&apos;ll confirm the exact car for you.
+                  </div>
+                </div>
+
                 <div className="grid3">
                   <div className="f">
                     <label>Make</label>
-                    <div className="f-field make-ac" ref={makeRef}>
-                      <input
-                        autoComplete="off"
-                        value={make}
-                        onChange={(e) => { setMake(e.target.value); setMakeOpen(true); }}
-                        onFocus={() => { if (make.trim().length > 0) setMakeOpen(true); }}
-                      />
-                      <RotatingPlaceholder show={make.length === 0} items={EG_MAKE} />
-                      {makeSuggestions.length > 0 && (
-                        <ul className="make-drop" role="listbox">
-                          {makeSuggestions.map((m) => (
-                            <li
-                              key={m}
-                              role="option"
-                              className="make-opt"
-                              onMouseDown={(e) => { e.preventDefault(); setMake(m); setMakeOpen(false); }}
-                            >
-                              {m}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
+                    <AutoCompleteField
+                      value={make}
+                      onChange={setMake}
+                      options={ALL_MAKES}
+                      egItems={EG_MAKE}
+                      ariaLabel="Make"
+                    />
                   </div>
                   <div className="f">
                     <label>Model</label>
-                    <div className="f-field">
-                      <input value={model} onChange={(e) => setModel(e.target.value)} />
-                      <RotatingPlaceholder show={model.length === 0} items={EG_MODEL} />
-                    </div>
+                    <AutoCompleteField
+                      value={model}
+                      onChange={setModel}
+                      options={modelOptions}
+                      egItems={EG_MODEL}
+                      ariaLabel="Model"
+                    />
                   </div>
                   <div className="f">
                     <label>Year</label>
-                    <div className="f-field">
-                      <input
-                        value={year}
-                        maxLength={4}
-                        onChange={(e) => setYear(e.target.value.replace(/[^0-9]/g, ""))}
-                      />
-                      <RotatingPlaceholder show={year.length === 0} items={EG_YEAR} />
-                    </div>
+                    <AutoCompleteField
+                      value={year}
+                      onChange={setYear}
+                      options={YEAR_OPTIONS}
+                      egItems={EG_YEAR}
+                      numeric
+                      maxLength={4}
+                      match="startsWith"
+                      ariaLabel="Year"
+                    />
                   </div>
                 </div>
 
