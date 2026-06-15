@@ -317,7 +317,7 @@
 /* parts rows */
 .part-row {
   display: grid;
-  grid-template-columns: 1fr 0.4fr auto;
+  grid-template-columns: 1fr 0.4fr 24px;
   gap: 18px;
   align-items: end;
   margin-top: 4px;
@@ -981,7 +981,7 @@
     gap: 0;
   }
   .part-row {
-    grid-template-columns: 1fr 58px auto;
+    grid-template-columns: 1fr 58px 24px;
     gap: 12px;
   }
   .nav {
