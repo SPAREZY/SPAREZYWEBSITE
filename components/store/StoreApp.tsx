@@ -11,8 +11,45 @@ import CheckoutView from "./CheckoutView";
 import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
 import OrdersView from "./OrdersView";
+import RotatingPlaceholder from "./RotatingPlaceholder";
 
 type View = "home" | "checkout" | "confirm" | "contact" | "orders";
+
+// Rotating example placeholders that scroll until the customer types.
+const EG_VIN = ["JTEBH3FJ20K123456", "JN8AZ2NE9DT001234", "GF-BH5", "ZN6-0012345"];
+const EG_MAKE = [
+  "Toyota",
+  "Nissan",
+  "GMC",
+  "BYD",
+  "Mitsubishi",
+  "Lexus",
+  "Honda",
+  "Hyundai",
+  "Kia",
+  "Land Rover",
+];
+const EG_MODEL = [
+  "Land Cruiser",
+  "Patrol",
+  "Camry",
+  "Hilux",
+  "Pajero",
+  "Civic",
+  "Corolla",
+  "Prado",
+];
+const EG_YEAR = ["2024", "2021", "2018", "2014", "2010", "2006"];
+const EG_PART = [
+  "Front brake pads",
+  "Oil filter",
+  "Headlight",
+  "Alternator",
+  "Side mirror",
+  "Radiator",
+  "Timing belt",
+  "Shock absorber",
+];
 // qty is kept as a string in the form so the field can start empty (customer
 // must type it); it is parsed to a number when the item is added to the cart.
 type FormPart = { name: string; qty: string };
@@ -320,77 +357,84 @@ export default function StoreApp() {
                   </p>
                 </div>
 
-                <div className="ff">
-                  <input
-                    id="f-vin"
-                    className={`vin-input ${vinErr ? "err" : ""}`}
-                    placeholder=" "
-                    maxLength={32}
-                    value={vin}
-                    onChange={(e) => setVin(e.target.value.toUpperCase())}
-                  />
-                  <label htmlFor="f-vin">Chassis / VIN number *</label>
+                <div className="f">
+                  <label>Chassis / VIN number *</label>
+                  <div className="f-field">
+                    <input
+                      className={`vin-input ${vinErr ? "err" : ""}`}
+                      maxLength={32}
+                      value={vin}
+                      onChange={(e) => setVin(e.target.value.toUpperCase())}
+                    />
+                    <RotatingPlaceholder show={vin.length === 0} prefix="e.g. " items={EG_VIN} />
+                  </div>
+                  {vinErr && (
+                    <div className="err-msg">Please enter the chassis / VIN number.</div>
+                  )}
                 </div>
-                {vinErr && <div className="err-msg">Please enter the chassis / VIN number.</div>}
 
                 <div className="grid3">
-                  <div className="ff">
-                    <input
-                      id="f-make"
-                      placeholder=" "
-                      value={make}
-                      onChange={(e) => setMake(e.target.value)}
-                    />
-                    <label htmlFor="f-make">Make</label>
+                  <div className="f">
+                    <label>Make</label>
+                    <div className="f-field">
+                      <input value={make} onChange={(e) => setMake(e.target.value)} />
+                      <RotatingPlaceholder show={make.length === 0} prefix="e.g. " items={EG_MAKE} />
+                    </div>
                   </div>
-                  <div className="ff">
-                    <input
-                      id="f-model"
-                      placeholder=" "
-                      value={model}
-                      onChange={(e) => setModel(e.target.value)}
-                    />
-                    <label htmlFor="f-model">Model</label>
+                  <div className="f">
+                    <label>Model</label>
+                    <div className="f-field">
+                      <input value={model} onChange={(e) => setModel(e.target.value)} />
+                      <RotatingPlaceholder
+                        show={model.length === 0}
+                        prefix="e.g. "
+                        items={EG_MODEL}
+                      />
+                    </div>
                   </div>
-                  <div className="ff">
-                    <input
-                      id="f-year"
-                      placeholder=" "
-                      maxLength={4}
-                      value={year}
-                      onChange={(e) => setYear(e.target.value.replace(/[^0-9]/g, ""))}
-                    />
-                    <label htmlFor="f-year">Year</label>
+                  <div className="f">
+                    <label>Year</label>
+                    <div className="f-field">
+                      <input
+                        value={year}
+                        maxLength={4}
+                        onChange={(e) => setYear(e.target.value.replace(/[^0-9]/g, ""))}
+                      />
+                      <RotatingPlaceholder show={year.length === 0} prefix="e.g. " items={EG_YEAR} />
+                    </div>
                   </div>
                 </div>
 
-                <div className="parts-block">
-                  <div className="parts-heading">Parts needed for this car *</div>
+                <div>
+                  <div className="part-row part-head">
+                    <span className="ph-label">Parts needed for this car *</span>
+                    <span className="ph-label">Qty *</span>
+                    <span />
+                  </div>
                   {parts.map((p, i) => (
                     <div className="part-row" key={i}>
-                      <div className="ff ff-inrow">
+                      <div className="f-field">
                         <input
-                          id={`f-pn-${i}`}
                           className="p-name"
-                          placeholder=" "
+                          aria-label="Part name"
                           value={p.name}
                           onChange={(e) => updatePart(i, { name: e.target.value })}
                         />
-                        <label htmlFor={`f-pn-${i}`}>Part name</label>
-                      </div>
-                      <div className="ff ff-inrow">
-                        <input
-                          id={`f-pq-${i}`}
-                          className="p-qty"
-                          type="text"
-                          inputMode="numeric"
-                          pattern="[0-9]*"
-                          placeholder=" "
-                          value={p.qty}
-                          onChange={(e) => updatePart(i, { qty: e.target.value.replace(/[^0-9]/g, "") })}
+                        <RotatingPlaceholder
+                          show={p.name.length === 0}
+                          prefix="e.g. "
+                          items={EG_PART}
                         />
-                        <label htmlFor={`f-pq-${i}`}>Qty</label>
                       </div>
+                      <input
+                        className="p-qty"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        aria-label="Quantity"
+                        value={p.qty}
+                        onChange={(e) => updatePart(i, { qty: e.target.value.replace(/[^0-9]/g, "") })}
+                      />
                       <button className="del" title="Remove" onClick={() => removePartRow(i)}>
                         ✕
                       </button>

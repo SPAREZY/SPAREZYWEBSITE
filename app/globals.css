@@ -1242,64 +1242,49 @@
   }
 }
 
-/* ===== floating-label fields (VIN / make / model / year / parts) ===== */
-.ff {
+/* ===== rotating example placeholder (scrolls until the user types) ===== */
+.f-field {
   position: relative;
-  margin-top: 20px;
 }
-.ff-inrow {
-  margin-top: 0;
-}
-.ff > input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1.5px solid var(--line);
-  color: #fff;
-  font-weight: 700;
-  border-radius: 0;
-  padding: 20px 0 7px;
-}
-.ff > input::placeholder {
-  color: transparent;
-}
-.ff > input:focus {
-  outline: none;
-  border-bottom-color: var(--line-strong);
-}
-.ff > input.err {
-  border-bottom-color: var(--red);
-}
-.ff > label {
+.rot-ph {
   position: absolute;
   left: 0;
-  top: 19px;
-  color: var(--txt-dim);
-  opacity: 0.55;
-  font-weight: 700;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  right: 0;
+  top: 9px;
+  height: 1.45em;
+  overflow: hidden;
   pointer-events: none;
-  transform-origin: left top;
-  transition: transform 0.15s ease, opacity 0.15s ease, letter-spacing 0.15s ease;
 }
-.ff > input:focus + label,
-.ff > input:not(:placeholder-shown) + label {
-  transform: translateY(-17px) scale(0.72);
-  opacity: 0.9;
-  letter-spacing: 0.12em;
-}
-.parts-block {
-  margin-top: 26px;
-}
-.parts-heading {
+.rot-word {
+  display: block;
+  white-space: nowrap;
   font-weight: 700;
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #fff;
-  margin-bottom: 4px;
+  color: var(--txt-dim);
+  animation: ph-rise 2s ease forwards;
+}
+@keyframes ph-rise {
+  0% {
+    transform: translateY(1.1em);
+    opacity: 0;
+  }
+  14% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  86% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-1.1em);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rot-word {
+    animation: none;
+    opacity: 0.5;
+  }
 }
 
 /* ===== mobile bottom tab bar (Contact / Orders / Cart) ===== */
