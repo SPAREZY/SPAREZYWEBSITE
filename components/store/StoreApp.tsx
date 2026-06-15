@@ -303,11 +303,13 @@ export default function StoreApp() {
                 </div>
                 <div className="desc">
                   <p>
-                    <strong>What you get:</strong> every part you need for one car, sourced and
-                    delivered. Works for any make, model, or year. Common or hard-to-find. Add your
-                    VIN/chassis, list your parts.
+                    <strong>What you get:</strong> Finding car parts usually means driving into
+                    sketchy industrial areas, getting random prices, second-guessing whether
+                    they&apos;re original or copies, and ending up with the wrong part that looks
+                    exactly the same. We&apos;ve fixed all of it. Just enter your VIN/chassis and
+                    your parts list — we source the exact match for your car and bring it to your
+                    door. No hassle, no guesswork: just your car ready and running perfectly.
                   </p>
-                  <p>Parts for another car? Just add it to your cart.</p>
                 </div>
 
                 <div className="f">
