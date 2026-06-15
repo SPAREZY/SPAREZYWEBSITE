@@ -1357,3 +1357,20 @@
     z-index: 130;
   }
 }
+
+/* phones: the header now holds only the logo (nav links moved to the
+   bottom bar), so center it in normal flow with breathing room instead
+   of absolute-positioning it on a short fixed-height bar */
+@media (max-width: 640px) {
+  .nav {
+    height: auto;
+    justify-content: center;
+    padding: 16px 18px;
+  }
+  .nav-logo {
+    position: static;
+    transform: none;
+    left: auto;
+    top: auto;
+  }
+}
