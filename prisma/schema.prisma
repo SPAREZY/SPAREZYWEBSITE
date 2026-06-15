@@ -25,6 +25,13 @@ model PartRequest {
   customerNote String?
   aiTranscript String?
 
+  // Back-office / ERP fields
+  internalNote    String? // private ops note (not shown to the customer)
+  priority        String   @default("NORMAL") // LOW | NORMAL | HIGH | URGENT
+  assignee        String? // team member handling this lead
+  tags            String? // comma-separated labels
+  lastContactedAt DateTime? // last time the customer was contacted
+
   // Car
   vin   String
   make  String?
@@ -52,9 +59,23 @@ model PartRequest {
   declinedAt    DateTime?
   declineReason String?
 
-  quote     Quote?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  quote      Quote?
+  activities ActivityLog[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+// Audit trail / timeline of everything that happens to a lead.
+model ActivityLog {
+  id        String      @id @default(cuid())
+  requestId String
+  request   PartRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  type      String // CREATED | STATUS | QUOTE | NOTE | CONTACT | PRIORITY | ASSIGN
+  message   String
+  actor     String? // who performed the action
+  createdAt DateTime    @default(now())
+
+  @@index([requestId])
 }
 
 model Quote {

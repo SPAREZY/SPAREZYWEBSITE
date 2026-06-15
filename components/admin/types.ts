@@ -11,6 +11,15 @@ export type QuoteT = {
   updatedAt: string;
 };
 
+export type ActivityT = {
+  id: string;
+  requestId: string;
+  type: string;
+  message: string;
+  actor: string | null;
+  createdAt: string;
+};
+
 export type Lead = {
   id: string;
   humanId: string;
@@ -22,6 +31,11 @@ export type Lead = {
   photoUrl: string | null;
   customerNote: string | null;
   aiTranscript: string | null;
+  internalNote: string | null;
+  priority: string;
+  assignee: string | null;
+  tags: string | null;
+  lastContactedAt: string | null;
   vin: string;
   make: string | null;
   model: string | null;
@@ -43,6 +57,7 @@ export type Lead = {
   declinedAt: string | null;
   declineReason: string | null;
   quote: QuoteT | null;
+  activities?: ActivityT[];
   createdAt: string;
   updatedAt: string;
 };

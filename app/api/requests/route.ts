@@ -4,6 +4,7 @@ import { notifyCustomer } from "@/lib/notify";
 import { isValidChassis, isValidUaePhone, isValidEmail } from "@/lib/utils";
 import { getOrderPattern } from "@/lib/settings";
 import { renderOrderNumber } from "@/lib/order-number";
+import { logActivity } from "@/lib/activity";
 
 export const dynamic = "force-dynamic";
 
@@ -143,6 +144,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Could not create the request. Please try again." }, { status: 500 });
     }
 
+    await logActivity(created.id, "CREATED", `Lead received — ${created.partName}`, "Customer");
     await notifyCustomer(created, null);
 
     return NextResponse.json(

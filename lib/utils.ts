@@ -83,6 +83,44 @@ export const STATUS_LABEL: Record<Status, string> = {
   DECLINED: "Lost",
 };
 
+// Tailwind text colour per status — used for dots, pills and chips.
+export const STATUS_COLOR: Record<Status, string> = {
+  RECEIVED: "text-sky-300",
+  SOURCING: "text-amber-300",
+  QUOTED: "text-yellow-300",
+  CONFIRMED: "text-emerald-300",
+  COMPLETED: "text-emerald-400",
+  DECLINED: "text-red-400",
+};
+export const STATUS_DOT: Record<Status, string> = {
+  RECEIVED: "bg-sky-400",
+  SOURCING: "bg-amber-400",
+  QUOTED: "bg-yellow-400",
+  CONFIRMED: "bg-emerald-400",
+  COMPLETED: "bg-emerald-500",
+  DECLINED: "bg-red-400",
+};
+
+// Lead priority (back-office triage).
+export const PRIORITIES = ["LOW", "NORMAL", "HIGH", "URGENT"] as const;
+export type Priority = (typeof PRIORITIES)[number];
+export const PRIORITY_LABEL: Record<Priority, string> = {
+  LOW: "Low",
+  NORMAL: "Normal",
+  HIGH: "High",
+  URGENT: "Urgent",
+};
+export const PRIORITY_CLASS: Record<Priority, string> = {
+  LOW: "border-white/20 text-white/50",
+  NORMAL: "border-white/25 text-white/70",
+  HIGH: "border-amber-400/60 text-amber-300",
+  URGENT: "border-red-400/70 text-red-300 bg-red-500/10",
+};
+
+export function isOpenStatus(status: string): boolean {
+  return status !== "COMPLETED" && status !== "DECLINED";
+}
+
 // The five kanban columns, in order. "Won" buckets CONFIRMED + COMPLETED.
 export const BOARD_COLUMNS: { key: string; label: string; statuses: Status[] }[] = [
   { key: "RECEIVED", label: "New Lead", statuses: ["RECEIVED"] },

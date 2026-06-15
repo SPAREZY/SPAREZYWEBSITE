@@ -88,6 +88,15 @@ export default function AdminBoard({ initialRequests }: { initialRequests: Lead[
 
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-6">
+      <div className="mb-5 flex items-end justify-between">
+        <div>
+          <h1 className="font-display text-2xl tracking-tightest sm:text-3xl">Pipeline</h1>
+          <p className="mt-1 text-[0.8rem] text-white/50">
+            Drag leads through the funnel — live, auto-refreshing every 15s.
+          </p>
+        </div>
+      </div>
+
       <StatsStrip leads={leads} />
 
       <input

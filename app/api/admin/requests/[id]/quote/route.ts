@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { notifyCustomer } from "@/lib/notify";
+import { logActivity } from "@/lib/activity";
 
 export const dynamic = "force-dynamic";
 
@@ -50,6 +51,11 @@ export async function POST(req: Request, { params }: { params: { id: string } })
     include: { quote: true },
   });
 
+  await logActivity(
+    params.id,
+    "QUOTE",
+    `Quoted AED ${quote.price} (${quote.condition})${quote.eta ? ` · ETA ${quote.eta}` : ""}`,
+  );
   await notifyCustomer(request, quote);
 
   return NextResponse.json({ request, quote });
