@@ -146,6 +146,17 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+/* On phones, trim the header logo ~10% (52.25vw -> 47vw) so it fits
+   cleanly inside the shorter mobile nav bar. Header only — the login
+   logo isn't inside .nav-logo, so it's unaffected. */
+@media (max-width: 640px) {
+  .nav-logo {
+    max-width: 47vw;
+  }
+  .nav-logo .sz-logo {
+    max-width: 47vw !important;
+  }
+}
 
 /* stage + views */
 .stage {
