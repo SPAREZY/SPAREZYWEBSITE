@@ -93,10 +93,6 @@ export default function OrdersView({ active }: { active: boolean }) {
   return (
     <div className="sheet">
       <h2>Your Orders</h2>
-      <p className="ord-intro">
-        Orders you placed on this device show up automatically. On a different phone? Look them
-        up with your number.
-      </p>
 
       <form className="ord-lookup" onSubmit={lookupByPhone}>
         <input
@@ -104,7 +100,7 @@ export default function OrdersView({ active }: { active: boolean }) {
           type="tel"
           inputMode="tel"
           autoComplete="tel"
-          placeholder="Phone number you ordered with"
+          placeholder="PHONE NUMBER YOU ORDERED WITH"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />

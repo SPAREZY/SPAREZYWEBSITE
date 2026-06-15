@@ -7,7 +7,6 @@ import { carLabel } from "@/lib/store-types";
 import { rememberOrders } from "@/lib/tracked-orders";
 import BackgroundGrid from "./BackgroundGrid";
 import SparezyLogo from "./SparezyLogo";
-import WhatsAppFab from "./WhatsAppFab";
 import CheckoutView from "./CheckoutView";
 import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
@@ -527,8 +526,6 @@ export default function StoreApp() {
 
       <div className={`addbar ${addBar ? "show" : ""}`}>PRODUCT ADDED TO CART</div>
       <div className={`toast ${toast ? "show" : ""}`}>{toast}</div>
-
-      <WhatsAppFab />
     </div>
   );
 }
