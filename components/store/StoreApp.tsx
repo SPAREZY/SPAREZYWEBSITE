@@ -437,7 +437,7 @@ export default function StoreApp() {
               onClick={goHome}
               aria-label="SPAREZY — go to home"
             >
-              <SparezyLogo />
+              <SparezyLogo width={172} maxWidth="44vw" />
             </button>
             <button className="cartlink" onClick={toggleCart}>
               Cart ( {cart.length} )
@@ -447,7 +447,7 @@ export default function StoreApp() {
 
         <div className="stage">
           {/* PRODUCT */}
-          <div ref={homeViewRef} className={`view ${view === "home" ? "active" : ""}`}>
+          <div ref={homeViewRef} className={`view view-home ${view === "home" ? "active" : ""}`}>
             <div className="pdp">
               <div>
                 <div className="imgpanel">

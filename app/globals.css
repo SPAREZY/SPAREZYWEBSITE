@@ -90,7 +90,7 @@
 .nav {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 14px 34px;
+  padding: 10px 34px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -136,8 +136,8 @@
 .nav-logo {
   grid-column: 2;
   justify-self: center;
-  width: 285px;
-  max-width: 52.25vw;
+  width: 172px;
+  max-width: 44vw;
   background: none;
   border: none;
   padding: 0;
@@ -149,10 +149,13 @@
    isn't inside .nav-logo, so it's unaffected. */
 @media (max-width: 640px) {
   .nav-logo {
-    max-width: 44.65vw;
+    max-width: 40vw;
   }
   .nav-logo .sz-logo {
-    max-width: 44.65vw !important;
+    max-width: 40vw !important;
+  }
+  .nav {
+    padding: 8px 18px;
   }
 }
 
@@ -1380,7 +1383,129 @@
    columns just centre the logo; trim the header padding a touch. */
 @media (max-width: 640px) {
   .nav {
-    padding: 14px 18px;
+    padding: 8px 18px;
+  }
+}
+
+/* ============================================================
+   ONE-SCREEN PRODUCT PAGE — the storefront fits the viewport
+   with no scrolling. Scoped to .view-home so other views
+   (checkout / orders / contact) keep their normal scroll.
+   ============================================================ */
+.view-home {
+  overflow: hidden;
+}
+.view-home .pdp {
+  height: 100%;
+  padding: 14px 34px;
+  gap: 40px;
+  align-items: center;
+}
+.view-home .imgpanel {
+  height: calc(100dvh - 150px);
+  min-height: 0;
+}
+.view-home .info {
+  padding-top: 0;
+}
+.view-home .desc {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.view-home .desc p {
+  margin-bottom: 0;
+}
+.view-home .price {
+  margin-top: 6px;
+}
+.view-home .f {
+  margin-top: 10px;
+}
+.view-home .f input,
+.view-home .f select,
+.view-home .part-row input {
+  padding: 6px 0;
+}
+.view-home .part-head {
+  margin-top: 10px;
+}
+.view-home .vin-upload {
+  margin-top: 8px;
+  padding: 9px 14px;
+}
+.view-home .vin-help-toggle {
+  padding: 4px 0 0;
+}
+.view-home .addpart {
+  margin-top: 10px;
+}
+.view-home .pdp-actions {
+  margin-top: 14px;
+  gap: 8px;
+}
+.view-home .rowbtn {
+  padding: 14px 18px;
+}
+
+/* shorter desktop/laptop screens — compact a little more so the
+   action buttons still land above the fold */
+@media (min-width: 921px) and (max-height: 860px) {
+  .view-home .pdp {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .view-home .ptitle {
+    font-size: 1.9rem;
+  }
+  .view-home .desc {
+    margin-top: 8px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+  .view-home .f {
+    margin-top: 7px;
+  }
+  .view-home .part-head {
+    margin-top: 7px;
+  }
+  .view-home .pdp-actions {
+    margin-top: 10px;
+  }
+  .view-home .rowbtn {
+    padding: 11px 18px;
+  }
+}
+
+/* phones: drop the (empty) white image panel and keep Make/Model/Year on
+   one compact row so the whole form fits above the bottom tab bar */
+@media (max-width: 920px) {
+  .view-home .pdp {
+    grid-template-columns: 1fr;
+    height: 100%;
+    padding: 10px 18px;
+    gap: 0;
+    align-content: start;
+    align-items: start;
+  }
+  .view-home .imgpanel {
+    display: none;
+  }
+  .view-home > .pdp > div:first-child {
+    display: none;
+  }
+  .view-home .desc {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    line-height: 1.38;
+    max-width: none;
+  }
+  .view-home .grid3 {
+    grid-template-columns: 1.2fr 1.2fr 0.7fr;
+    gap: 12px;
+  }
+  .view-home .f {
+    margin-top: 8px;
   }
 }
 
