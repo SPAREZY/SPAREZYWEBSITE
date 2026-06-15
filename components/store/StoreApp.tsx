@@ -485,7 +485,7 @@ export default function StoreApp() {
             <div className="drawer-subtotal">
               <span>Subtotal</span>
               <span className="sub-price">
-                <s>AED 0.00</s> <b className="free">FREE</b>
+                <s>AED 287</s> <b className="free">FREE</b>
               </span>
             </div>
             <div className="drawer-note">

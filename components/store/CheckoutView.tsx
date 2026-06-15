@@ -245,7 +245,7 @@ export default function CheckoutView({
             Subtotal · {cart.length} vehicle{cart.length === 1 ? "" : "s"}
           </span>
           <span>
-            <s>AED 0.00</s>
+            <s>AED 287</s>
           </span>
         </div>
         <div className="cs-total">
