@@ -366,7 +366,7 @@ export default function StoreApp() {
                       value={vin}
                       onChange={(e) => setVin(e.target.value.toUpperCase())}
                     />
-                    <RotatingPlaceholder show={vin.length === 0} prefix="e.g. " items={EG_VIN} />
+                    <RotatingPlaceholder show={vin.length === 0} items={EG_VIN} />
                   </div>
                   {vinErr && (
                     <div className="err-msg">Please enter the chassis / VIN number.</div>
@@ -378,18 +378,14 @@ export default function StoreApp() {
                     <label>Make</label>
                     <div className="f-field">
                       <input value={make} onChange={(e) => setMake(e.target.value)} />
-                      <RotatingPlaceholder show={make.length === 0} prefix="e.g. " items={EG_MAKE} />
+                      <RotatingPlaceholder show={make.length === 0} items={EG_MAKE} />
                     </div>
                   </div>
                   <div className="f">
                     <label>Model</label>
                     <div className="f-field">
                       <input value={model} onChange={(e) => setModel(e.target.value)} />
-                      <RotatingPlaceholder
-                        show={model.length === 0}
-                        prefix="e.g. "
-                        items={EG_MODEL}
-                      />
+                      <RotatingPlaceholder show={model.length === 0} items={EG_MODEL} />
                     </div>
                   </div>
                   <div className="f">
@@ -400,7 +396,7 @@ export default function StoreApp() {
                         maxLength={4}
                         onChange={(e) => setYear(e.target.value.replace(/[^0-9]/g, ""))}
                       />
-                      <RotatingPlaceholder show={year.length === 0} prefix="e.g. " items={EG_YEAR} />
+                      <RotatingPlaceholder show={year.length === 0} items={EG_YEAR} />
                     </div>
                   </div>
                 </div>
@@ -420,11 +416,7 @@ export default function StoreApp() {
                           value={p.name}
                           onChange={(e) => updatePart(i, { name: e.target.value })}
                         />
-                        <RotatingPlaceholder
-                          show={p.name.length === 0}
-                          prefix="e.g. "
-                          items={EG_PART}
-                        />
+                        <RotatingPlaceholder show={p.name.length === 0} items={EG_PART} />
                       </div>
                       <input
                         className="p-qty"
