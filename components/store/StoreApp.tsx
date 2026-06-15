@@ -46,6 +46,7 @@ export default function StoreApp() {
 
   const addBarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const homeViewRef = useRef<HTMLDivElement>(null);
 
   // load + persist cart
   useEffect(() => {
@@ -79,6 +80,18 @@ export default function StoreApp() {
       return;
     }
     setView(v);
+  }
+
+  // Logo acts as the "home" button. In this single-page storefront the home
+  // view is the main page, so we always return to it, close the cart, and
+  // scroll back to the top — that way the click has visible feedback even
+  // when the home view is already showing.
+  function goHome() {
+    closeCart();
+    setView("home");
+    requestAnimationFrame(() =>
+      homeViewRef.current?.scrollTo({ top: 0, behavior: "smooth" }),
+    );
   }
 
   function showToast(t: string) {
@@ -261,7 +274,7 @@ export default function StoreApp() {
             <button
               type="button"
               className="nav-logo"
-              onClick={() => go("home")}
+              onClick={goHome}
               aria-label="SPAREZY — go to home"
             >
               <SparezyLogo />
@@ -274,7 +287,7 @@ export default function StoreApp() {
 
         <div className="stage">
           {/* PRODUCT */}
-          <div className={`view ${view === "home" ? "active" : ""}`}>
+          <div ref={homeViewRef} className={`view ${view === "home" ? "active" : ""}`}>
             <div className="pdp">
               <div>
                 <div className="imgpanel">
