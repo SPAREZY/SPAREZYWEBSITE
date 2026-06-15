@@ -1446,8 +1446,13 @@
     display: flex;
     flex-direction: column;
   }
+  /* pull the title up so its caps line up with the top of the image box
+     (the heavy display font otherwise leaves leading space above the
+     letters). Bottom stays pinned, so this just tightens the top. */
   .view-home .ptitle {
     font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1;
+    margin-top: -0.22em;
   }
   .view-home .desc {
     margin-top: clamp(8px, 1.5vh, 18px);
