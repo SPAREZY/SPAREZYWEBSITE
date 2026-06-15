@@ -132,10 +132,10 @@
 .nav-logo {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: calc(50% + 12px);
   transform: translate(-50%, -50%);
-  width: 300px;
-  max-width: 55vw;
+  width: 285px;
+  max-width: 52.25vw;
   z-index: 90;
   pointer-events: none;
 }

@@ -59,8 +59,8 @@ export default function SparezyLogo() {
         style={{
           display: "inline-block",
           position: "relative",
-          width: 300,
-          maxWidth: "55vw",
+          width: 285,
+          maxWidth: "52.25vw",
           aspectRatio: "1200 / 430",
           transformStyle: "preserve-3d",
           transformOrigin: "center center",
