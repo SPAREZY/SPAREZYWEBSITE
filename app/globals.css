@@ -1372,3 +1372,112 @@
     padding: 14px 18px;
   }
 }
+
+/* ===== make autocomplete dropdown ===== */
+.make-ac {
+  position: relative;
+}
+.make-drop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #0e1b38;
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  max-height: 190px;
+  overflow-y: auto;
+  z-index: 110;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+.make-opt {
+  padding: 11px 14px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #d8e0f0;
+  letter-spacing: 0.01em;
+  transition: background 0.1s;
+}
+.make-opt:hover,
+.make-opt:active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* ===== VIN helper ===== */
+.vin-help-toggle {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 5px 0 2px;
+  display: block;
+  text-align: left;
+  transition: color 0.15s;
+}
+.vin-help-toggle:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+.vin-help {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 14px;
+  margin-top: 6px;
+  margin-bottom: 4px;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.55;
+}
+.vin-help p {
+  margin: 0 0 6px;
+}
+.vin-help ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.vin-help li {
+  margin: 3px 0;
+}
+
+/* ===== quick-add part chips ===== */
+.part-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+.part-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: background 0.14s, border-color 0.14s, color 0.14s;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+.part-chip:hover,
+.part-chip:active {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #fff;
+}
+.part-chip.active {
+  background: rgba(100, 200, 130, 0.18);
+  border-color: rgba(100, 200, 130, 0.5);
+  color: #8ef0b6;
+}

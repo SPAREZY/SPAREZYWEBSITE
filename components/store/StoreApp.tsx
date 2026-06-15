@@ -50,6 +50,20 @@ const EG_PART = [
   "Timing belt",
   "Shock absorber",
 ];
+
+const ALL_MAKES = [
+  "Toyota", "Nissan", "GMC", "BYD", "Mitsubishi", "Lexus", "Honda", "Hyundai", "Kia", "Land Rover",
+  "Ford", "Chevrolet", "BMW", "Mercedes-Benz", "Audi", "Volkswagen", "Jeep", "Dodge", "RAM",
+  "Infiniti", "Mazda", "Suzuki", "Subaru", "Isuzu", "Porsche", "Cadillac", "Lincoln",
+  "Volvo", "Renault", "Peugeot", "Fiat", "Jaguar", "Genesis", "MG", "Acura",
+  "Chery", "Geely", "HAVAL", "Daihatsu", "Foton", "JAC", "Mahindra",
+];
+
+const COMMON_PARTS = [
+  "Oil filter", "Air filter", "Brake pads", "Spark plugs",
+  "Wiper blades", "Battery", "Headlight", "Alternator",
+  "Shock absorber", "Radiator",
+];
 // qty is kept as a string in the form so the field can start empty (customer
 // must type it); it is parsed to a number when the item is added to the cart.
 type FormPart = { name: string; qty: string };
@@ -85,6 +99,9 @@ export default function StoreApp() {
   const addBarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const homeViewRef = useRef<HTMLDivElement>(null);
+  const makeRef = useRef<HTMLDivElement>(null);
+  const [makeOpen, setMakeOpen] = useState(false);
+  const [vinHelpOpen, setVinHelpOpen] = useState(false);
 
   // load + persist cart
   useEffect(() => {
@@ -106,10 +123,18 @@ export default function StoreApp() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setCartOpen(false);
+      if (e.key === "Escape") { setCartOpen(false); setMakeOpen(false); }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  useEffect(() => {
+    function onOutside(e: MouseEvent) {
+      if (makeRef.current && !makeRef.current.contains(e.target as Node)) setMakeOpen(false);
+    }
+    document.addEventListener("mousedown", onOutside);
+    return () => document.removeEventListener("mousedown", onOutside);
   }, []);
 
   function go(v: View) {
@@ -163,6 +188,17 @@ export default function StoreApp() {
   }
   function removePartRow(i: number) {
     setParts((prev) => (prev.length === 1 ? prev : prev.filter((_, idx) => idx !== i)));
+  }
+  function addChipPart(name: string) {
+    setParts((prev) => {
+      if (prev.some((p) => p.name.toLowerCase() === name.toLowerCase())) return prev;
+      const emptyIdx = prev.findIndex((p) => p.name.trim() === "");
+      if (emptyIdx >= 0) {
+        return prev.map((p, i) => i === emptyIdx ? { ...p, name, qty: p.qty || "1" } : p);
+      }
+      return [...prev, { name, qty: "1" }];
+    });
+    if (partsErr) setPartsErr(false);
   }
 
   function saveItem(direct: boolean) {
@@ -298,6 +334,10 @@ export default function StoreApp() {
   }
 
   const editing = editIndex !== null;
+  const makeSuggestions =
+    makeOpen && make.trim().length > 0
+      ? ALL_MAKES.filter((m) => m.toLowerCase().startsWith(make.toLowerCase()))
+      : [];
 
   return (
     <div className="store">
@@ -364,21 +404,61 @@ export default function StoreApp() {
                       className={`vin-input ${vinErr ? "err" : ""}`}
                       maxLength={32}
                       value={vin}
-                      onChange={(e) => setVin(e.target.value.toUpperCase())}
+                      onChange={(e) => {
+                        const val = e.target.value.toUpperCase();
+                        setVin(val);
+                        if (vinErr && isValidChassis(val.trim())) setVinErr(false);
+                      }}
                     />
                     <RotatingPlaceholder show={vin.length === 0} items={EG_VIN} />
                   </div>
                   {vinErr && (
                     <div className="err-msg">Please enter the chassis / VIN number.</div>
                   )}
+                  <button
+                    type="button"
+                    className="vin-help-toggle"
+                    onClick={() => setVinHelpOpen((o) => !o)}
+                  >
+                    {vinHelpOpen ? "▲" : "▼"} Where do I find my VIN / chassis number?
+                  </button>
+                  {vinHelpOpen && (
+                    <div className="vin-help">
+                      <p>It&apos;s a 17-character code — or a shorter chassis number on GCC models. Find it:</p>
+                      <ul>
+                        <li>Dashboard (driver side), visible through the windshield</li>
+                        <li>Sticker inside the driver&apos;s door jamb</li>
+                        <li>Car registration card or Mulkiya</li>
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 <div className="grid3">
                   <div className="f">
                     <label>Make</label>
-                    <div className="f-field">
-                      <input value={make} onChange={(e) => setMake(e.target.value)} />
+                    <div className="f-field make-ac" ref={makeRef}>
+                      <input
+                        autoComplete="off"
+                        value={make}
+                        onChange={(e) => { setMake(e.target.value); setMakeOpen(true); }}
+                        onFocus={() => { if (make.trim().length > 0) setMakeOpen(true); }}
+                      />
                       <RotatingPlaceholder show={make.length === 0} items={EG_MAKE} />
+                      {makeSuggestions.length > 0 && (
+                        <ul className="make-drop" role="listbox">
+                          {makeSuggestions.map((m) => (
+                            <li
+                              key={m}
+                              role="option"
+                              className="make-opt"
+                              onMouseDown={(e) => { e.preventDefault(); setMake(m); setMakeOpen(false); }}
+                            >
+                              {m}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                   </div>
                   <div className="f">
@@ -407,6 +487,18 @@ export default function StoreApp() {
                     <span className="ph-label">Qty *</span>
                     <span />
                   </div>
+                  <div className="part-chips">
+                    {COMMON_PARTS.map((c) => (
+                      <button
+                        key={c}
+                        type="button"
+                        className={`part-chip ${parts.some((p) => p.name.toLowerCase() === c.toLowerCase()) ? "active" : ""}`}
+                        onClick={() => addChipPart(c)}
+                      >
+                        {c}
+                      </button>
+                    ))}
+                  </div>
                   {parts.map((p, i) => (
                     <div className="part-row" key={i}>
                       <div className="f-field">
@@ -414,7 +506,10 @@ export default function StoreApp() {
                           className="p-name"
                           aria-label="Part name"
                           value={p.name}
-                          onChange={(e) => updatePart(i, { name: e.target.value })}
+                          onChange={(e) => {
+                            updatePart(i, { name: e.target.value });
+                            if (partsErr && e.target.value.trim()) setPartsErr(false);
+                          }}
                         />
                         <RotatingPlaceholder show={p.name.length === 0} items={EG_PART} />
                       </div>
@@ -425,7 +520,11 @@ export default function StoreApp() {
                         pattern="[0-9]*"
                         aria-label="Quantity"
                         value={p.qty}
-                        onChange={(e) => updatePart(i, { qty: e.target.value.replace(/[^0-9]/g, "") })}
+                        onChange={(e) => {
+                          const v = e.target.value.replace(/[^0-9]/g, "");
+                          updatePart(i, { qty: v });
+                          if (qtyErr && v && parseInt(v) >= 1) setQtyErr(false);
+                        }}
                       />
                       <button className="del" title="Remove" onClick={() => removePartRow(i)}>
                         ✕
