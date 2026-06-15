@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { isValidChassis } from "@/lib/utils";
 import type { CartItem, CheckoutData, OrderRecap } from "@/lib/store-types";
-import { carLabel } from "@/lib/store-types";
+import { carLabel, vinLabel } from "@/lib/store-types";
 import { rememberOrders } from "@/lib/tracked-orders";
 import BackgroundGrid from "./BackgroundGrid";
 import SparezyLogo from "./SparezyLogo";
@@ -259,6 +259,7 @@ export default function StoreApp() {
     setPhotoBusy(true);
     try {
       setPhoto(await fileToCompressedDataUrl(file));
+      setVinErr(false); // a photo satisfies the "VIN or photo" requirement
     } catch {
       showToast("Couldn't read that image. Try a JPG or PNG.");
     } finally {
@@ -281,7 +282,9 @@ export default function StoreApp() {
     const cleanParts = parts
       .map((p) => ({ name: p.name.trim(), qty: parseInt(p.qty, 10) }))
       .filter((p) => p.name);
-    const badVin = !isValidChassis(vinNorm);
+    // The customer can EITHER type a VIN/chassis OR upload a photo of the
+    // registration card — only flag the VIN when neither is provided.
+    const badVin = !isValidChassis(vinNorm) && !photo;
     const badParts = cleanParts.length === 0;
     const badQty = cleanParts.some((p) => !Number.isFinite(p.qty) || p.qty < 1);
     setVinErr(badVin);
@@ -487,7 +490,9 @@ export default function StoreApp() {
                     <RotatingPlaceholder show={vin.length === 0} items={EG_VIN} />
                   </div>
                   {vinErr && (
-                    <div className="err-msg">Please enter the chassis / VIN number.</div>
+                    <div className="err-msg">
+                      Enter the VIN / chassis number or upload a photo of the registration card.
+                    </div>
                   )}
                   {photo ? (
                     <div className="vin-thumb">
@@ -674,7 +679,7 @@ export default function StoreApp() {
               <div className="vrow" key={i}>
                 <div className="vh">
                   <span className="vt">VEHICLE {i + 1} — WE HAVE IT</span>
-                  <span className="vin">{it.vin}</span>
+                  <span className="vin">{vinLabel(it)}</span>
                 </div>
                 {carLabel(it) && <div className="car">{carLabel(it).toUpperCase()}</div>}
                 <ul>
@@ -809,7 +814,8 @@ function buildOrderWaLink(humanIds: string[], vehicles: CartItem[], data: Checko
   msg += `Address: ${data.address}\n`;
   vehicles.forEach((it, i) => {
     const label = carLabel(it);
-    msg += `\nVehicle ${i + 1}${humanIds[i] ? " (" + humanIds[i] + ")" : ""} — VIN: ${it.vin}${
+    const vinText = it.vin && it.vin.trim() ? it.vin : "see registration photo";
+    msg += `\nVehicle ${i + 1}${humanIds[i] ? " (" + humanIds[i] + ")" : ""} — VIN: ${vinText}${
       label ? " (" + label + ")" : ""
     }\n`;
     it.parts.forEach((p) => {

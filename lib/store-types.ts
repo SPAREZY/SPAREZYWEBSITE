@@ -37,3 +37,10 @@ export type OrderRecap = {
 export function carLabel(it: { make: string; model: string; year: string }): string {
   return [it.make, it.model, it.year].filter(Boolean).join(" ");
 }
+
+// What to show in place of the VIN when the customer uploaded a registration
+// card photo instead of typing it.
+export function vinLabel(it: { vin: string; photo?: string }): string {
+  if (it.vin && it.vin.trim()) return it.vin;
+  return it.photo ? "📷 REG. CARD PHOTO" : "";
+}

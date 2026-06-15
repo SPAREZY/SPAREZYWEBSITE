@@ -1,5 +1,5 @@
 import type { OrderRecap } from "@/lib/store-types";
-import { carLabel } from "@/lib/store-types";
+import { carLabel, vinLabel } from "@/lib/store-types";
 
 export default function ConfirmView({
   recap,
@@ -42,7 +42,7 @@ export default function ConfirmView({
                 Vehicle {i + 1}
                 {recap.humanIds[i] ? ` — ${recap.humanIds[i]}` : ""}
               </span>
-              <span className="vin">{it.vin}</span>
+              <span className="vin">{vinLabel(it)}</span>
             </div>
             {carLabel(it) && <div className="car">{carLabel(it)}</div>}
             <ul>

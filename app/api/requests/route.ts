@@ -37,12 +37,17 @@ export async function POST(req: Request) {
     customerNote,
   } = body as Record<string, any>;
 
-  if (typeof vin !== "string" || !isValidChassis(vin)) {
+  // The customer can identify the car EITHER by typing a VIN/chassis OR by
+  // uploading a photo of the registration card. Require at least one.
+  const vinClean = typeof vin === "string" ? vin.trim().toUpperCase() : "";
+  const hasPhotoUrl = typeof photoUrl === "string" && photoUrl.trim().length > 0;
+  if (!isValidChassis(vinClean) && !hasPhotoUrl) {
     return NextResponse.json(
-      { error: "Chassis / VIN number is required." },
+      { error: "A chassis / VIN number or a registration card photo is required." },
       { status: 400 },
     );
   }
+  const finalVin = isValidChassis(vinClean) ? vinClean : vinClean || "SEE PHOTO";
   if (typeof customerName !== "string" || customerName.trim().length < 2) {
     return NextResponse.json({ error: "Customer name is required." }, { status: 400 });
   }
@@ -113,7 +118,7 @@ export async function POST(req: Request) {
             partNumber: typeof partNumber === "string" && partNumber.trim() ? partNumber.trim() : null,
             photoUrl: typeof photoUrl === "string" && photoUrl.trim() ? photoUrl.trim() : null,
             customerNote: typeof customerNote === "string" && customerNote.trim() ? customerNote.trim() : null,
-            vin: vin.trim().toUpperCase(),
+            vin: finalVin,
             make: typeof make === "string" && make.trim() ? make.trim() : null,
             model: typeof model === "string" && model.trim() ? model.trim() : null,
             year: validYear,

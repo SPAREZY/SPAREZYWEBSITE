@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { CartItem, CheckoutData } from "@/lib/store-types";
-import { carLabel } from "@/lib/store-types";
+import { carLabel, vinLabel } from "@/lib/store-types";
 import { isValidUaePhone, isValidEmail } from "@/lib/utils";
 
 const CITIES = [
@@ -231,7 +231,7 @@ export default function CheckoutView({
                 <span className="vt" style={{ fontSize: ".9rem" }}>
                   Vehicle {i + 1}
                 </span>
-                <span className="vin">{it.vin}</span>
+                <span className="vin">{vinLabel(it)}</span>
               </div>
               <div className="car">
                 {it.parts.length} part{it.parts.length > 1 ? "s" : ""}
