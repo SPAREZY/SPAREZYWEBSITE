@@ -11,7 +11,6 @@ export default function ConfirmView({
   if (!recap) return null;
   return (
     <div className="confirm-wrap">
-      <h2>Consider It Done</h2>
       <div className="order-no-label">Order Number</div>
       <div className="order-no">{recap.humanIds.join(" · ")}</div>
       <p className="body">
