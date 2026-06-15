@@ -500,10 +500,6 @@ export default function StoreApp() {
                 <s>AED 287</s> <b className="free">FREE</b>
               </span>
             </div>
-            <div className="drawer-note">
-              {cart.length} {cart.length === 1 ? "VEHICLE" : "VEHICLES"} · PAY ONLY WHEN YOUR PARTS
-              ARE CONFIRMED
-            </div>
             <button
               className="rowbtn"
               onClick={() => {
