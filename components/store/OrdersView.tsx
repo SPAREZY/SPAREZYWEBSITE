@@ -100,7 +100,7 @@ export default function OrdersView({ active }: { active: boolean }) {
           type="tel"
           inputMode="tel"
           autoComplete="tel"
-          placeholder="PHONE NUMBER YOU ORDERED WITH"
+          placeholder="ADD PHONE NUMBER TO TRACK"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
