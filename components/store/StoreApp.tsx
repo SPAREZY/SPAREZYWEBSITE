@@ -299,7 +299,7 @@ export default function StoreApp() {
                 <h1 className="ptitle">A Finder</h1>
                 <div className="ptag-line">ANY PART · ANY CAR · WE GOT IT</div>
                 <div className="price">
-                  <s className="was">AED 0.00</s> <b className="free-tag">FREE</b>
+                  <s className="was">AED 287</s> <b className="free-tag">FREE</b>
                 </div>
                 <div className="desc">
                   <p>
