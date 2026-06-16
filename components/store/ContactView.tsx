@@ -1,4 +1,4 @@
-export default function ContactView() {
+export default function ContactView({ onHelp }: { onHelp?: () => void }) {
   return (
     <div className="sheet">
       <h2>Contact</h2>
@@ -32,6 +32,11 @@ export default function ContactView() {
           </span>
         </div>
       </div>
+      {onHelp && (
+        <button type="button" className="contact-help" onClick={onHelp}>
+          How it works &amp; FAQ →
+        </button>
+      )}
     </div>
   );
 }

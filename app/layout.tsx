@@ -26,15 +26,38 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sparezy.store"),
-  title: "Sparezy — Just Ask, We Have It",
+  title: {
+    default: "Sparezy — Just Ask, We Have It | Car Parts in the UAE",
+    template: "%s · Sparezy",
+  },
   description:
     "Every auto spare part for every car, sourced and delivered across the UAE. Common or rare — just ask, we have it. Sparezy, Musaffah, Abu Dhabi.",
+  keywords: [
+    "car parts UAE",
+    "auto spare parts Abu Dhabi",
+    "spare parts Musaffah",
+    "car parts by VIN",
+    "genuine OEM car parts UAE",
+    "find car parts Dubai",
+    "Sparezy",
+  ],
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Sparezy — Just Ask, We Have It",
     description:
       "Source any auto part for any car in the UAE. No part number? No stress. Just ask, we have it.",
+    url: "https://sparezy.store",
+    siteName: "Sparezy",
+    locale: "en_AE",
     images: ["/sparezy-logo-white.png"],
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sparezy — Just Ask, We Have It",
+    description: "Source any auto part for any car in the UAE. Just ask, we have it.",
+    images: ["/sparezy-logo-white.png"],
   },
   icons: { icon: "/sparezy-logo-white.png" },
 };

@@ -12,10 +12,11 @@ import CheckoutView from "./CheckoutView";
 import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
 import OrdersView from "./OrdersView";
+import HelpView from "./HelpView";
 import RotatingPlaceholder from "./RotatingPlaceholder";
 import AutoCompleteField from "./AutoCompleteField";
 
-type View = "home" | "checkout" | "confirm" | "contact" | "orders";
+type View = "home" | "checkout" | "confirm" | "contact" | "orders" | "help";
 
 // Rotating example placeholders that scroll until the customer types.
 const EG_VIN = ["JTEBH3FJ20K123456", "JN8AZ2NE9DT001234", "GF-BH5", "ZN6-0012345"];
@@ -441,6 +442,9 @@ export default function StoreApp() {
         <header>
           <div className="nav">
             <div className="nav-l">
+              <button className="lnk" onClick={() => go("help")}>
+                How It Works
+              </button>
               <button className="lnk" onClick={() => go("contact")}>
                 Contact
               </button>
@@ -687,12 +691,17 @@ export default function StoreApp() {
 
           {/* CONTACT */}
           <div className={`view ${view === "contact" ? "active" : ""}`}>
-            <ContactView />
+            <ContactView onHelp={() => go("help")} />
           </div>
 
           {/* ORDERS */}
           <div className={`view ${view === "orders" ? "active" : ""}`}>
             <OrdersView active={view === "orders"} />
+          </div>
+
+          {/* HOW IT WORKS / FAQ */}
+          <div className={`view ${view === "help" ? "active" : ""}`}>
+            <HelpView />
           </div>
         </div>
       </div>
