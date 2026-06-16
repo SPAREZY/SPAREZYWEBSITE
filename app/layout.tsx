@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Archivo_Black, JetBrains_Mono } from "next/font/google";
+import Analytics from "@/components/Analytics";
 import "./globals.css";
 
 const sans = Archivo({
@@ -47,7 +48,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${sans.variable} ${display.variable} ${mono.variable}`}>
-      <body className="bg-royal text-white font-sans antialiased">{children}</body>
+      <body className="bg-royal text-white font-sans antialiased">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
