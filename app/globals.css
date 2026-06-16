@@ -1162,7 +1162,7 @@
   top: 0;
   width: 92%;
   overflow: hidden;
-  color: var(--blue);
+  color: #f5a623;
 }
 .sp-div {
   width: 1.5px;
@@ -1173,7 +1173,7 @@
   font-family: Arial, Roboto, system-ui, sans-serif;
   font-weight: 700;
   font-size: 0.95rem;
-  color: var(--blue);
+  color: #f5a623;
   line-height: 1;
 }
 
