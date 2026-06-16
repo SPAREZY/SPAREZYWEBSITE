@@ -1137,27 +1137,44 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 11px;
 }
-.sp-star-row {
-  color: #f5a623;
-  font-size: 1.4rem;
-  letter-spacing: 2px;
+/* 5-star track with a gold overlay clipped to the rating (4.6 / 5 = 92%) */
+.sp-meter {
+  position: relative;
+  display: inline-block;
+  font-size: 1.3rem;
   line-height: 1;
+  letter-spacing: 3px;
+  white-space: nowrap;
+}
+.sp-meter-base {
+  color: rgba(14, 19, 32, 0.17);
+}
+.sp-meter-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 92%;
+  overflow: hidden;
+  color: #f5a623;
 }
 .sp-rating {
-  font-family: var(--font-display), "Arial Black", sans-serif;
-  font-size: 1.45rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1.32rem;
+  letter-spacing: -0.01em;
   color: #0e1320;
   line-height: 1;
 }
 .sp-count {
-  margin-top: 7px;
-  font-weight: 800;
-  font-size: 0.82rem;
-  letter-spacing: 0.1em;
+  margin-top: 9px;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #0e1320;
+  color: rgba(14, 19, 32, 0.72);
 }
 
 /* ===== sliding logo grid background ===== */
