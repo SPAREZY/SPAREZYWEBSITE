@@ -1129,29 +1129,26 @@
   right: 0;
   bottom: 0;
   padding: 26px 20px 24px;
-  text-align: center;
-  background: linear-gradient(to top, #ffffff 55%, rgba(255, 255, 255, 0));
-  pointer-events: none;
-}
-/* Google-reviews style rating badge */
-.sp-stars {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 9px;
+  background: linear-gradient(to top, #ffffff 58%, rgba(255, 255, 255, 0));
+  pointer-events: none;
 }
 .sp-rating {
   font-family: Arial, Roboto, system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: #202124;
+  font-weight: 800;
+  font-size: 1.26rem;
+  color: #1a1f2b;
   line-height: 1;
 }
-/* 5-star track with a Google-amber overlay clipped to the rating (4.6/5 = 92%) */
+/* 5-star track with a brand-green overlay clipped to the rating (4.6/5 = 92%) */
 .sp-meter {
   position: relative;
   display: inline-block;
-  font-size: 1.22rem;
+  font-size: 1.18rem;
   line-height: 1;
   letter-spacing: 2px;
   white-space: nowrap;
@@ -1165,14 +1162,19 @@
   top: 0;
   width: 92%;
   overflow: hidden;
-  color: #fbbc04;
+  color: #1e9e5a;
+}
+.sp-div {
+  width: 1.5px;
+  height: 18px;
+  background: rgba(14, 19, 32, 0.16);
 }
 .sp-count {
-  margin-top: 6px;
   font-family: Arial, Roboto, system-ui, sans-serif;
-  font-weight: 400;
-  font-size: 0.83rem;
-  color: #5f6368;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1e9e5a;
+  line-height: 1;
 }
 
 /* ===== sliding logo grid background ===== */
