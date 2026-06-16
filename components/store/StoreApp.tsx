@@ -465,14 +465,14 @@ export default function StoreApp() {
               <div>
                 <div className="imgpanel">
                   <div className="mbox-wrap" />
-                  <div className="social-proof" aria-label="Rated 4.6 out of 5 — 5.3K+ parts sourced">
+                  <div className="social-proof" aria-label="Rated 4.6 out of 5 — 5.3K+ parts found">
                     <span className="sp-rating" aria-hidden="true">4.6</span>
                     <span className="sp-meter" aria-hidden="true">
                       <span className="sp-meter-base">★★★★★</span>
                       <span className="sp-meter-fill">★★★★★</span>
                     </span>
                     <span className="sp-div" aria-hidden="true" />
-                    <span className="sp-count" aria-hidden="true">5.3K+ Parts Sourced</span>
+                    <span className="sp-count" aria-hidden="true">5.3K+ Parts Found</span>
                   </div>
                 </div>
               </div>
