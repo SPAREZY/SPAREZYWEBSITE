@@ -1122,6 +1122,44 @@
   padding: 30px;
 }
 
+/* social proof pinned to the bottom of the white image box */
+.social-proof {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 26px 20px 24px;
+  text-align: center;
+  background: linear-gradient(to top, #ffffff 55%, rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+.sp-stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+.sp-star-row {
+  color: #f5a623;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+.sp-rating {
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-size: 1.45rem;
+  color: #0e1320;
+  line-height: 1;
+}
+.sp-count {
+  margin-top: 7px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #0e1320;
+}
+
 /* ===== sliding logo grid background ===== */
 .bggrid {
   position: fixed;

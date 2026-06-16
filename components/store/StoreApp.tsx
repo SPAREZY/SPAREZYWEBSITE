@@ -465,6 +465,13 @@ export default function StoreApp() {
               <div>
                 <div className="imgpanel">
                   <div className="mbox-wrap" />
+                  <div className="social-proof">
+                    <div className="sp-stars" aria-label="Rated 4.6 out of 5">
+                      <span className="sp-star-row" aria-hidden="true">★★★★★</span>
+                      <span className="sp-rating">4.6</span>
+                    </div>
+                    <div className="sp-count">1.6K+ PARTS SOURCED</div>
+                  </div>
                 </div>
               </div>
 
