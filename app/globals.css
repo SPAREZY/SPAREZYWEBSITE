@@ -267,32 +267,6 @@
   font-size: 1.15rem;
   letter-spacing: 0.04em;
 }
-/* trust signals under the price */
-.trust {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 14px;
-}
-.trust-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 999px;
-  padding: 4px 11px;
-  white-space: nowrap;
-}
-.trust-item svg {
-  width: 13px;
-  height: 13px;
-  color: #2fe08a;
-  flex: none;
-}
-
 .desc {
   margin-top: 30px;
   font-weight: 700;
@@ -1585,14 +1559,6 @@
   }
   .view-home .price {
     margin-top: clamp(6px, 1vh, 12px);
-  }
-  .view-home .trust {
-    margin-top: clamp(7px, 1.1vh, 14px);
-    gap: clamp(5px, 0.7vh, 8px);
-  }
-  .view-home .trust-item {
-    font-size: clamp(0.6rem, 0.92vh, 0.72rem);
-    padding: clamp(2px, 0.45vh, 4px) clamp(7px, 0.9vh, 11px);
   }
   .view-home .f {
     margin-top: clamp(7px, 1.5vh, 18px);

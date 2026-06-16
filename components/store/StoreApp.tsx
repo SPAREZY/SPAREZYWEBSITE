@@ -107,14 +107,6 @@ const makeKey = (make: string) =>
 const YEAR_OPTIONS: string[] = [];
 for (let y = new Date().getFullYear() + 1; y >= 1990; y--) YEAR_OPTIONS.push(String(y));
 
-// Honest, factual trust signals shown under the price (no fabricated stats).
-const TRUST_POINTS = [
-  "Genuine & OEM options",
-  "Delivered across the UAE",
-  "Pay only when confirmed",
-  "WhatsApp support",
-];
-
 // Resize + compress a chosen image to a small JPEG data URL so the
 // registration card can be stored/sent without any blob storage.
 async function fileToCompressedDataUrl(file: File, maxDim = 1280, quality = 0.68): Promise<string> {
@@ -481,16 +473,6 @@ export default function StoreApp() {
                 <div className="ptag-line">ANY PART · ANY CAR · WE GOT IT</div>
                 <div className="price">
                   <s className="was">AED 287</s> <b className="free-tag">FREE</b>
-                </div>
-                <div className="trust">
-                  {TRUST_POINTS.map((t) => (
-                    <span className="trust-item" key={t}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M20 6 9 17l-5-5" />
-                      </svg>
-                      {t}
-                    </span>
-                  ))}
                 </div>
                 <div className="desc">
                   <p>
