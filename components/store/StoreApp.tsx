@@ -467,13 +467,13 @@ export default function StoreApp() {
                   <div className="mbox-wrap" />
                   <div className="social-proof">
                     <div className="sp-stars" aria-label="Rated 4.6 out of 5">
+                      <span className="sp-rating">4.6</span>
                       <span className="sp-meter" aria-hidden="true">
                         <span className="sp-meter-base">★★★★★</span>
                         <span className="sp-meter-fill">★★★★★</span>
                       </span>
-                      <span className="sp-rating">4.6</span>
                     </div>
-                    <div className="sp-count">5K+ PARTS SOURCED</div>
+                    <div className="sp-count">5K+ parts sourced</div>
                   </div>
                 </div>
               </div>

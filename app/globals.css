@@ -1133,23 +1133,31 @@
   background: linear-gradient(to top, #ffffff 55%, rgba(255, 255, 255, 0));
   pointer-events: none;
 }
+/* Google-reviews style rating badge */
 .sp-stars {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 11px;
+  gap: 8px;
 }
-/* 5-star track with a gold overlay clipped to the rating (4.6 / 5 = 92%) */
+.sp-rating {
+  font-family: Arial, Roboto, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #202124;
+  line-height: 1;
+}
+/* 5-star track with a Google-amber overlay clipped to the rating (4.6/5 = 92%) */
 .sp-meter {
   position: relative;
   display: inline-block;
-  font-size: 1.3rem;
+  font-size: 1.22rem;
   line-height: 1;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   white-space: nowrap;
 }
 .sp-meter-base {
-  color: rgba(14, 19, 32, 0.17);
+  color: #dadce0;
 }
 .sp-meter-fill {
   position: absolute;
@@ -1157,24 +1165,14 @@
   top: 0;
   width: 92%;
   overflow: hidden;
-  color: #f5a623;
-}
-.sp-rating {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 1.32rem;
-  letter-spacing: -0.01em;
-  color: #0e1320;
-  line-height: 1;
+  color: #fbbc04;
 }
 .sp-count {
-  margin-top: 9px;
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 0.74rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(14, 19, 32, 0.72);
+  margin-top: 6px;
+  font-family: Arial, Roboto, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.83rem;
+  color: #5f6368;
 }
 
 /* ===== sliding logo grid background ===== */
