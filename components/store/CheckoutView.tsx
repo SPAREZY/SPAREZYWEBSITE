@@ -54,8 +54,8 @@ export default function CheckoutView({
     if (!city.trim()) e.city = "Please enter your city.";
     if (!phoneLocal) e.phone = "Please enter your phone number.";
     else if (!isValidPhone(fullPhone)) e.phone = "Enter a valid phone number for the selected country.";
-    if (email.trim() && !isValidEmail(email)) e.email = "That email doesn't look right.";
-    if (pref === "Email" && !email.trim()) e.email = "Add your email, or pick another contact method.";
+    if (!email.trim()) e.email = "Please enter your email.";
+    else if (!isValidEmail(email)) e.email = "That email doesn't look right.";
     if (!address.trim()) e.address = "Please enter your delivery address.";
     setErr(e);
     if (Object.keys(e).length) return;
@@ -87,7 +87,7 @@ export default function CheckoutView({
             {err.name && <div className="err-msg">{err.name}</div>}
           </div>
           <div className="f">
-            <label>Email</label>
+            <label>Email *</label>
             <input
               className={err.email ? "err" : ""}
               value={email}
