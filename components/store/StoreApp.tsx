@@ -424,8 +424,8 @@ export default function StoreApp() {
       : !hasQty
         ? "Set the quantity"
         : formProgress >= 100
-          ? "All set! 🎉"
-          : "Ready to check out! 🎉";
+          ? "All set!"
+          : "Ready to check out!";
 
   return (
     <div className="store">
