@@ -1134,28 +1134,22 @@
 }
 
 /* social proof pinned to the bottom of the white image box */
+/* rating badge — sits below the tagline, above the price (on the blue bg) */
 .social-proof {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 26px 20px 24px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
   gap: 9px;
-  background: linear-gradient(to top, #ffffff 58%, rgba(255, 255, 255, 0));
-  pointer-events: none;
+  margin-top: 12px;
 }
 .sp-rating {
   font-family: Arial, Roboto, system-ui, sans-serif;
   font-weight: 800;
   font-size: 1.26rem;
-  color: #1a1f2b;
+  color: #fff;
   line-height: 1;
 }
-/* 5-star track with a brand-green overlay clipped to the rating (4.6/5 = 92%) */
+/* 5-star track with a gold overlay clipped to the rating (4.6/5 = 92%) */
 .sp-meter {
   position: relative;
   display: inline-block;
@@ -1165,7 +1159,7 @@
   white-space: nowrap;
 }
 .sp-meter-base {
-  color: #dadce0;
+  color: rgba(255, 255, 255, 0.3);
 }
 .sp-meter-fill {
   position: absolute;
@@ -1178,7 +1172,7 @@
 .sp-div {
   width: 1.5px;
   height: 18px;
-  background: rgba(14, 19, 32, 0.16);
+  background: rgba(255, 255, 255, 0.3);
 }
 .sp-count {
   font-family: Arial, Roboto, system-ui, sans-serif;
@@ -1741,6 +1735,9 @@
   }
   .view-home .desc p {
     margin-bottom: 0;
+  }
+  .view-home .social-proof {
+    margin-top: clamp(6px, 1vh, 12px);
   }
   .view-home .price {
     margin-top: clamp(6px, 1vh, 12px);

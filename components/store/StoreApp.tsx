@@ -534,21 +534,21 @@ export default function StoreApp() {
               <div>
                 <div className="imgpanel">
                   <div className="mbox-wrap" />
-                  <div className="social-proof" aria-label="Rated 4.6 out of 5 — 5.3K+ parts found">
-                    <span className="sp-rating" aria-hidden="true">4.6</span>
-                    <span className="sp-meter" aria-hidden="true">
-                      <span className="sp-meter-base">★★★★★</span>
-                      <span className="sp-meter-fill">★★★★★</span>
-                    </span>
-                    <span className="sp-div" aria-hidden="true" />
-                    <span className="sp-count" aria-hidden="true">5.3K+ Parts Found</span>
-                  </div>
                 </div>
               </div>
 
               <div className="info">
                 <h1 className="ptitle">The Finder</h1>
                 <div className="ptag-line">ANY CAR PARTS · WE HAVE IT</div>
+                <div className="social-proof" aria-label="Rated 4.6 out of 5 — 5.3K+ parts found">
+                  <span className="sp-rating" aria-hidden="true">4.6</span>
+                  <span className="sp-meter" aria-hidden="true">
+                    <span className="sp-meter-base">★★★★★</span>
+                    <span className="sp-meter-fill">★★★★★</span>
+                  </span>
+                  <span className="sp-div" aria-hidden="true" />
+                  <span className="sp-count" aria-hidden="true">5.3K+ Parts Found</span>
+                </div>
                 <div className="price">
                   <s className="was">AED 287</s> <b className="free-tag">FREE</b>
                 </div>
