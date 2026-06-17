@@ -15,6 +15,7 @@ export type CheckoutData = {
   phone: string;
   wa: string;
   country: string;
+  state: string;
   city: string;
   pref: string; // "WhatsApp" | "Phone call" | "Email"
   address: string;
@@ -28,6 +29,7 @@ export type OrderRecap = {
   phone: string;
   email: string;
   city: string;
+  state: string;
   country: string;
   address: string;
   notes: string;

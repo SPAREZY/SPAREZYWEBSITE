@@ -267,7 +267,7 @@ export default function LeadDrawer({
                 <Row k="Name" v={cur.customerName} />
                 <Row k="Phone" v={cur.phone ?? "—"} strong={cur.contactPref !== "email"} />
                 <Row k="Email" v={cur.email ?? "—"} strong={cur.contactPref === "email"} />
-                <Row k="Location" v={[cur.city, cur.country].filter(Boolean).join(", ") || "—"} />
+                <Row k="Location" v={[cur.city, cur.state, cur.country].filter(Boolean).join(", ") || "—"} />
                 {cur.address && <Row k="Delivery" v={cur.address} />}
                 <Row k="Prefers" v={STATUS_PREF[cur.contactPref] ?? cur.contactPref} />
                 <Row k="Received" v={timeAgo(cur.receivedAt)} />

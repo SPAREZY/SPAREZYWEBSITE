@@ -43,6 +43,7 @@ model PartRequest {
   phone          String? // at least one of phone/email required
   email          String?
   city           String?
+  state          String? // state / region / province
   country        String?
   address        String?
   contactPref    String // whatsapp | call | email

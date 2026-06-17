@@ -44,6 +44,7 @@ export type Lead = {
   phone: string | null;
   email: string | null;
   city: string | null;
+  state: string | null;
   country: string | null;
   address: string | null;
   contactPref: string;

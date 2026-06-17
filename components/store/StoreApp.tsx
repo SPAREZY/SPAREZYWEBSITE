@@ -369,6 +369,7 @@ export default function StoreApp() {
             phone: data.phone || undefined,
             email: data.email || undefined,
             city: data.city,
+            state: data.state || undefined,
             country: data.country,
             address: data.address,
             contactPref,
@@ -400,6 +401,7 @@ export default function StoreApp() {
         phone: data.phone,
         email: data.email,
         city: data.city,
+        state: data.state,
         country: data.country,
         address: data.address,
         notes: data.notes,
@@ -841,7 +843,7 @@ export default function StoreApp() {
 function buildOrderWaLink(humanIds: string[], vehicles: CartItem[], data: CheckoutData): string {
   let msg = `NEW ORDER ${humanIds.join(", ")} — SPAREZY\n`;
   msg += `Name: ${data.name}\nPhone: ${data.phone}\n`;
-  msg += `City: ${data.city}${data.country ? ", " + data.country : ""}\n`;
+  msg += `City: ${[data.city, data.state, data.country].filter(Boolean).join(", ")}\n`;
   msg += `Address: ${data.address}\n`;
   vehicles.forEach((it, i) => {
     const label = carLabel(it);

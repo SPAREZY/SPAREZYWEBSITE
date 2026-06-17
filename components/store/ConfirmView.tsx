@@ -57,8 +57,8 @@ export default function ConfirmView({
         ))}
         <div className="vrow">
           <div className="car">
-            <strong style={{ color: "#fff" }}>{recap.name}</strong> · {recap.phone} · {recap.city}
-            {recap.country ? `, ${recap.country}` : ""}
+            <strong style={{ color: "#fff" }}>{recap.name}</strong> · {recap.phone} ·{" "}
+            {[recap.city, recap.state, recap.country].filter(Boolean).join(", ")}
             <br />
             {recap.address}
             {recap.notes ? (
