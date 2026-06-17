@@ -44,7 +44,7 @@ export async function POST(req: Request) {
   const hasPhotoUrl = typeof photoUrl === "string" && photoUrl.trim().length > 0;
   if (!isValidChassis(vinClean) && !hasPhotoUrl) {
     return NextResponse.json(
-      { error: "A chassis / VIN number or a registration card photo is required." },
+      { error: "A VIN / chassis number or a VIN / chassis photo is required." },
       { status: 400 },
     );
   }

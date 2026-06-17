@@ -5,7 +5,7 @@ import { useState } from "react";
 const STEPS = [
   {
     t: "Tell us your car & parts",
-    d: "Enter your VIN / chassis number — or just snap a photo of your registration card — and list the parts you need.",
+    d: "Enter your VIN / chassis number — or just upload a VIN / chassis photo — and list the parts you need.",
   },
   {
     t: "We source & quote you",
@@ -32,7 +32,7 @@ const FAQS = [
   },
   {
     q: "I don't have the part number — can you still help?",
-    a: "Absolutely. Just enter your VIN / chassis (or upload your registration card) and describe the part. We match the exact one for your car.",
+    a: "Absolutely. Just enter your VIN / chassis (or upload a VIN / chassis photo) and describe the part. We match the exact one for your car.",
   },
   {
     q: "Where do you deliver?",

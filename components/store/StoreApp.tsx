@@ -526,7 +526,7 @@ export default function StoreApp() {
                   </div>
                   {vinErr && (
                     <div className="err-msg">
-                      Enter the VIN / chassis number or upload a photo of the registration card.
+                      Enter the VIN / chassis number or upload a VIN / chassis photo.
                     </div>
                   )}
                   {vinDecoding && <div className="vin-decode">🔎 Reading your VIN…</div>}
@@ -534,7 +534,7 @@ export default function StoreApp() {
                   {photo ? (
                     <div className="vin-thumb">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={photo} alt="Registration card" />
+                      <img src={photo} alt="VIN / chassis photo" />
                       <button type="button" className="vin-thumb-x" onClick={() => setPhoto("")}>✕</button>
                     </div>
                   ) : (
@@ -845,7 +845,7 @@ function buildOrderWaLink(humanIds: string[], vehicles: CartItem[], data: Checko
   msg += `Address: ${data.address}\n`;
   vehicles.forEach((it, i) => {
     const label = carLabel(it);
-    const vinText = it.vin && it.vin.trim() ? it.vin : "see registration photo";
+    const vinText = it.vin && it.vin.trim() ? it.vin : "see VIN / chassis photo";
     msg += `\nVehicle ${i + 1}${humanIds[i] ? " (" + humanIds[i] + ")" : ""} — VIN: ${vinText}${
       label ? " (" + label + ")" : ""
     }\n`;
