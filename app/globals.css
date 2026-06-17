@@ -1689,6 +1689,10 @@
   color: #fff;
   margin-bottom: 3px;
 }
+.brand-heading .req {
+  color: #ff7a7a;
+  font-weight: 800;
+}
 .brand-subheading {
   font-weight: 600;
   font-size: 0.9rem;
