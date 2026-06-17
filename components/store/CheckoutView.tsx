@@ -23,6 +23,7 @@ export default function CheckoutView({
   const [wa, setWa] = useState("");
   const [sameWa, setSameWa] = useState(false);
   const [country, setCountry] = useState(DEFAULT_COUNTRY);
+  const [stateRegion, setStateRegion] = useState("");
   const [city, setCity] = useState("");
   const [pref, setPref] = useState("WhatsApp");
   const [address, setAddress] = useState("");
@@ -65,7 +66,7 @@ export default function CheckoutView({
       phone: fullPhone,
       wa: fullWa,
       country,
-      city: city.trim(),
+      city: stateRegion.trim() ? `${city.trim()}, ${stateRegion.trim()}` : city.trim(),
       pref,
       address: address.trim(),
       notes: notes.trim(),
@@ -97,21 +98,30 @@ export default function CheckoutView({
         </div>
 
         {/* Location first — the phone's country code follows the country. */}
+        <div className="f">
+          <label>Country *</label>
+          <select
+            className={err.country ? "err" : ""}
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+          >
+            {COUNTRIES.map((c) => (
+              <option key={c.name} value={c.name}>
+                {c.name} ({c.dial})
+              </option>
+            ))}
+          </select>
+          {err.country && <div className="err-msg">{err.country}</div>}
+        </div>
+
         <div className="grid2">
           <div className="f">
-            <label>Country *</label>
-            <select
-              className={err.country ? "err" : ""}
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            >
-              {COUNTRIES.map((c) => (
-                <option key={c.name} value={c.name}>
-                  {c.name} ({c.dial})
-                </option>
-              ))}
-            </select>
-            {err.country && <div className="err-msg">{err.country}</div>}
+            <label>State / Region</label>
+            <input
+              value={stateRegion}
+              onChange={(e) => setStateRegion(e.target.value)}
+              placeholder="State / Region"
+            />
           </div>
           <div className="f">
             <label>City *</label>
