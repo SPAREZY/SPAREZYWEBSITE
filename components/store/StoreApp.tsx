@@ -471,11 +471,18 @@ export default function StoreApp() {
   // Mobile form progress: vehicle identified (VIN or photo) → part named →
   // quantity set. 100% means the form is ready to add to cart / checkout.
   const namedParts = parts.filter((p) => p.name.trim().length > 0);
-  const progressDone =
-    (isValidChassis(vin.trim().toUpperCase()) || !!photo ? 1 : 0) +
-    (namedParts.length > 0 ? 1 : 0) +
-    (namedParts.length > 0 && namedParts.every((p) => parseInt(p.qty, 10) >= 1) ? 1 : 0);
+  const hasVehicle = isValidChassis(vin.trim().toUpperCase()) || !!photo;
+  const hasPart = namedParts.length > 0;
+  const hasQty = hasPart && namedParts.every((p) => parseInt(p.qty, 10) >= 1);
+  const progressDone = (hasVehicle ? 1 : 0) + (hasPart ? 1 : 0) + (hasQty ? 1 : 0);
   const formProgress = Math.round((progressDone / 3) * 100);
+  const progressLabel = !hasVehicle
+    ? "Add your car"
+    : !hasPart
+      ? "Add a part"
+      : !hasQty
+        ? "Set the quantity"
+        : "Ready — add to cart! 🎉";
 
   return (
     <div className="store">
@@ -841,12 +848,20 @@ export default function StoreApp() {
             aria-valuenow={formProgress}
             aria-valuemin={0}
             aria-valuemax={100}
-            aria-label="Form completion"
+            aria-label="Order progress"
           >
-            <div
-              className={`botnav-progress-fill ${formProgress >= 100 ? "full" : ""}`}
-              style={{ width: `${formProgress}%` }}
-            />
+            <div className="bp-head">
+              <span className="bp-label">{progressLabel}</span>
+              <span className="bp-pct">{formProgress}%</span>
+            </div>
+            <div className="bp-track">
+              <span className="bp-tick" style={{ left: "33.33%" }} />
+              <span className="bp-tick" style={{ left: "66.66%" }} />
+              <div
+                className={`bp-fill ${formProgress >= 100 ? "full" : ""}`}
+                style={{ width: `${formProgress}%` }}
+              />
+            </div>
           </div>
         )}
         <div className="botnav-row">
