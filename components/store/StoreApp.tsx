@@ -6,6 +6,7 @@ import type { CartItem, CheckoutData, OrderRecap } from "@/lib/store-types";
 import { carLabel, vinLabel } from "@/lib/store-types";
 import { rememberOrders } from "@/lib/tracked-orders";
 import { trackAddToCart, trackInitiateCheckout, trackLead } from "@/lib/analytics";
+import { decodeVin, isVin } from "@/lib/vin";
 import BackgroundGrid from "./BackgroundGrid";
 import SparezyLogo from "./SparezyLogo";
 import CheckoutView from "./CheckoutView";
@@ -178,13 +179,14 @@ export default function StoreApp() {
   const lastDecodedVin = useRef<string>("");
   const [vinHelpOpen, setVinHelpOpen] = useState(false);
 
-  // Auto-fill Make / Model / Year from a full 17-char VIN (free NHTSA decode).
-  // Debounced; only fills fields the customer hasn't already typed; fails
-  // silently so it never blocks the form. Chassis codes won't decode.
+  // Auto-fill Make / Model / Year from a full 17-char VIN (free NHTSA decode,
+  // done browser-side). Debounced; only fills fields the customer hasn't
+  // already typed; fails silently so it never blocks the form. Chassis codes
+  // won't decode.
   useEffect(() => {
     const v = vin.trim().toUpperCase();
     setVinNote(null);
-    if (!/^[A-HJ-NPR-Z0-9]{17}$/.test(v)) return;
+    if (!isVin(v)) return;
     if (v === lastDecodedVin.current) return;
     const curMake = make.trim();
     const curModel = model.trim();
@@ -192,23 +194,19 @@ export default function StoreApp() {
     const ctrl = new AbortController();
     const timer = setTimeout(async () => {
       setVinDecoding(true);
-      try {
-        const res = await fetch(`/api/decode-vin?vin=${encodeURIComponent(v)}`, {
-          signal: ctrl.signal,
-        });
-        if (!res.ok) return;
-        const d = (await res.json()) as { make?: string | null; model?: string | null; year?: string | null };
-        lastDecodedVin.current = v;
-        let filled = 0;
-        if (d.make && !curMake) { setMake(d.make); filled++; }
-        if (d.model && !curModel) { setModel(d.model); filled++; }
-        if (d.year && !curYear) { setYear(String(d.year)); filled++; }
-        if (filled > 0) setVinNote("Filled from your VIN — edit if anything's off.");
-      } catch {
-        /* aborted or network blocked — ignore, form still works */
-      } finally {
-        setVinDecoding(false);
+      const d = await decodeVin(v, ctrl.signal);
+      if (ctrl.signal.aborted) return; // customer kept typing — drop this result
+      lastDecodedVin.current = v;
+      let filled = 0;
+      if (d.make && !curMake) { setMake(d.make); filled++; }
+      if (d.model && !curModel) { setModel(d.model); filled++; }
+      if (d.year && !curYear) { setYear(String(d.year)); filled++; }
+      if (filled > 0) {
+        setVinNote("Filled from your VIN — edit if anything's off.");
+      } else if (!d.make && !d.model && !d.year) {
+        setVinNote("Couldn't read this VIN automatically — please add Make / Model / Year.");
       }
+      setVinDecoding(false);
     }, 650);
     return () => {
       clearTimeout(timer);
