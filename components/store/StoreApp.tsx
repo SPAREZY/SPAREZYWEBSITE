@@ -468,21 +468,31 @@ export default function StoreApp() {
   const editing = editIndex !== null;
   const modelOptions = makeKey(make) ? MAKE_MODELS[makeKey(make)!] : POPULAR_MODELS;
 
-  // Mobile form progress: vehicle identified (VIN or photo) → part named →
-  // quantity set. 100% means the form is ready to add to cart / checkout.
+  // Mobile form progress — every field rewards the bar so it climbs smoothly:
+  // vehicle (VIN/photo) → make → model → year → part → quantity. The essentials
+  // for ordering are vehicle + part + qty; the rest sweeten the climb (and
+  // auto-fill from the VIN decode).
   const namedParts = parts.filter((p) => p.name.trim().length > 0);
   const hasVehicle = isValidChassis(vin.trim().toUpperCase()) || !!photo;
+  const hasMake = make.trim().length > 0;
+  const hasModel = model.trim().length > 0;
+  const hasYear = year.trim().length > 0;
   const hasPart = namedParts.length > 0;
   const hasQty = hasPart && namedParts.every((p) => parseInt(p.qty, 10) >= 1);
-  const progressDone = (hasVehicle ? 1 : 0) + (hasPart ? 1 : 0) + (hasQty ? 1 : 0);
-  const formProgress = Math.round((progressDone / 3) * 100);
+  const progressSteps = [hasVehicle, hasMake, hasModel, hasYear, hasPart, hasQty];
+  const formProgress = Math.round(
+    (progressSteps.filter(Boolean).length / progressSteps.length) * 100,
+  );
+  const isReady = hasVehicle && hasPart && hasQty;
   const progressLabel = !hasVehicle
     ? "Add your car"
     : !hasPart
       ? "Add a part"
       : !hasQty
         ? "Set the quantity"
-        : "Ready — add to cart! 🎉";
+        : formProgress >= 100
+          ? "All set! 🎉"
+          : "Ready to check out! 🎉";
 
   return (
     <div className="store">
@@ -858,7 +868,7 @@ export default function StoreApp() {
               <span className="bp-tick" style={{ left: "33.33%" }} />
               <span className="bp-tick" style={{ left: "66.66%" }} />
               <div
-                className={`bp-fill ${formProgress >= 100 ? "full" : ""}`}
+                className={`bp-fill ${formProgress >= 100 ? "full" : isReady ? "ready" : ""}`}
                 style={{ width: `${formProgress}%` }}
               />
             </div>

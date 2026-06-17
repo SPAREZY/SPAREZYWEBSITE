@@ -1590,6 +1590,10 @@
     background-position: 18px 0;
   }
 }
+/* essentials done — you can order even if optional fields are still empty */
+.bp-fill.ready {
+  box-shadow: 0 0 8px rgba(63, 224, 137, 0.6);
+}
 .bp-fill.full {
   background: linear-gradient(90deg, #1e9e5a, #3fe089);
   animation: bp-pulse 1.15s ease-in-out infinite;
