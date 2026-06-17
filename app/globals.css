@@ -1695,34 +1695,36 @@
   gap: 7px;
   min-height: 76px;
   padding: 10px 6px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  background: #ffffff;
+  border: 1.5px solid #e2e6ee;
   border-radius: 10px;
   cursor: pointer;
-  transition: border-color 0.14s, background 0.14s, transform 0.08s;
+  transition: border-color 0.14s, box-shadow 0.14s, transform 0.08s;
 }
 .brand-tile:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.32);
+  border-color: #c5ccdb;
+  box-shadow: 0 4px 12px rgba(10, 22, 52, 0.18);
 }
 .brand-tile.active {
   border-color: var(--green);
-  background: rgba(30, 158, 90, 0.16);
+  box-shadow: 0 0 0 2px rgba(30, 158, 90, 0.3);
 }
 .brand-logo {
-  height: 26px;
+  height: 28px;
   width: auto;
-  max-width: 58px;
+  max-width: 60px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.92;
+  /* logo PNGs are white silhouettes — darken them so they read on white */
+  filter: brightness(0);
+  opacity: 0.82;
 }
 .brand-logo-fallback {
-  height: 26px;
-  width: 26px;
+  height: 28px;
+  width: 28px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.16);
-  color: #fff;
+  background: #eef1f6;
+  color: #122a5e;
   font-weight: 800;
   font-size: 0.95rem;
   display: flex;
@@ -1734,7 +1736,7 @@
   font-weight: 700;
   line-height: 1.15;
   text-align: center;
-  color: rgba(255, 255, 255, 0.85);
+  color: #1a1f2b;
 }
 .brand-search-wrap {
   position: relative;
@@ -1747,25 +1749,25 @@
   transform: translateY(-50%);
   width: 16px;
   height: 16px;
-  color: rgba(255, 255, 255, 0.55);
+  color: #8a93a6;
   pointer-events: none;
 }
 .brandbox .brand-search {
   width: 100%;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1.5px solid var(--line);
+  background: #ffffff;
+  border: 1.5px solid #e2e6ee;
   border-radius: 8px;
-  color: #fff;
+  color: #1a1f2b;
   font-weight: 700;
-  padding: 11px 12px 11px 36px;
+  padding: 12px 12px 12px 36px;
 }
 .brandbox .brand-search::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: #8a93a6;
   font-weight: 600;
 }
 .brandbox .brand-search:focus {
   outline: none;
-  border-color: var(--line-strong);
+  border-color: var(--green);
 }
 .brand-list {
   margin: 8px 0 0;
@@ -1773,10 +1775,11 @@
   list-style: none;
   max-height: 196px;
   overflow-y: auto;
-  border: 1px solid var(--line);
+  background: #ffffff;
+  border: 1.5px solid #e2e6ee;
   border-radius: 8px;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  scrollbar-color: rgba(10, 22, 52, 0.25) transparent;
 }
 .brand-row {
   width: 100%;
@@ -1785,25 +1788,26 @@
   justify-content: space-between;
   background: none;
   border: none;
-  color: #fff;
+  color: #1a1f2b;
   font-weight: 700;
   text-align: left;
-  padding: 10px 12px;
+  padding: 11px 12px;
   border-radius: 6px;
 }
 .brand-row:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: #f2f4f8;
 }
 .brand-row.active {
-  background: rgba(30, 158, 90, 0.22);
+  background: #eaf7ef;
+  color: #0e1320;
 }
 .brand-check {
-  color: #8ef0b6;
+  color: var(--green-deep);
   font-weight: 800;
 }
 .brand-none {
   padding: 14px 12px;
-  color: rgba(255, 255, 255, 0.55);
+  color: #6b7280;
   font-weight: 600;
   font-size: 0.85rem;
 }
