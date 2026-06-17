@@ -1683,11 +1683,11 @@
   margin-bottom: 26px;
 }
 .brand-heading {
-  font-weight: 800;
-  font-size: 1.02rem;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.82);
   margin-bottom: 12px;
 }
 .brandbox {
