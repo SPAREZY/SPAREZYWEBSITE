@@ -1288,6 +1288,20 @@
   }
 }
 
+/* Phones: move the cart drawer's Close / Cart controls to the BOTTOM so they
+   sit within thumb reach, like the bottom tab bar. (Desktop keeps them on
+   top.) Flex order: items first, then the actions footer, then this bar. */
+@media (max-width: 640px) {
+  .drawer-head {
+    order: 3;
+    border-top: 1px solid var(--line);
+    padding: 16px 28px calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+  .drawer-body {
+    padding-top: calc(22px + env(safe-area-inset-top, 0px));
+  }
+}
+
 /* floating whatsapp button (all views) */
 .wa-float {
   position: fixed;
