@@ -16,35 +16,12 @@ import OrdersView from "./OrdersView";
 import HelpView from "./HelpView";
 import VinHelp from "./VinHelp";
 import RotatingPlaceholder from "./RotatingPlaceholder";
-import AutoCompleteField from "./AutoCompleteField";
+import BrandPicker from "./BrandPicker";
 
 type View = "home" | "checkout" | "confirm" | "contact" | "orders" | "help";
 
 // Rotating example placeholders that scroll until the customer types.
 const EG_VIN = ["JTEBH3FJ20K123456", "JN8AZ2NE9DT001234", "GF-BH5", "ZN6-0012345"];
-const EG_MAKE = [
-  "Toyota",
-  "Nissan",
-  "GMC",
-  "BYD",
-  "Mitsubishi",
-  "Lexus",
-  "Honda",
-  "Hyundai",
-  "Kia",
-  "Land Rover",
-];
-const EG_MODEL = [
-  "Land Cruiser",
-  "Patrol",
-  "Camry",
-  "Hilux",
-  "Pajero",
-  "Civic",
-  "Corolla",
-  "Prado",
-];
-const EG_YEAR = ["2024", "2021", "2018", "2014", "2010", "2006"];
 const EG_PART = [
   "Front brake pads",
   "Oil filter",
@@ -63,51 +40,6 @@ const ALL_MAKES = [
   "Volvo", "Renault", "Peugeot", "Fiat", "Jaguar", "Genesis", "MG", "Acura",
   "Chery", "Geely", "HAVAL", "Daihatsu", "Foton", "JAC", "Mahindra",
 ];
-
-// Popular models per make (UAE market) used for Model autocomplete; when the
-// make isn't recognised we fall back to a flat popular-models list.
-const MAKE_MODELS: Record<string, string[]> = {
-  Toyota: ["Land Cruiser", "Prado", "Hilux", "Corolla", "Camry", "Fortuner", "Yaris", "RAV4", "Avalon", "Rush", "Avanza", "Hiace", "Innova", "Land Cruiser 70", "Coaster", "FJ Cruiser", "Previa"],
-  Nissan: ["Patrol", "Altima", "Sunny", "X-Trail", "Kicks", "Pathfinder", "Navara", "Sentra", "Maxima", "Patrol Safari", "Urvan", "Tiida", "Armada", "Juke"],
-  GMC: ["Yukon", "Yukon XL", "Sierra", "Acadia", "Terrain", "Savana"],
-  BYD: ["Atto 3", "Seal", "Dolphin", "Han", "Tang", "Song Plus", "Yuan Plus"],
-  Mitsubishi: ["Pajero", "Montero Sport", "Lancer", "L200", "Outlander", "ASX", "Attrage", "Eclipse Cross", "Xpander"],
-  Lexus: ["LX", "GX", "RX", "ES", "LS", "NX", "IS", "LC", "UX"],
-  Honda: ["Civic", "Accord", "CR-V", "City", "Pilot", "HR-V", "Odyssey"],
-  Hyundai: ["Tucson", "Santa Fe", "Elantra", "Accent", "Sonata", "Creta", "Palisade", "Kona", "H1", "Azera"],
-  Kia: ["Sportage", "Sorento", "Cerato", "Pegas", "Seltos", "Carnival", "Picanto", "Telluride", "K5"],
-  "Land Rover": ["Range Rover", "Range Rover Sport", "Range Rover Evoque", "Range Rover Velar", "Defender", "Discovery", "Discovery Sport"],
-  Ford: ["F-150", "Explorer", "Edge", "Expedition", "Mustang", "Ranger", "Escape", "Territory", "Taurus", "Bronco"],
-  Chevrolet: ["Tahoe", "Silverado", "Malibu", "Captiva", "Trailblazer", "Traverse", "Suburban", "Camaro", "Spark", "Groove"],
-  BMW: ["3 Series", "5 Series", "7 Series", "X1", "X3", "X5", "X6", "X7", "2 Series", "4 Series"],
-  "Mercedes-Benz": ["C-Class", "E-Class", "S-Class", "GLC", "GLE", "GLS", "G-Class", "A-Class", "CLA", "GLA"],
-  Audi: ["A3", "A4", "A6", "A8", "Q3", "Q5", "Q7", "Q8", "e-tron"],
-  Volkswagen: ["Golf", "Passat", "Tiguan", "Teramont", "Jetta", "Touareg", "Polo"],
-  Jeep: ["Wrangler", "Grand Cherokee", "Cherokee", "Compass", "Gladiator", "Wagoneer", "Renegade"],
-  Dodge: ["Charger", "Challenger", "Durango", "Ram"],
-  RAM: ["1500", "2500", "3500"],
-  Infiniti: ["QX80", "QX60", "QX50", "Q50", "QX70", "Q70"],
-  Mazda: ["CX-5", "CX-9", "Mazda3", "Mazda6", "CX-30", "CX-90", "MX-5"],
-  Suzuki: ["Swift", "Vitara", "Jimny", "Ciaz", "Baleno", "Ertiga", "Grand Vitara"],
-  Subaru: ["Forester", "Outback", "XV", "Impreza", "Legacy"],
-  Isuzu: ["D-Max", "MU-X", "NPR"],
-  Porsche: ["Cayenne", "Macan", "Panamera", "911", "Taycan"],
-  Cadillac: ["Escalade", "XT5", "XT6", "CT5", "XT4"],
-  Genesis: ["GV80", "GV70", "G80", "G70", "GV60"],
-  MG: ["MG5", "MG6", "ZS", "HS", "RX5", "RX8"],
-  Chery: ["Tiggo 4", "Tiggo 7", "Tiggo 8", "Arrizo 5", "Arrizo 6"],
-  HAVAL: ["H6", "Jolion", "Dargo", "H9"],
-};
-const POPULAR_MODELS = [
-  "Land Cruiser", "Patrol", "Prado", "Hilux", "Corolla", "Camry", "Pajero",
-  "Civic", "Accord", "Tucson", "Sportage", "Range Rover", "F-150", "Tahoe",
-];
-const makeKey = (make: string) =>
-  Object.keys(MAKE_MODELS).find((k) => k.toLowerCase() === make.trim().toLowerCase());
-
-// Year suggestions from next model year back to 1990.
-const YEAR_OPTIONS: string[] = [];
-for (let y = new Date().getFullYear() + 1; y >= 1990; y--) YEAR_OPTIONS.push(String(y));
 
 // Resize + compress a chosen image to a small JPEG data URL so the
 // registration card can be stored/sent without any blob storage.
@@ -467,20 +399,17 @@ export default function StoreApp() {
   }
 
   const editing = editIndex !== null;
-  const modelOptions = makeKey(make) ? MAKE_MODELS[makeKey(make)!] : POPULAR_MODELS;
 
-  // Mobile form progress — every field rewards the bar so it climbs smoothly:
-  // vehicle (VIN/photo) → make → model → year → part → quantity. The essentials
-  // for ordering are vehicle + part + qty; the rest sweeten the climb (and
-  // auto-fill from the VIN decode).
+  // Mobile form progress — every step rewards the bar so it climbs smoothly:
+  // vehicle (VIN/photo) → brand → part → quantity. The essentials for ordering
+  // are vehicle + part + qty; the brand sweetens the climb (and auto-fills from
+  // the VIN decode).
   const namedParts = parts.filter((p) => p.name.trim().length > 0);
   const hasVehicle = isValidChassis(vin.trim().toUpperCase()) || !!photo;
   const hasMake = make.trim().length > 0;
-  const hasModel = model.trim().length > 0;
-  const hasYear = year.trim().length > 0;
   const hasPart = namedParts.length > 0;
   const hasQty = hasPart && namedParts.every((p) => parseInt(p.qty, 10) >= 1);
-  const progressSteps = [hasVehicle, hasMake, hasModel, hasYear, hasPart, hasQty];
+  const progressSteps = [hasVehicle, hasMake, hasPart, hasQty];
   const formProgress = Math.round(
     (progressSteps.filter(Boolean).length / progressSteps.length) * 100,
   );
@@ -531,12 +460,6 @@ export default function StoreApp() {
           {/* PRODUCT */}
           <div ref={homeViewRef} className={`view view-home ${view === "home" ? "active" : ""}`}>
             <div className="pdp">
-              <div>
-                <div className="imgpanel">
-                  <div className="mbox-wrap" />
-                </div>
-              </div>
-
               <div className="info">
                 <h1 className="ptitle">The Finder</h1>
                 <div className="ptag-line">ANY CAR PARTS · WE HAVE IT</div>
@@ -611,40 +534,9 @@ export default function StoreApp() {
                   {vinHelpOpen && <VinHelp />}
                 </div>
 
-                <div className="grid3">
-                  <div className="f">
-                    <label>Make</label>
-                    <AutoCompleteField
-                      value={make}
-                      onChange={setMake}
-                      options={ALL_MAKES}
-                      egItems={EG_MAKE}
-                      ariaLabel="Make"
-                    />
-                  </div>
-                  <div className="f">
-                    <label>Model</label>
-                    <AutoCompleteField
-                      value={model}
-                      onChange={setModel}
-                      options={modelOptions}
-                      egItems={EG_MODEL}
-                      ariaLabel="Model"
-                    />
-                  </div>
-                  <div className="f">
-                    <label>Year</label>
-                    <AutoCompleteField
-                      value={year}
-                      onChange={setYear}
-                      options={YEAR_OPTIONS}
-                      egItems={EG_YEAR}
-                      numeric
-                      maxLength={4}
-                      match="startsWith"
-                      ariaLabel="Year"
-                    />
-                  </div>
+                <div className="f">
+                  <label>Your car brand</label>
+                  <BrandPicker value={make} onChange={setMake} brands={ALL_MAKES} />
                 </div>
 
                 <div>

@@ -207,27 +207,14 @@
 }
 
 /* ===== product page ===== */
+/* single-column product page (centered) */
 .pdp {
-  max-width: 1400px;
+  max-width: 660px;
   margin: 0 auto;
-  padding: 34px;
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 54px;
-  align-items: start;
-}
-.imgpanel {
-  background: var(--panel);
-  position: relative;
-  height: calc(100dvh - 84px - 68px);
-  min-height: 420px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  padding: 30px 24px 64px;
 }
 .info {
-  padding-top: 6px;
+  padding-top: 0;
 }
 .ptag-line {
   font-size: 0.8rem;
@@ -1686,96 +1673,139 @@
   }
 }
 
-/* ============================================================
-   ONE-SCREEN PRODUCT PAGE (DESKTOP ONLY) — on desktop the
-   storefront fits the viewport with no scrolling. Everything is
-   gated behind min-width:921px so the phone/tablet layout is
-   completely untouched (it scrolls exactly as before).
-   ============================================================ */
-@media (min-width: 921px) {
-  .view-home {
-    overflow: hidden;
-  }
-  .view-home .pdp {
-    height: 100%;
-    /* one full-height row so both columns are exactly the same height,
-       aligned top and bottom */
-    grid-template-rows: minmax(0, 1fr);
-    padding: clamp(10px, 1.6vh, 18px) 34px;
-    gap: 44px;
-    align-items: stretch;
-  }
-  .view-home .imgpanel {
-    height: 100%;
-    min-height: 0;
-  }
-  /* info column fills the same height as the image; its action buttons are
-     pinned to the bottom so the column reaches the bottom of the image.
-     All vertical sizing scales with the viewport height (vh) so the content
-     fills tall screens yet always shrinks to fit shorter ones — the buttons
-     never spill below the image. */
-  .view-home .info {
-    padding-top: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  /* pull the title up so its caps line up with the top of the image box
-     (the heavy display font otherwise leaves leading space above the
-     letters). Bottom stays pinned, so this just tightens the top. */
-  .view-home .ptitle {
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    line-height: 1;
-    margin-top: -0.22em;
-  }
-  .view-home .desc {
-    margin-top: clamp(8px, 1.5vh, 18px);
-    font-size: clamp(0.82rem, 1.25vh, 1.04rem);
-    line-height: 1.5;
-  }
-  .view-home .desc p {
-    margin-bottom: 0;
-  }
-  .view-home .social-proof {
-    margin-top: clamp(6px, 1vh, 12px);
-  }
-  .view-home .price {
-    margin-top: clamp(6px, 1vh, 12px);
-  }
-  .view-home .f {
-    margin-top: clamp(7px, 1.5vh, 18px);
-  }
-  .view-home .f label {
-    font-size: 0.82rem;
-  }
-  .view-home .f input,
-  .view-home .f select,
-  .view-home .part-row input {
-    padding: clamp(5px, 1vh, 9px) 0;
-    font-size: 1.02rem;
-  }
-  .view-home .part-head {
-    margin-top: clamp(8px, 1.5vh, 16px);
-  }
-  .view-home .vin-upload {
-    margin-top: clamp(8px, 1.2vh, 12px);
-    padding: clamp(8px, 1.1vh, 11px) 14px;
-    font-size: 0.88rem;
-  }
-  .view-home .vin-help-toggle {
-    padding: clamp(3px, 0.7vh, 6px) 0 0;
-  }
-  .view-home .addpart {
-    margin-top: clamp(8px, 1.3vh, 14px);
-  }
-  .view-home .pdp-actions {
-    margin-top: auto;
-    padding-top: clamp(8px, 1.5vh, 18px);
-    gap: clamp(8px, 1vh, 10px);
-  }
-  .view-home .rowbtn {
-    padding: clamp(11px, 1.6vh, 17px) 18px;
-  }
+/* product page is a single, centered, scrolling column on all sizes */
+.view-home .pdp-actions {
+  gap: 10px;
+}
+
+/* ===== car brand picker (Cars24 / SellAnyCar style) ===== */
+.brandbox {
+  margin-top: 4px;
+}
+.brand-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.brand-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 76px;
+  padding: 10px 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.14s, background 0.14s, transform 0.08s;
+}
+.brand-tile:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+.brand-tile.active {
+  border-color: var(--green);
+  background: rgba(30, 158, 90, 0.16);
+}
+.brand-logo {
+  height: 26px;
+  width: auto;
+  max-width: 58px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+.brand-logo-fallback {
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.brand-name {
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+}
+.brand-search-wrap {
+  position: relative;
+  margin-top: 10px;
+}
+.brand-search-ico {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+}
+.brandbox .brand-search {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  padding: 11px 12px 11px 36px;
+}
+.brandbox .brand-search::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+}
+.brandbox .brand-search:focus {
+  outline: none;
+  border-color: var(--line-strong);
+}
+.brand-list {
+  margin: 8px 0 0;
+  padding: 4px;
+  list-style: none;
+  max-height: 196px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+.brand-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+.brand-row:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.brand-row.active {
+  background: rgba(30, 158, 90, 0.22);
+}
+.brand-check {
+  color: #8ef0b6;
+  font-weight: 800;
+}
+.brand-none {
+  padding: 14px 12px;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 600;
+  font-size: 0.85rem;
 }
 
 /* ===== make autocomplete dropdown ===== */
