@@ -3,6 +3,7 @@ import { isAdmin } from "@/lib/admin";
 import { prisma } from "@/lib/prisma";
 import { getOrderPattern } from "@/lib/settings";
 import OrderNumberSettings from "@/components/admin/OrderNumberSettings";
+import DangerZone from "@/components/admin/DangerZone";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +21,7 @@ export default async function AdminSettingsPage() {
       <div className="mt-6">
         <OrderNumberSettings initialPattern={pattern} previewSeq={count + 1} />
       </div>
+      <DangerZone />
     </main>
   );
 }
