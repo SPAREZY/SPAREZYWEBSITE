@@ -93,6 +93,7 @@ export default function StoreApp() {
   const [photo, setPhoto] = useState("");
   const [photoBusy, setPhotoBusy] = useState(false);
   const [vinErr, setVinErr] = useState(false);
+  const [makeErr, setMakeErr] = useState(false);
   const [partsErr, setPartsErr] = useState(false);
   const [qtyErr, setQtyErr] = useState(false);
   const [vinDecoding, setVinDecoding] = useState(false);
@@ -103,6 +104,7 @@ export default function StoreApp() {
   const homeViewRef = useRef<HTMLDivElement>(null);
   const lastDecodedVin = useRef<string>("");
   const vinFieldRef = useRef<HTMLDivElement>(null);
+  const brandFieldRef = useRef<HTMLDivElement>(null);
   const [vinHelpOpen, setVinHelpOpen] = useState(false);
 
   // Auto-fill Make / Model / Year from a full 17-char VIN (free NHTSA decode,
@@ -217,6 +219,7 @@ export default function StoreApp() {
     setParts([{ name: "", qty: "" }]);
     setPhoto("");
     setVinErr(false);
+    setMakeErr(false);
     setPartsErr(false);
     setQtyErr(false);
     setVinNote(null);
@@ -246,6 +249,7 @@ export default function StoreApp() {
   function selectBrand(v: string) {
     setMake(v);
     if (v) {
+      setMakeErr(false);
       requestAnimationFrame(() =>
         vinFieldRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
       );
@@ -269,13 +273,21 @@ export default function StoreApp() {
       .filter((p) => p.name);
     // The customer can EITHER type a VIN/chassis OR upload a photo of the
     // registration card — only flag the VIN when neither is provided.
+    const badBrand = !make.trim();
     const badVin = !isValidChassis(vinNorm) && !photo;
     const badParts = cleanParts.length === 0;
     const badQty = cleanParts.some((p) => !Number.isFinite(p.qty) || p.qty < 1);
+    setMakeErr(badBrand);
     setVinErr(badVin);
     setPartsErr(badParts);
     setQtyErr(!badParts && badQty);
-    if (badVin || badParts || badQty) return;
+    if (badBrand || badVin || badParts || badQty) {
+      // Brand sits at the top, far from the buttons — guide the eye to it.
+      if (badBrand) {
+        brandFieldRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      return;
+    }
 
     const item: CartItem = { vin: vinNorm, make, model, year, parts: cleanParts, photo: photo || undefined };
     setCart((prev) => {
@@ -308,6 +320,7 @@ export default function StoreApp() {
     );
     setPhoto(it.photo ?? "");
     setVinErr(false);
+    setMakeErr(false);
     setPartsErr(false);
     setQtyErr(false);
     closeCart();
@@ -403,29 +416,28 @@ export default function StoreApp() {
 
   const editing = editIndex !== null;
 
-  // Mobile form progress — every step rewards the bar so it climbs smoothly:
-  // vehicle (VIN/photo) → brand → part → quantity. The essentials for ordering
-  // are vehicle + part + qty; the brand sweetens the climb (and auto-fills from
-  // the VIN decode).
+  // Mobile form progress — every required step rewards the bar so it climbs
+  // smoothly: brand → vehicle (VIN/photo) → part → quantity. All four are
+  // required to add to cart / checkout.
   const namedParts = parts.filter((p) => p.name.trim().length > 0);
   const hasVehicle = isValidChassis(vin.trim().toUpperCase()) || !!photo;
   const hasMake = make.trim().length > 0;
   const hasPart = namedParts.length > 0;
   const hasQty = hasPart && namedParts.every((p) => parseInt(p.qty, 10) >= 1);
-  const progressSteps = [hasVehicle, hasMake, hasPart, hasQty];
+  const progressSteps = [hasMake, hasVehicle, hasPart, hasQty];
   const formProgress = Math.round(
     (progressSteps.filter(Boolean).length / progressSteps.length) * 100,
   );
-  const isReady = hasVehicle && hasPart && hasQty;
-  const progressLabel = !hasVehicle
+  const isReady = hasMake && hasVehicle && hasPart && hasQty;
+  const progressLabel = !hasMake
     ? "Add your car"
-    : !hasPart
-      ? "Add a part"
-      : !hasQty
-        ? "Set the quantity"
-        : formProgress >= 100
-          ? "All set!"
-          : "Ready to check out!";
+    : !hasVehicle
+      ? "Add your VIN / Chassis"
+      : !hasPart
+        ? "Add a part"
+        : !hasQty
+          ? "Set the quantity"
+          : "All set!";
 
   return (
     <div className="store">
@@ -464,8 +476,9 @@ export default function StoreApp() {
           <div ref={homeViewRef} className={`view view-home ${view === "home" ? "active" : ""}`}>
             <div className="pdp">
               <div className="info">
-                <div className="brand-field">
+                <div className="brand-field" ref={brandFieldRef}>
                   <BrandPicker value={make} onChange={selectBrand} />
+                  {makeErr && <div className="err-msg">Please select your car brand.</div>}
                 </div>
                 <h1 className="ptitle">The Finder</h1>
                 <div className="ptag-line">ANY CAR PARTS · WE HAVE IT</div>
