@@ -92,4 +92,4 @@ export const CAR_BRANDS: CarBrand[] = [
 ];
 
 // Brands surfaced as tiles before the customer searches (UAE-popular).
-export const POPULAR_SLUGS = ["toyota","nissan","mitsubishi","honda","lexus","mercedes-benz","bmw","ford","hyundai","kia","gmc","land-rover"];
+export const POPULAR_SLUGS = ["toyota","nissan","mitsubishi","honda","lexus","mercedes-benz","hyundai","ford"];
