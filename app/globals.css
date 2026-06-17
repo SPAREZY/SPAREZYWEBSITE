@@ -1781,7 +1781,7 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(10, 22, 52, 0.25) transparent;
 }
-.brand-row {
+.brandbox .brand-row {
   width: 100%;
   display: flex;
   align-items: center;
@@ -1794,10 +1794,10 @@
   padding: 11px 12px;
   border-radius: 6px;
 }
-.brand-row:hover {
+.brandbox .brand-row:hover {
   background: #f2f4f8;
 }
-.brand-row.active {
+.brandbox .brand-row.active {
   background: #eaf7ef;
   color: #0e1320;
 }

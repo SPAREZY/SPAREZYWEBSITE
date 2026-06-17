@@ -110,6 +110,7 @@ export default function StoreApp() {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const homeViewRef = useRef<HTMLDivElement>(null);
   const lastDecodedVin = useRef<string>("");
+  const vinFieldRef = useRef<HTMLDivElement>(null);
   const [vinHelpOpen, setVinHelpOpen] = useState(false);
 
   // Auto-fill Make / Model / Year from a full 17-char VIN (free NHTSA decode,
@@ -246,6 +247,16 @@ export default function StoreApp() {
       showToast("Couldn't read that image. Try a JPG or PNG.");
     } finally {
       setPhotoBusy(false);
+    }
+  }
+
+  // Picking a brand sets the make and glides the customer down to the VIN step.
+  function selectBrand(v: string) {
+    setMake(v);
+    if (v) {
+      requestAnimationFrame(() =>
+        vinFieldRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
+      );
     }
   }
 
@@ -491,6 +502,11 @@ export default function StoreApp() {
                 </div>
 
                 <div className="f">
+                  <label>Your car brand</label>
+                  <BrandPicker value={make} onChange={selectBrand} brands={ALL_MAKES} />
+                </div>
+
+                <div className="f" ref={vinFieldRef}>
                   <label>Enter VIN / Chassis or upload a photo *</label>
                   <div className="f-field">
                     <input
@@ -532,11 +548,6 @@ export default function StoreApp() {
                     {vinHelpOpen ? "▲" : "▼"} Where do I find my VIN / Chassis?
                   </button>
                   {vinHelpOpen && <VinHelp />}
-                </div>
-
-                <div className="f">
-                  <label>Your car brand</label>
-                  <BrandPicker value={make} onChange={setMake} brands={ALL_MAKES} />
                 </div>
 
                 <div>
