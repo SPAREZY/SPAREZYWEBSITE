@@ -468,6 +468,15 @@ export default function StoreApp() {
   const editing = editIndex !== null;
   const modelOptions = makeKey(make) ? MAKE_MODELS[makeKey(make)!] : POPULAR_MODELS;
 
+  // Mobile form progress: vehicle identified (VIN or photo) → part named →
+  // quantity set. 100% means the form is ready to add to cart / checkout.
+  const namedParts = parts.filter((p) => p.name.trim().length > 0);
+  const progressDone =
+    (isValidChassis(vin.trim().toUpperCase()) || !!photo ? 1 : 0) +
+    (namedParts.length > 0 ? 1 : 0) +
+    (namedParts.length > 0 && namedParts.every((p) => parseInt(p.qty, 10) >= 1) ? 1 : 0);
+  const formProgress = Math.round((progressDone / 3) * 100);
+
   return (
     <div className="store">
       <BackgroundGrid />
@@ -825,48 +834,27 @@ export default function StoreApp() {
 
       {/* Mobile bottom tab bar (hidden on desktop via CSS) */}
       <nav className="botnav" aria-label="Primary">
-        <button
-          type="button"
-          className={`botnav-item ${view === "contact" ? "active" : ""}`}
-          onClick={() => go("contact")}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        {view === "home" && (
+          <div
+            className="botnav-progress"
+            role="progressbar"
+            aria-valuenow={formProgress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Form completion"
           >
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
-          <span>Contact</span>
-        </button>
-        <button
-          type="button"
-          className={`botnav-item ${view === "orders" ? "active" : ""}`}
-          onClick={() => go("orders")}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            <div
+              className={`botnav-progress-fill ${formProgress >= 100 ? "full" : ""}`}
+              style={{ width: `${formProgress}%` }}
+            />
+          </div>
+        )}
+        <div className="botnav-row">
+          <button
+            type="button"
+            className={`botnav-item ${view === "contact" ? "active" : ""}`}
+            onClick={() => go("contact")}
           >
-            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
-            <rect x="9" y="3" width="6" height="4" rx="1" />
-            <path d="M9 12h6M9 16h6" />
-          </svg>
-          <span>Orders</span>
-        </button>
-        <button
-          type="button"
-          className={`botnav-item ${cartOpen ? "active" : ""}`}
-          onClick={toggleCart}
-        >
-          <span className="botnav-ico-wrap">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -875,14 +863,52 @@ export default function StoreApp() {
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-              <path d="M3 6h18" />
-              <path d="M16 10a4 4 0 0 1-8 0" />
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
-            {cart.length > 0 && <span className="botnav-badge">{cart.length}</span>}
-          </span>
-          <span>Cart</span>
-        </button>
+            <span>Contact</span>
+          </button>
+          <button
+            type="button"
+            className={`botnav-item ${view === "orders" ? "active" : ""}`}
+            onClick={() => go("orders")}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+              <rect x="9" y="3" width="6" height="4" rx="1" />
+              <path d="M9 12h6M9 16h6" />
+            </svg>
+            <span>Orders</span>
+          </button>
+          <button
+            type="button"
+            className={`botnav-item ${cartOpen ? "active" : ""}`}
+            onClick={toggleCart}
+          >
+            <span className="botnav-ico-wrap">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <path d="M3 6h18" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+              {cart.length > 0 && <span className="botnav-badge">{cart.length}</span>}
+            </span>
+            <span>Cart</span>
+          </button>
+        </div>
       </nav>
     </div>
   );

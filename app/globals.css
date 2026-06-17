@@ -1512,6 +1512,25 @@
 .botnav {
   display: none;
 }
+/* form-completion progress strip that sits above the footer tabs (phone) */
+.botnav-progress {
+  height: 5px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 9px;
+}
+.botnav-progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--green);
+  border-radius: 999px;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.botnav-progress-fill.full {
+  box-shadow: 0 0 9px rgba(30, 158, 90, 0.75);
+}
 .botnav-item {
   flex: 1;
   background: none;
@@ -1561,6 +1580,7 @@
   }
   .botnav {
     display: flex;
+    flex-direction: column;
     position: fixed;
     left: 0;
     right: 0;
@@ -1570,11 +1590,14 @@
     border-top: 1px solid rgba(255, 255, 255, 0.14);
     padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
   }
+  .botnav-row {
+    display: flex;
+  }
   .view {
-    padding-bottom: 86px;
+    padding-bottom: 92px;
   }
   .toast {
-    bottom: 96px;
+    bottom: 102px;
     z-index: 130;
   }
 }
