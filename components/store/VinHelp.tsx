@@ -1,5 +1,6 @@
 // Visual "where to find your VIN" helper — three animated SVG illustrations
-// (windshield, door jamb, registration card) replacing the old bullet list.
+// (windshield, registration card, door), each with a pulsing green highlight
+// on where the VIN sits.
 export default function VinHelp() {
   return (
     <div className="vinhelp">
@@ -28,25 +29,6 @@ export default function VinHelp() {
       <figure className="vinhelp-card">
         <div className="vinhelp-art">
           <svg viewBox="0 0 64 48" fill="none" stroke="currentColor" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round">
-            {/* door opening / B-pillar */}
-            <path d="M14 38 V14 H36 a3 3 0 0 1 3 3 V38" />
-            <path d="M9 38 H44" />
-            {/* open door panel */}
-            <path d="M41 18 L56 22 V38 L41 34 Z" />
-            <path d="M45 23 H53" />
-            {/* sticker on the jamb */}
-            <rect className="vh-hl" x="31" y="22" width="6" height="9" rx="1" />
-          </svg>
-        </div>
-        <figcaption className="vinhelp-cap">
-          <b>Door jamb</b>
-          <span>Sticker inside the driver&apos;s door</span>
-        </figcaption>
-      </figure>
-
-      <figure className="vinhelp-card">
-        <div className="vinhelp-art">
-          <svg viewBox="0 0 64 48" fill="none" stroke="currentColor" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round">
             {/* registration card */}
             <rect x="10" y="9" width="44" height="30" rx="3" />
             <circle cx="18" cy="17" r="3.2" />
@@ -64,6 +46,27 @@ export default function VinHelp() {
         <figcaption className="vinhelp-cap">
           <b>Registration</b>
           <span>Your car&apos;s reg card</span>
+        </figcaption>
+      </figure>
+
+      <figure className="vinhelp-card">
+        <div className="vinhelp-art">
+          <svg viewBox="0 0 64 48" fill="none" stroke="currentColor" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round">
+            {/* car body / jamb behind the open door */}
+            <path d="M41 7 L49 10 V42 L41 39" />
+            {/* open door panel */}
+            <rect x="15" y="9" width="24" height="30" rx="2.5" />
+            {/* window */}
+            <rect x="19" y="13" width="16" height="8" rx="1" />
+            {/* handle */}
+            <path d="M20 27 h6" />
+            {/* VIN sticker on the door edge, highlighted */}
+            <rect className="vh-hl" x="19" y="30" width="13" height="5" rx="1" />
+          </svg>
+        </div>
+        <figcaption className="vinhelp-cap">
+          <b>Door jamb</b>
+          <span>Sticker inside the driver&apos;s door</span>
         </figcaption>
       </figure>
     </div>

@@ -598,7 +598,7 @@ export default function StoreApp() {
                   ) : (
                     <label className={`vin-upload ${photoBusy ? "busy" : ""}`}>
                       <input type="file" accept="image/*" onChange={onPickPhoto} hidden disabled={photoBusy} />
-                      {photoBusy ? "Processing…" : "📷 Upload a photo of the chassis / reg. card"}
+                      {photoBusy ? "Processing…" : "📷 Upload a photo of the chassis / VIN"}
                     </label>
                   )}
                   <button
