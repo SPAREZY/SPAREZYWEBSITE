@@ -33,14 +33,6 @@ const EG_PART = [
   "Shock absorber",
 ];
 
-const ALL_MAKES = [
-  "Toyota", "Nissan", "GMC", "BYD", "Mitsubishi", "Lexus", "Honda", "Hyundai", "Kia", "Land Rover",
-  "Ford", "Chevrolet", "BMW", "Mercedes-Benz", "Audi", "Volkswagen", "Jeep", "Dodge", "RAM",
-  "Infiniti", "Mazda", "Suzuki", "Subaru", "Isuzu", "Porsche", "Cadillac", "Lincoln",
-  "Volvo", "Renault", "Peugeot", "Fiat", "Jaguar", "Genesis", "MG", "Acura",
-  "Chery", "Geely", "HAVAL", "Daihatsu", "Foton", "JAC", "Mahindra",
-];
-
 // Resize + compress a chosen image to a small JPEG data URL so the
 // registration card can be stored/sent without any blob storage.
 async function fileToCompressedDataUrl(file: File, maxDim = 1280, quality = 0.68): Promise<string> {
@@ -473,8 +465,7 @@ export default function StoreApp() {
             <div className="pdp">
               <div className="info">
                 <div className="brand-field">
-                  <h2 className="brand-heading">Select your car brand for any parts</h2>
-                  <BrandPicker value={make} onChange={selectBrand} brands={ALL_MAKES} />
+                  <BrandPicker value={make} onChange={selectBrand} />
                 </div>
                 <h1 className="ptitle">The Finder</h1>
                 <div className="ptag-line">ANY CAR PARTS · WE HAVE IT</div>
