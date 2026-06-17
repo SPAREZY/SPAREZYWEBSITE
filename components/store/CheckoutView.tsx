@@ -3,18 +3,8 @@
 import { useState } from "react";
 import type { CartItem, CheckoutData } from "@/lib/store-types";
 import { carLabel, vinLabel } from "@/lib/store-types";
-import { isValidUaePhone, isValidEmail } from "@/lib/utils";
-
-const CITIES = [
-  "Abu Dhabi",
-  "Dubai",
-  "Sharjah",
-  "Ajman",
-  "Umm Al Quwain",
-  "Ras Al Khaimah",
-  "Fujairah",
-  "Al Ain",
-];
+import { isValidPhone, isValidEmail } from "@/lib/utils";
+import { COUNTRIES } from "@/lib/countries";
 
 export default function CheckoutView({
   cart,
@@ -33,9 +23,7 @@ export default function CheckoutView({
   const [wa, setWa] = useState("");
   const [sameWa, setSameWa] = useState(false);
   const [country, setCountry] = useState("United Arab Emirates");
-  const [countryOther, setCountryOther] = useState("");
   const [city, setCity] = useState("");
-  const [cityOther, setCityOther] = useState("");
   const [pref, setPref] = useState("WhatsApp");
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
@@ -44,16 +32,14 @@ export default function CheckoutView({
 
   function submit() {
     if (hp) return; // bot caught by honeypot — silently drop
-    const finalCountry = country === "Other" ? countryOther.trim() : country;
-    const finalCity = city === "Other" ? cityOther.trim() : city;
     const e: Record<string, string> = {};
     if (!name.trim()) e.name = "Please enter your name.";
     if (!phone.trim()) e.phone = "Please enter your phone number.";
-    else if (!isValidUaePhone(phone)) e.phone = "Enter a valid UAE number (e.g. +971 5X XXX XXXX).";
+    else if (!isValidPhone(phone)) e.phone = "Enter a valid phone number, including the country code.";
     if (email.trim() && !isValidEmail(email)) e.email = "That email doesn't look right.";
     if (pref === "Email" && !email.trim()) e.email = "Add your email, or pick another contact method.";
-    if (!finalCity) e.city = "Please choose your city.";
-    if (country === "Other" && !countryOther.trim()) e.countryOther = "Please type your country.";
+    if (!country) e.country = "Please choose your country.";
+    if (!city.trim()) e.city = "Please enter your city.";
     if (!address.trim()) e.address = "Please enter your delivery address.";
     setErr(e);
     if (Object.keys(e).length) return;
@@ -63,8 +49,8 @@ export default function CheckoutView({
       email: email.trim(),
       phone: phone.trim(),
       wa: (sameWa ? phone : wa).trim(),
-      country: finalCountry,
-      city: finalCity,
+      country,
+      city: city.trim(),
       pref,
       address: address.trim(),
       notes: notes.trim(),
@@ -100,19 +86,23 @@ export default function CheckoutView({
             <label>Phone *</label>
             <input
               className={err.phone ? "err" : ""}
+              type="tel"
+              inputMode="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="+971 5X XXX XXXX"
+              placeholder="+971 50 123 4567"
             />
             {err.phone && <div className="err-msg">{err.phone}</div>}
           </div>
           <div className="f">
             <label>WhatsApp</label>
             <input
+              type="tel"
+              inputMode="tel"
               value={sameWa ? phone : wa}
               disabled={sameWa}
               onChange={(e) => setWa(e.target.value)}
-              placeholder="+971 5X XXX XXXX"
+              placeholder="+971 50 123 4567"
             />
             <label className="inline-check">
               <input
@@ -128,41 +118,25 @@ export default function CheckoutView({
         <div className="grid2">
           <div className="f">
             <label>Country *</label>
-            <select value={country} onChange={(e) => setCountry(e.target.value)}>
-              <option>United Arab Emirates</option>
-              <option>Other</option>
+            <select
+              className={err.country ? "err" : ""}
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            >
+              {COUNTRIES.map((c) => (
+                <option key={c}>{c}</option>
+              ))}
             </select>
-            {country === "Other" && (
-              <input
-                className={err.countryOther ? "err" : ""}
-                value={countryOther}
-                onChange={(e) => setCountryOther(e.target.value)}
-                placeholder="Type your country"
-                style={{ marginTop: 10 }}
-              />
-            )}
+            {err.country && <div className="err-msg">{err.country}</div>}
           </div>
           <div className="f">
-            <label>City / Emirate *</label>
-            <select
+            <label>City *</label>
+            <input
               className={err.city ? "err" : ""}
               value={city}
               onChange={(e) => setCity(e.target.value)}
-            >
-              <option value="">Select</option>
-              {CITIES.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-              <option>Other</option>
-            </select>
-            {city === "Other" && (
-              <input
-                value={cityOther}
-                onChange={(e) => setCityOther(e.target.value)}
-                placeholder="Type your city"
-                style={{ marginTop: 10 }}
-              />
-            )}
+              placeholder="City"
+            />
             {err.city && <div className="err-msg">{err.city}</div>}
           </div>
         </div>

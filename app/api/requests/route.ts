@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyCustomer } from "@/lib/notify";
-import { isValidChassis, isValidUaePhone, isValidEmail } from "@/lib/utils";
+import { isValidChassis, isValidPhone, isValidEmail } from "@/lib/utils";
 import { getOrderPattern } from "@/lib/settings";
 import { renderOrderNumber } from "@/lib/order-number";
 import { logActivity } from "@/lib/activity";
@@ -64,8 +64,8 @@ export async function POST(req: Request) {
   if (!hasPhone && !hasEmail) {
     return NextResponse.json({ error: "At least one of phone or email is required." }, { status: 400 });
   }
-  if (hasPhone && !isValidUaePhone(phone)) {
-    return NextResponse.json({ error: "That doesn't look like a valid UAE phone number." }, { status: 400 });
+  if (hasPhone && !isValidPhone(phone)) {
+    return NextResponse.json({ error: "That doesn't look like a valid phone number." }, { status: 400 });
   }
   if (hasEmail && !isValidEmail(email)) {
     return NextResponse.json({ error: "That doesn't look like a valid email address." }, { status: 400 });

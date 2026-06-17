@@ -14,6 +14,13 @@ export function isValidUaePhone(phone: string): boolean {
   return /^\+9715\d{8}$/.test(p) || /^9715\d{8}$/.test(p) || /^05\d{8}$/.test(p);
 }
 
+// International phone (E.164-ish): optional leading +, 7–15 digits. Accepts any
+// country so checkout works worldwide.
+export function isValidPhone(phone: string): boolean {
+  const p = phone.replace(/[\s\-().]/g, "");
+  return /^\+?\d{7,15}$/.test(p);
+}
+
 export function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
