@@ -36,7 +36,7 @@ const FAQS = [
   },
   {
     q: "Where do you deliver?",
-    a: "Across the UAE, from our base in M7, Musaffah Industrial, Abu Dhabi.",
+    a: "Worldwide. We're based in M7, Musaffah Industrial, Abu Dhabi, and ship across the UAE and internationally.",
   },
   {
     q: "How and when do I pay?",
