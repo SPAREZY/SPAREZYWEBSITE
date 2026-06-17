@@ -512,7 +512,7 @@ export default function StoreApp() {
                 </div>
 
                 <div className="f" ref={vinFieldRef}>
-                  <label>Enter VIN / Chassis or upload a photo *</label>
+                  <label>Enter VIN / Chassis or upload a photo</label>
                   <div className="f-field">
                     <input
                       className={`vin-input ${vinErr ? "err" : ""}`}
@@ -557,8 +557,8 @@ export default function StoreApp() {
 
                 <div>
                   <div className="part-row part-head">
-                    <span className="ph-label">Parts needed for this car *</span>
-                    <span className="ph-label">Qty *</span>
+                    <span className="ph-label">Parts needed for this car</span>
+                    <span className="ph-label">Qty</span>
                     <span />
                   </div>
                   {parts.map((p, i) => (

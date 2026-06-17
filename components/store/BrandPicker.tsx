@@ -23,9 +23,7 @@ export default function BrandPicker({
 
   return (
     <div className="brandbox">
-      <h2 className="brand-heading">
-        Select your car brand to find parts <span className="req">*</span>
-      </h2>
+      <h2 className="brand-heading">Select your car brand to find parts</h2>
       <p className="brand-subheading">Pick your car&apos;s brand and find parts fast</p>
 
       <div className="brand-search-wrap">
