@@ -1751,7 +1751,7 @@
 .brand-badge {
   width: 66px;
   height: 66px;
-  border-radius: 50%;
+  border-radius: 16px;
   background: #ffffff;
   border: 1.5px solid #e2e6ee;
   display: flex;
