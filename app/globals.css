@@ -359,6 +359,17 @@
   margin-top: 6px;
   font-weight: 600;
 }
+/* VIN auto-decode status */
+.vin-decode {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.01em;
+}
+.vin-decode.ok {
+  color: #8ef0b6;
+}
 .hint {
   font-size: 0.78rem;
   color: var(--txt-dim);

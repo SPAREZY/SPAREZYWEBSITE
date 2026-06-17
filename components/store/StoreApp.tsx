@@ -169,11 +169,53 @@ export default function StoreApp() {
   const [vinErr, setVinErr] = useState(false);
   const [partsErr, setPartsErr] = useState(false);
   const [qtyErr, setQtyErr] = useState(false);
+  const [vinDecoding, setVinDecoding] = useState(false);
+  const [vinNote, setVinNote] = useState<string | null>(null);
 
   const addBarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const homeViewRef = useRef<HTMLDivElement>(null);
+  const lastDecodedVin = useRef<string>("");
   const [vinHelpOpen, setVinHelpOpen] = useState(false);
+
+  // Auto-fill Make / Model / Year from a full 17-char VIN (free NHTSA decode).
+  // Debounced; only fills fields the customer hasn't already typed; fails
+  // silently so it never blocks the form. Chassis codes won't decode.
+  useEffect(() => {
+    const v = vin.trim().toUpperCase();
+    setVinNote(null);
+    if (!/^[A-HJ-NPR-Z0-9]{17}$/.test(v)) return;
+    if (v === lastDecodedVin.current) return;
+    const curMake = make.trim();
+    const curModel = model.trim();
+    const curYear = year.trim();
+    const ctrl = new AbortController();
+    const timer = setTimeout(async () => {
+      setVinDecoding(true);
+      try {
+        const res = await fetch(`/api/decode-vin?vin=${encodeURIComponent(v)}`, {
+          signal: ctrl.signal,
+        });
+        if (!res.ok) return;
+        const d = (await res.json()) as { make?: string | null; model?: string | null; year?: string | null };
+        lastDecodedVin.current = v;
+        let filled = 0;
+        if (d.make && !curMake) { setMake(d.make); filled++; }
+        if (d.model && !curModel) { setModel(d.model); filled++; }
+        if (d.year && !curYear) { setYear(String(d.year)); filled++; }
+        if (filled > 0) setVinNote("Filled from your VIN — edit if anything's off.");
+      } catch {
+        /* aborted or network blocked — ignore, form still works */
+      } finally {
+        setVinDecoding(false);
+      }
+    }, 650);
+    return () => {
+      clearTimeout(timer);
+      ctrl.abort();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vin]);
 
   // load + persist cart
   useEffect(() => {
@@ -253,6 +295,8 @@ export default function StoreApp() {
     setVinErr(false);
     setPartsErr(false);
     setQtyErr(false);
+    setVinNote(null);
+    lastDecodedVin.current = "";
   }
 
   async function onPickPhoto(e: React.ChangeEvent<HTMLInputElement>) {
@@ -518,6 +562,8 @@ export default function StoreApp() {
                       Enter the VIN / chassis number or upload a photo of the registration card.
                     </div>
                   )}
+                  {vinDecoding && <div className="vin-decode">🔎 Reading your VIN…</div>}
+                  {!vinDecoding && vinNote && <div className="vin-decode ok">✓ {vinNote}</div>}
                   {photo ? (
                     <div className="vin-thumb">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
