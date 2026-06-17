@@ -14,6 +14,7 @@ import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
 import OrdersView from "./OrdersView";
 import HelpView from "./HelpView";
+import VinHelp from "./VinHelp";
 import RotatingPlaceholder from "./RotatingPlaceholder";
 import AutoCompleteField from "./AutoCompleteField";
 
@@ -607,15 +608,7 @@ export default function StoreApp() {
                   >
                     {vinHelpOpen ? "▲" : "▼"} Where do I find my VIN / Chassis?
                   </button>
-                  {vinHelpOpen && (
-                    <div className="vin-help">
-                      <ul>
-                        <li>The dashboard, driver side — visible through the windshield</li>
-                        <li>The sticker inside the driver&apos;s door jamb</li>
-                        <li>Your car registration card</li>
-                      </ul>
-                    </div>
-                  )}
+                  {vinHelpOpen && <VinHelp />}
                 </div>
 
                 <div className="grid3">

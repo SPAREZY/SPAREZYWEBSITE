@@ -1835,27 +1835,111 @@
 .vin-help-toggle:hover {
   color: rgba(255, 255, 255, 0.8);
 }
-.vin-help {
-  background: rgba(255, 255, 255, 0.05);
-  border-left: 3px solid rgba(255, 255, 255, 0.2);
-  padding: 10px 14px;
-  margin-top: 6px;
+/* ===== animated "where's my VIN" visual helper (3 tiles) ===== */
+.vinhelp {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 8px;
   margin-bottom: 4px;
-  border-radius: 0 6px 6px 0;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.65);
-  line-height: 1.55;
 }
-.vin-help p {
-  margin: 0 0 6px;
-}
-.vin-help ul {
+.vinhelp-card {
   margin: 0;
-  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  text-align: center;
 }
-.vin-help li {
-  margin: 3px 0;
+.vinhelp-art {
+  color: #fff;
+}
+.vinhelp-art svg {
+  display: block;
+  width: 58px;
+  height: 44px;
+}
+.vinhelp-cap b {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.vinhelp-cap span {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.64rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.6);
+}
+/* pulsing highlight on where the VIN sits in each illustration */
+.vh-hl {
+  stroke: #3fe089;
+  fill: rgba(63, 224, 137, 0.18);
+  animation: vh-pulse 1.7s ease-in-out infinite;
+}
+.vinhelp-card:nth-child(2) .vh-hl {
+  animation-delay: 0.35s;
+}
+.vinhelp-card:nth-child(3) .vh-hl {
+  animation-delay: 0.7s;
+}
+@keyframes vh-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.vh-float {
+  animation: vh-float 2.6s ease-in-out infinite;
+  transform-origin: center;
+}
+@keyframes vh-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2.5px);
+  }
+}
+.vh-shine {
+  animation: vh-shine 3s ease-in-out infinite;
+}
+@keyframes vh-shine {
+  0%,
+  60%,
+  100% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(38px);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vh-hl,
+  .vh-float,
+  .vh-shine {
+    animation: none;
+  }
+  .vh-hl {
+    opacity: 1;
+  }
 }
 
 
