@@ -5,14 +5,12 @@ import { useState } from "react";
 // Popular UAE makes shown as tiles; the rest live in the searchable list.
 const POPULAR = ["Toyota", "Nissan", "Mitsubishi", "Lexus", "Honda", "Mercedes-Benz"];
 
-// Brand logos we ship in /public/brands. Others fall back to a clean name tile.
-const LOGOS = new Set([
-  "bmw", "changan", "honda", "lexus", "mazda", "mercedes-benz", "mg",
-  "mitsubishi", "peugeot", "renault", "suzuki", "toyota", "volkswagen", "volvo",
-]);
+// Real full-colour brand logos in /public/brand-logos. Others fall back to a
+// clean name tile.
+const LOGOS = new Set(["toyota", "nissan", "mitsubishi", "lexus", "honda", "mercedes-benz"]);
 function logoFor(name: string): string | null {
   const f = name.toLowerCase().replace(/\s+/g, "-");
-  return LOGOS.has(f) ? `/brands/${f}.png` : null;
+  return LOGOS.has(f) ? `/brand-logos/${f}.png` : null;
 }
 
 export default function BrandPicker({

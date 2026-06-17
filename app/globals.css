@@ -1679,6 +1679,17 @@
 }
 
 /* ===== car brand picker (Cars24 / SellAnyCar style) ===== */
+.brand-field {
+  margin-bottom: 26px;
+}
+.brand-heading {
+  font-weight: 800;
+  font-size: 1.02rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 12px;
+}
 .brandbox {
   margin-top: 4px;
 }
@@ -1711,13 +1722,10 @@
   box-shadow: 0 0 0 2px rgba(30, 158, 90, 0.3);
 }
 .brand-logo {
-  height: 28px;
+  height: 34px;
   width: auto;
-  max-width: 60px;
+  max-width: 64px;
   object-fit: contain;
-  /* logo PNGs are white silhouettes — darken them so they read on white */
-  filter: brightness(0);
-  opacity: 0.82;
 }
 .brand-logo-fallback {
   height: 28px;

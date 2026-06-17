@@ -472,6 +472,10 @@ export default function StoreApp() {
           <div ref={homeViewRef} className={`view view-home ${view === "home" ? "active" : ""}`}>
             <div className="pdp">
               <div className="info">
+                <div className="brand-field">
+                  <h2 className="brand-heading">Select your car brand for any parts</h2>
+                  <BrandPicker value={make} onChange={selectBrand} brands={ALL_MAKES} />
+                </div>
                 <h1 className="ptitle">The Finder</h1>
                 <div className="ptag-line">ANY CAR PARTS · WE HAVE IT</div>
                 <div className="social-proof" aria-label="Rated 4.6 out of 5 — 5.3K+ parts found">
@@ -499,11 +503,6 @@ export default function StoreApp() {
                     guesswork: just <span className="flag-good">your car ready</span> and running
                     perfectly.
                   </p>
-                </div>
-
-                <div className="f">
-                  <label>Your car brand</label>
-                  <BrandPicker value={make} onChange={selectBrand} brands={ALL_MAKES} />
                 </div>
 
                 <div className="f" ref={vinFieldRef}>
