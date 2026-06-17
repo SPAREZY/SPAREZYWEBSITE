@@ -333,6 +333,42 @@
 .f select.err {
   border-bottom-color: var(--red);
 }
+/* auto-growing textareas (address / notes) — sit on one line when empty so
+   they line up with the other fields, then grow as the customer types */
+.f textarea.autogrow {
+  resize: none;
+  overflow: hidden;
+  line-height: 1.45;
+  min-height: 0;
+}
+/* phone field with a country dial-code prefix; the underline spans both */
+.phone-field {
+  display: flex;
+  align-items: center;
+  border-bottom: 1.5px solid var(--line);
+}
+.phone-field.err {
+  border-bottom-color: var(--red);
+}
+.phone-field:focus-within {
+  border-bottom-color: var(--line-strong);
+}
+.phone-dial {
+  font-weight: 800;
+  color: #fff;
+  padding-right: 8px;
+  white-space: nowrap;
+  user-select: none;
+}
+.f .phone-field input {
+  border: none;
+  padding: 9px 0;
+  flex: 1;
+  min-width: 0;
+}
+.f .phone-field input:disabled {
+  opacity: 0.55;
+}
 .f select {
   appearance: none;
   -webkit-appearance: none;
