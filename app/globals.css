@@ -174,21 +174,15 @@
 
 /* ===== header category tiles (Part Finder + coming-soon teasers) ===== */
 .cat-bar {
-  max-width: 1400px;
+  max-width: 660px;
   margin: 0 auto;
-  display: flex;
-  gap: 10px;
-  padding: 0 18px 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.cat-bar::-webkit-scrollbar {
-  display: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 0 24px 14px;
 }
 .cat-tile {
   position: relative;
-  flex: 0 0 auto;
-  width: 104px;
   height: 88px;
   border-radius: 16px;
   padding: 11px 12px;
@@ -215,10 +209,11 @@
   position: relative;
   z-index: 1;
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: clamp(0.72rem, 2.1vw, 0.95rem);
   line-height: 1.05;
   letter-spacing: -0.01em;
   text-align: left;
+  overflow-wrap: anywhere;
 }
 .cat-ico {
   position: absolute;

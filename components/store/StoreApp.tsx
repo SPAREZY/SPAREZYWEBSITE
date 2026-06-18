@@ -36,7 +36,6 @@ const EG_PART = [
 const HEADER_CATS = [
   { key: "finder", label: "Part Finder", icon: "🔧", live: true },
   { key: "buy", label: "Buy Parts", icon: "🛒" },
-  { key: "sell", label: "Sell Parts", icon: "🏷️" },
   { key: "service", label: "Car Service", icon: "🛠️" },
   { key: "accessories", label: "Accessories", icon: "🎧" },
 ];
