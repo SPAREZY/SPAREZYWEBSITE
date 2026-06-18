@@ -8,7 +8,6 @@ import { rememberOrders } from "@/lib/tracked-orders";
 import { trackAddToCart, trackInitiateCheckout, trackLead } from "@/lib/analytics";
 import { decodeVin, isVin } from "@/lib/vin";
 import BackgroundGrid from "./BackgroundGrid";
-import SparezyLogo from "./SparezyLogo";
 import CheckoutView from "./CheckoutView";
 import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
@@ -185,18 +184,6 @@ export default function StoreApp() {
       return;
     }
     setView(v);
-  }
-
-  // Logo acts as the "home" button. In this single-page storefront the home
-  // view is the main page, so we always return to it, close the cart, and
-  // scroll back to the top — that way the click has visible feedback even
-  // when the home view is already showing.
-  function goHome() {
-    closeCart();
-    setView("home");
-    requestAnimationFrame(() =>
-      homeViewRef.current?.scrollTo({ top: 0, behavior: "smooth" }),
-    );
   }
 
   function showToast(t: string) {
@@ -459,14 +446,6 @@ export default function StoreApp() {
                 Orders
               </button>
             </div>
-            <button
-              type="button"
-              className="nav-logo"
-              onClick={goHome}
-              aria-label="SPAREZY — go to home"
-            >
-              <SparezyLogo />
-            </button>
             <button className="cartlink" onClick={toggleCart}>
               Cart ( {cart.length} )
             </button>
