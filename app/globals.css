@@ -1496,7 +1496,8 @@
 .rot-word {
   display: block;
   white-space: nowrap;
-  font-weight: 700;
+  font-weight: 400;
+  font-size: 0.8rem;
   color: var(--txt-dim);
   animation: ph-rise 2s ease forwards;
 }
@@ -1507,11 +1508,11 @@
   }
   14% {
     transform: translateY(0);
-    opacity: 0.5;
+    opacity: 0.35;
   }
   86% {
     transform: translateY(0);
-    opacity: 0.5;
+    opacity: 0.35;
   }
   100% {
     transform: translateY(-1.1em);
@@ -1521,7 +1522,7 @@
 @media (prefers-reduced-motion: reduce) {
   .rot-word {
     animation: none;
-    opacity: 0.5;
+    opacity: 0.35;
   }
 }
 
