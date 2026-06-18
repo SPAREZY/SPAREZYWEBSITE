@@ -32,13 +32,13 @@ const EG_PART = [
   "Shock absorber",
 ];
 
-// Header category tiles. Only Part Finder is live; the rest are teasers.
-// Two-word labels so each renders on two lines and clears the "Soon" badge.
+// Header category tiles. Only the first (the live part finder) works; the
+// rest are "Soon" teasers.
 const HEADER_CATS = [
-  { key: "finder", label: "Part Finder", icon: "🔧", live: true },
-  { key: "buy", label: "Buy Parts", icon: "🛒" },
-  { key: "service", label: "Car Service", icon: "🛠️" },
-  { key: "accessories", label: "Car Extras", icon: "🎧" },
+  { key: "part", label: "Buy Part", icon: "🔧", live: true },
+  { key: "battery", label: "Buy Battery", icon: "🔋" },
+  { key: "oil", label: "Buy Oil", icon: "🛢️" },
+  { key: "body", label: "Buy Body Parts", icon: "🚗" },
 ];
 
 // Resize + compress a chosen image to a small JPEG data URL so the
@@ -461,33 +461,34 @@ export default function StoreApp() {
           </div>
 
           <div className="cat-bar" aria-label="Categories">
-            {HEADER_CATS.map((c) => (
-              <button
-                key={c.key}
-                type="button"
-                className={`cat-tile ${c.live ? "active" : "soon"}`}
-                onClick={() => {
-                  if (c.live) {
-                    closeCart();
-                    setView("home");
-                  } else {
-                    showToast(`${c.label} — coming soon`);
-                  }
-                }}
-              >
-                <span className="cat-label">
-                  {c.label.split(" ").map((w, i) => (
-                    <span className="cat-line" key={i}>
-                      {w}
-                    </span>
-                  ))}
-                </span>
-                <span className="cat-ico" aria-hidden="true">
-                  {c.icon}
-                </span>
-                {!c.live && <span className="cat-soon">Soon</span>}
-              </button>
-            ))}
+            {HEADER_CATS.map((c) => {
+              const [first, ...rest] = c.label.split(" ");
+              const second = rest.join(" ");
+              return (
+                <button
+                  key={c.key}
+                  type="button"
+                  className={`cat-tile ${c.live ? "active" : "soon"}`}
+                  onClick={() => {
+                    if (c.live) {
+                      closeCart();
+                      setView("home");
+                    } else {
+                      showToast(`${c.label} — coming soon`);
+                    }
+                  }}
+                >
+                  <span className="cat-label">
+                    <span className="cat-line">{first}</span>
+                    {second && <span className="cat-line">{second}</span>}
+                  </span>
+                  <span className="cat-ico" aria-hidden="true">
+                    {c.icon}
+                  </span>
+                  {!c.live && <span className="cat-soon">Soon</span>}
+                </button>
+              );
+            })}
           </div>
         </header>
 
