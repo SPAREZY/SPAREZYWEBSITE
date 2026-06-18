@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: "How fast will I hear back?",
-    a: "We reply on WhatsApp as soon as we've sourced your part — usually the same day.",
+    a: "We reply as soon as possible — usually the same day.",
   },
   {
     q: "Genuine, OEM or aftermarket?",
