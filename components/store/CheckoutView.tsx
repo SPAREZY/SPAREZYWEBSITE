@@ -92,7 +92,6 @@ export default function CheckoutView({
               className={err.email ? "err" : ""}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@email.com"
             />
             {err.email && <div className="err-msg">{err.email}</div>}
           </div>
@@ -146,7 +145,6 @@ export default function CheckoutView({
                 inputMode="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="50 123 4567"
                 aria-label="Phone number"
               />
             </div>
@@ -162,7 +160,6 @@ export default function CheckoutView({
                 value={sameWa ? phone : wa}
                 disabled={sameWa}
                 onChange={(e) => setWa(e.target.value)}
-                placeholder="50 123 4567"
                 aria-label="WhatsApp number"
               />
             </div>
