@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: "How fast will I hear back?",
-    a: "We reply to you as soon as we've sourced your parts.",
+    a: "We'll reply to you as soon as we've sourced your parts.",
   },
   {
     q: "Genuine, OEM or aftermarket?",
