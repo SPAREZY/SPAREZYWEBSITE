@@ -5,15 +5,15 @@ import { useState } from "react";
 const STEPS = [
   {
     t: "Tell us your car & parts",
-    d: "Enter your VIN / chassis number — or just upload a VIN / chassis photo — and list the parts you need.",
+    d: "Select your car brand, enter your VIN / chassis (or upload a VIN / chassis photo), then list the parts you need and the quantity.",
   },
   {
-    t: "We source & quote you",
-    d: "We find the exact match for your car and send you the price on WhatsApp, with genuine, OEM or aftermarket options.",
+    t: "We send you the price",
+    d: "We find the exact match for your car and send you the price — with genuine, OEM or aftermarket options.",
   },
   {
-    t: "Confirm & we deliver",
-    d: "You only pay once you're happy with the quote. Then we deliver to your door, anywhere in the UAE.",
+    t: "Confirm & we ship",
+    d: "You only pay once you're happy with the quote. Then we ship worldwide, right to your door.",
   },
 ];
 
