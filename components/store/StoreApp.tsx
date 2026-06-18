@@ -613,7 +613,7 @@ export default function StoreApp() {
                   </button>
                   {!editing && (
                     <button className="rowbtn" onClick={() => saveItem(true)}>
-                      <span>Order Now — Straight to Checkout</span>
+                      <span>Order Now — 100% Free</span>
                       <span className="dot" />
                     </button>
                   )}
