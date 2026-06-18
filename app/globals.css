@@ -530,6 +530,26 @@
 .rowbtn.secondary:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+/* "pumping" emphasis on the 100% Free text inside the order button */
+.free-pump {
+  display: inline-block;
+  transform-origin: center;
+  animation: free-pump 0.85s ease-in-out infinite;
+}
+@keyframes free-pump {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.14);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .free-pump {
+    animation: none;
+  }
+}
 /* Action stack on the product page — uniform spacing regardless of which
    button is the green primary vs the outline secondary. */
 .pdp-actions {
