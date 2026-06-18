@@ -132,7 +132,7 @@ export default function StoreApp() {
       if (filled > 0) {
         setVinNote("Filled from your VIN — edit if anything's off.");
       } else if (!d.make && !d.model && !d.year) {
-        setVinNote("Couldn't read this VIN automatically — please add Make / Model / Year.");
+        setVinNote("Couldn't read this VIN automatically — no problem, just carry on.");
       }
       setVinDecoding(false);
     }, 650);
