@@ -172,6 +172,80 @@
   }
 }
 
+/* ===== header category tiles (Part Finder + coming-soon teasers) ===== */
+.cat-bar {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+  padding: 0 18px 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.cat-bar::-webkit-scrollbar {
+  display: none;
+}
+.cat-tile {
+  position: relative;
+  flex: 0 0 auto;
+  width: 104px;
+  height: 88px;
+  border-radius: 16px;
+  padding: 11px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.1s, background 0.14s, box-shadow 0.14s;
+}
+.cat-tile:hover {
+  transform: translateY(-2px);
+}
+.cat-tile.active {
+  background: #fff;
+  border-color: #fff;
+  color: var(--blue);
+  box-shadow: 0 6px 16px rgba(10, 22, 52, 0.25);
+}
+.cat-label {
+  position: relative;
+  z-index: 1;
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-align: left;
+}
+.cat-ico {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  font-size: 1.55rem;
+  line-height: 1;
+}
+.cat-tile.soon .cat-label,
+.cat-tile.soon .cat-ico {
+  opacity: 0.7;
+}
+.cat-soon {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  z-index: 2;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--green);
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 999px;
+}
+
 /* stage + views */
 .stage {
   flex: 1;
@@ -1702,9 +1776,13 @@
   justify-content: center;
 }
 @media (max-width: 640px) {
-  .nav-l,
-  .cartlink {
+  /* links + cart live in the bottom bar on phones; the category tiles become
+     the header, so drop the now-empty top nav row */
+  .nav {
     display: none;
+  }
+  .cat-bar {
+    padding: 4px 14px 12px;
   }
   .botnav {
     display: flex;

@@ -32,6 +32,15 @@ const EG_PART = [
   "Shock absorber",
 ];
 
+// Header category tiles. Only Part Finder is live; the rest are teasers.
+const HEADER_CATS = [
+  { key: "finder", label: "Part Finder", icon: "🔧", live: true },
+  { key: "buy", label: "Buy Parts", icon: "🛒" },
+  { key: "sell", label: "Sell Parts", icon: "🏷️" },
+  { key: "service", label: "Car Service", icon: "🛠️" },
+  { key: "accessories", label: "Accessories", icon: "🎧" },
+];
+
 // Resize + compress a chosen image to a small JPEG data URL so the
 // registration card can be stored/sent without any blob storage.
 async function fileToCompressedDataUrl(file: File, maxDim = 1280, quality = 0.68): Promise<string> {
@@ -449,6 +458,30 @@ export default function StoreApp() {
             <button className="cartlink" onClick={toggleCart}>
               Cart ( {cart.length} )
             </button>
+          </div>
+
+          <div className="cat-bar" aria-label="Categories">
+            {HEADER_CATS.map((c) => (
+              <button
+                key={c.key}
+                type="button"
+                className={`cat-tile ${c.live ? "active" : "soon"}`}
+                onClick={() => {
+                  if (c.live) {
+                    closeCart();
+                    setView("home");
+                  } else {
+                    showToast(`${c.label} — coming soon`);
+                  }
+                }}
+              >
+                <span className="cat-label">{c.label}</span>
+                <span className="cat-ico" aria-hidden="true">
+                  {c.icon}
+                </span>
+                {!c.live && <span className="cat-soon">Soon</span>}
+              </button>
+            ))}
           </div>
         </header>
 
