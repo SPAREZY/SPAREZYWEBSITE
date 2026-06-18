@@ -1794,6 +1794,37 @@
   outline: none;
   border-color: var(--green);
 }
+/* scrolling brand-name hint inside the white search box */
+.brand-search-wrap .rot-ph {
+  left: 40px;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.brand-search-wrap .rot-word {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #8a93a6;
+  animation-name: ph-rise-strong;
+}
+@keyframes ph-rise-strong {
+  0% {
+    transform: translateY(1.05em);
+    opacity: 0;
+  }
+  14% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  86% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-1.05em);
+    opacity: 0;
+  }
+}
 .brand-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));

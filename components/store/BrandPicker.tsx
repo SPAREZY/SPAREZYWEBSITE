@@ -2,6 +2,13 @@
 
 import { useState } from "react";
 import { CAR_BRANDS, POPULAR_SLUGS, type CarBrand } from "@/lib/car-brands";
+import RotatingPlaceholder from "./RotatingPlaceholder";
+
+// Brand names that scroll through the search box as an animated hint.
+const SEARCH_HINTS = [
+  "Toyota", "Nissan", "BMW", "Mercedes-Benz", "Honda", "Lexus",
+  "Ford", "Hyundai", "Kia", "Mitsubishi", "Land Rover", "Audi", "Porsche",
+];
 
 const POPULAR = POPULAR_SLUGS
   .map((s) => CAR_BRANDS.find((b) => b.slug === s))
@@ -35,9 +42,9 @@ export default function BrandPicker({
           className="brand-search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search all car brands"
           aria-label="Search car brands"
         />
+        <RotatingPlaceholder show={q.length === 0} items={SEARCH_HINTS} prefix="Search " />
       </div>
 
       <div className={`brand-tiles ${term ? "searching" : ""}`}>
