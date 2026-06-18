@@ -33,11 +33,12 @@ const EG_PART = [
 ];
 
 // Header category tiles. Only Part Finder is live; the rest are teasers.
+// Two-word labels so each renders on two lines and clears the "Soon" badge.
 const HEADER_CATS = [
   { key: "finder", label: "Part Finder", icon: "🔧", live: true },
   { key: "buy", label: "Buy Parts", icon: "🛒" },
   { key: "service", label: "Car Service", icon: "🛠️" },
-  { key: "accessories", label: "Accessories", icon: "🎧" },
+  { key: "accessories", label: "Car Extras", icon: "🎧" },
 ];
 
 // Resize + compress a chosen image to a small JPEG data URL so the
@@ -474,7 +475,13 @@ export default function StoreApp() {
                   }
                 }}
               >
-                <span className="cat-label">{c.label}</span>
+                <span className="cat-label">
+                  {c.label.split(" ").map((w, i) => (
+                    <span className="cat-line" key={i}>
+                      {w}
+                    </span>
+                  ))}
+                </span>
                 <span className="cat-ico" aria-hidden="true">
                   {c.icon}
                 </span>
