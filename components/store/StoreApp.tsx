@@ -762,7 +762,7 @@ export default function StoreApp() {
                 closeCart();
               }}
             >
-              <span>Add Another Vehicle</span>
+              <span>Add Another Part</span>
               <span className="dot" />
             </button>
           </div>
