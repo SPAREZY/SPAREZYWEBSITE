@@ -192,8 +192,8 @@
   justify-content: center;
   gap: 9px;
   text-align: center;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)), #0d111c;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(180deg, rgba(170, 140, 255, 0.14), rgba(120, 90, 230, 0.04)), #16112e;
+  border: 1px solid rgba(180, 150, 255, 0.18);
   color: #fff;
   cursor: pointer;
   overflow: hidden;
@@ -201,7 +201,7 @@
 }
 .cat-tile:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.26);
+  border-color: rgba(190, 165, 255, 0.38);
 }
 
 /* the icon sits in a soft rounded chip tinted with the category accent */
@@ -246,14 +246,14 @@
 
 /* live / available category — brighter and lifted */
 .cat-tile.active {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04)), #11151f;
-  border-color: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.42);
+  background: linear-gradient(180deg, rgba(180, 150, 255, 0.22), rgba(130, 95, 240, 0.07)), #1d1640;
+  border-color: rgba(200, 175, 255, 0.6);
+  box-shadow: 0 8px 24px rgba(60, 25, 130, 0.5);
 }
 
 /* coming-soon teasers — muted */
 .cat-tile.soon {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)), #0b0e16;
+  background: linear-gradient(180deg, rgba(160, 130, 255, 0.08), rgba(120, 90, 230, 0.02)), #120e24;
 }
 .cat-tile.soon .cat-ico,
 .cat-tile.soon .cat-name {
