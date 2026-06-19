@@ -183,50 +183,49 @@
 }
 .cat-tile {
   position: relative;
-  height: 84px;
-  border-radius: 16px;
-  padding: 10px 11px;
+  height: 100px;
+  border-radius: 20px;
+  padding: 12px 13px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 2px;
   text-align: left;
-  background: #000;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.09));
+  border: 1px solid rgba(255, 255, 255, 0.28);
   color: #fff;
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.12s ease, border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  transition: transform 0.12s ease, box-shadow 0.15s, filter 0.15s;
 }
 .cat-tile:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 10px 24px rgba(8, 18, 45, 0.3);
 }
 
-/* the icon sits in a soft rounded chip tinted with the category accent,
-   tucked into the bottom-right corner so the label owns the top-left */
+/* character / item image — bleeds into the bottom-right corner */
 .cat-ico {
   position: absolute;
-  right: 8px;
-  bottom: 8px;
-  width: 34px;
-  height: 34px;
-  flex: none;
+  right: 0;
+  bottom: 0;
+  width: 60%;
+  height: 66%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 11px;
-  background: rgb(var(--acc) / 0.16);
-  box-shadow: inset 0 0 0 1px rgb(var(--acc) / 0.32);
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0 5px 5px 0;
+  pointer-events: none;
 }
 .cat-ico img {
-  width: 21px;
-  height: 21px;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
+  object-position: bottom right;
 }
 
 .cat-label {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -234,39 +233,40 @@
   padding-right: 6px;
 }
 .cat-eyebrow {
-  font-size: 0.56rem;
+  font-size: 0.62rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
 }
 .cat-name {
   margin-top: 1px;
-  font-size: clamp(0.76rem, 2.2vw, 0.9rem);
+  font-size: clamp(0.86rem, 2.5vw, 1.05rem);
   font-weight: 800;
   letter-spacing: -0.01em;
   white-space: nowrap;
   color: #fff;
 }
 
-/* live / available category — brighter and lifted */
+/* live / available category — solid white card with brand-blue text (their "All" tile) */
 .cat-tile.active {
-  background: #000;
-  border-color: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+  background: #fff;
+  border-color: #fff;
+  box-shadow: 0 8px 22px rgba(8, 18, 45, 0.28);
+}
+.cat-tile.active .cat-eyebrow,
+.cat-tile.active .cat-name {
+  color: var(--blue);
 }
 
-/* coming-soon teasers — muted icon only; label stays bold white */
-.cat-tile.soon {
-  background: #000;
-}
+/* coming-soon teasers — keep the translucent gradient, just badge them */
 .cat-tile.soon .cat-ico {
-  opacity: 0.78;
+  opacity: 0.92;
 }
 .cat-soon {
   position: absolute;
-  top: 7px;
-  right: 7px;
+  top: 8px;
+  right: 8px;
   z-index: 2;
   font-size: 0.5rem;
   font-weight: 800;
