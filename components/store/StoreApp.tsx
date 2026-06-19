@@ -31,8 +31,8 @@ const EG_PART = [
 // Header category tiles. Only the first (the live part finder) works; the
 // rest are "Soon" teasers. Icons live in /public/cat-icons.
 const HEADER_CATS = [
-  { key: "part", label: "Buy Auto Parts", img: "/cat-icons/part.png", accent: "249 115 22", live: true },
   { key: "battery", label: "Buy Battery", img: "/cat-icons/battery.png", accent: "34 197 94" },
+  { key: "part", label: "Buy Auto Parts", img: "/cat-icons/part.png", accent: "249 115 22", live: true },
   { key: "oil", label: "Buy Lubricant", img: "/cat-icons/oil.png", accent: "40 120 255" },
   { key: "body", label: "Buy Body Parts", img: "/cat-icons/body.png", accent: "239 68 68" },
 ];
