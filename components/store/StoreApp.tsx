@@ -35,10 +35,10 @@ const EG_PART = [
 // Header category tiles. Only the first (the live part finder) works; the
 // rest are "Soon" teasers. Icons live in /public/cat-icons.
 const HEADER_CATS = [
-  { key: "part", label: "Buy Auto Parts", img: "/cat-icons/part.png", live: true },
-  { key: "battery", label: "Buy Battery", img: "/cat-icons/battery.png" },
-  { key: "oil", label: "Buy Lubricant", img: "/cat-icons/oil.png" },
-  { key: "body", label: "Buy Body Parts", img: "/cat-icons/body.png" },
+  { key: "part", label: "Buy Auto Parts", img: "/cat-icons/part.png", accent: "249 115 22", live: true },
+  { key: "battery", label: "Buy Battery", img: "/cat-icons/battery.png", accent: "34 197 94" },
+  { key: "oil", label: "Buy Lubricant", img: "/cat-icons/oil.png", accent: "40 120 255" },
+  { key: "body", label: "Buy Body Parts", img: "/cat-icons/body.png", accent: "239 68 68" },
 ];
 
 // Resize + compress a chosen image to a small JPEG data URL so the
@@ -463,12 +463,13 @@ export default function StoreApp() {
           <div className="cat-bar" aria-label="Categories">
             {HEADER_CATS.map((c) => {
               const [first, ...rest] = c.label.split(" ");
-              const second = rest.join(" ");
+              const name = rest.join(" ");
               return (
                 <button
                   key={c.key}
                   type="button"
                   className={`cat-tile ${c.live ? "active" : "soon"}`}
+                  style={{ ["--acc" as string]: c.accent }}
                   onClick={() => {
                     if (c.live) {
                       closeCart();
@@ -478,13 +479,13 @@ export default function StoreApp() {
                     }
                   }}
                 >
-                  <span className="cat-label">
-                    <span className="cat-line">{first}</span>
-                    {second && <span className="cat-line">{second}</span>}
-                  </span>
                   <span className="cat-ico" aria-hidden="true">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={c.img} alt="" />
+                  </span>
+                  <span className="cat-label">
+                    <span className="cat-eyebrow">{first}</span>
+                    <span className="cat-name">{name}</span>
                   </span>
                   {!c.live && <span className="cat-soon">Soon</span>}
                 </button>

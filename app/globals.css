@@ -178,66 +178,86 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  padding: 0 24px 16px;
+  gap: 12px;
+  padding: 2px 24px 16px;
 }
 .cat-tile {
   position: relative;
-  height: 106px;
+  height: 110px;
   border-radius: 18px;
-  padding: 14px 15px;
+  padding: 13px 10px 12px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  background: #0c0f17;
-  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)), #0d111c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.1s, background 0.14s, box-shadow 0.14s;
+  transition: transform 0.12s ease, border-color 0.15s, box-shadow 0.15s, background 0.15s;
 }
 .cat-tile:hover {
   transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.26);
 }
-.cat-tile.active {
-  background: #0c0f17;
-  border-color: rgba(255, 255, 255, 0.55);
-  color: #fff;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-}
-.cat-label {
-  position: relative;
-  z-index: 1;
-  font-weight: 800;
-  font-size: clamp(0.82rem, 2.4vw, 1.08rem);
-  line-height: 1.14;
-  letter-spacing: -0.01em;
-  text-align: left;
-  /* keep the first line clear of the "Soon" badge (top-right) */
-  padding-right: 8px;
-}
-.cat-line {
-  display: block;
-  white-space: nowrap;
-}
+
+/* the icon sits in a soft rounded chip tinted with the category accent */
 .cat-ico {
-  position: absolute;
-  right: 9px;
-  bottom: 8px;
-  width: 56px;
-  height: 50px;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 13px;
+  background: rgb(var(--acc) / 0.16);
+  box-shadow: inset 0 0 0 1px rgb(var(--acc) / 0.32);
 }
 .cat-ico img {
-  max-width: 100%;
-  max-height: 100%;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
 }
-.cat-tile.soon .cat-label,
-.cat-tile.soon .cat-ico {
-  opacity: 0.7;
+
+.cat-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.05;
+}
+.cat-eyebrow {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.52);
+}
+.cat-name {
+  margin-top: 2px;
+  font-size: clamp(0.8rem, 2.3vw, 0.97rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* live / available category — brighter and lifted */
+.cat-tile.active {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04)), #11151f;
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.42);
+}
+
+/* coming-soon teasers — muted */
+.cat-tile.soon {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)), #0b0e16;
+}
+.cat-tile.soon .cat-ico,
+.cat-tile.soon .cat-name {
+  opacity: 0.78;
 }
 .cat-soon {
   position: absolute;
@@ -246,11 +266,11 @@
   z-index: 2;
   font-size: 0.5rem;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   background: var(--green);
   color: #fff;
-  padding: 2px 5px;
+  padding: 2px 6px;
   border-radius: 999px;
 }
 
