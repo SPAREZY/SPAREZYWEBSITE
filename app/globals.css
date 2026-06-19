@@ -1931,33 +1931,36 @@
     opacity: 0;
   }
 }
-.brand-tiles {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
-  gap: 16px 10px;
-  margin-top: 18px;
-}
-.brand-tiles.searching {
-  max-height: 320px;
-  overflow-y: auto;
-  padding: 2px 2px 6px;
+/* single-line horizontal logo strip — scrolls sideways, never wraps */
+.brand-strip {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 2px 8px;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  -webkit-overflow-scrolling: touch;
 }
 .brand-tile {
+  flex: 0 0 auto;
+  width: 62px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   background: none;
   border: none;
-  padding: 2px;
+  padding: 2px 0;
   cursor: pointer;
 }
 .brand-badge {
-  width: 66px;
-  height: 66px;
-  border-radius: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
   background: #ffffff;
   border: 1.5px solid #e2e6ee;
   display: flex;
@@ -1974,29 +1977,26 @@
   box-shadow: 0 0 0 3px rgba(30, 158, 90, 0.35);
 }
 .brand-logo {
-  max-width: 42px;
-  max-height: 40px;
+  max-width: 36px;
+  max-height: 34px;
   object-fit: contain;
 }
 .brand-logo-fallback {
   color: #122a5e;
   font-weight: 800;
-  font-size: 1.5rem;
-}
-.brand-logo-fallback.sm {
-  font-size: 1rem;
+  font-size: 1.35rem;
 }
 .brand-name {
-  font-size: 0.7rem;
+  width: 62px;
+  font-size: 0.66rem;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.12;
   text-align: center;
   color: rgba(255, 255, 255, 0.9);
-}
-
-/* ----- compact searchable combobox ----- */
-.brand-combo {
-  position: relative;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* once a brand is chosen, the field collapses to a logo + name chip */
@@ -2047,67 +2047,9 @@
   background: #e7eaf2;
   color: #1a1f2b;
 }
-
-/* dropdown list — overlays the page so it never pushes content down */
-.brand-menu {
-  position: absolute;
-  z-index: 40;
-  top: calc(100% + 6px);
-  left: 0;
-  right: 0;
-  max-height: 264px;
-  overflow-y: auto;
-  margin: 0;
-  padding: 5px;
-  list-style: none;
-  background: #fff;
-  border: 1.5px solid #e2e6ee;
-  border-radius: 12px;
-  box-shadow: 0 18px 40px rgba(8, 18, 45, 0.35);
-  scrollbar-width: thin;
-}
-.brand-menu li {
-  list-style: none;
-}
-.brand-opt {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  background: none;
-  border: none;
-  border-radius: 9px;
-  padding: 8px 9px;
-  cursor: pointer;
-  text-align: left;
-  color: #1a1f2b;
-}
-.brand-opt:hover {
-  background: #f1f5fb;
-}
-.brand-opt-logo {
-  width: 34px;
-  height: 34px;
-  flex: none;
-  border-radius: 8px;
-  background: #fff;
-  border: 1.5px solid #e9edf4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.brand-opt-logo img {
-  max-width: 24px;
-  max-height: 22px;
-  object-fit: contain;
-}
-.brand-opt-name {
-  font-weight: 700;
-  font-size: 0.95rem;
-}
 .brand-none {
-  padding: 14px 10px;
-  color: #6b7280;
+  padding: 12px 6px;
+  color: rgba(255, 255, 255, 0.65);
   font-weight: 600;
   font-size: 0.85rem;
 }

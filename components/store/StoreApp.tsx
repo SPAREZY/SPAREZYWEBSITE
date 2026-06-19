@@ -298,7 +298,7 @@ export default function StoreApp() {
     if (!wasEditing) trackAddToCart();
     resetForm();
     if (wasEditing) showToast("Updated");
-    if (direct) setView("checkout");
+    if (direct) openCart();
     else if (!wasEditing) showAddBar();
   }
 
@@ -622,21 +622,20 @@ export default function StoreApp() {
                 </button>
 
                 <div className="pdp-actions">
-                  {/* Green "press-in" effect is reserved for the conversion
-                      action (going to checkout); Add to Cart is the calmer
-                      outline button. In edit mode Save Changes is primary. */}
-                  <button
-                    className={`rowbtn ${editing ? "" : "secondary"}`}
-                    onClick={() => saveItem(false)}
-                  >
-                    <span>{editing ? "Save Changes" : "Add to Cart"}</span>
-                    <span className="dot" />
-                  </button>
+                  {/* Order Now is the single conversion action — it adds the
+                      vehicle and opens the cart. In edit mode we instead show
+                      Save Changes / Cancel for the vehicle being edited. */}
                   {!editing && (
                     <button className="rowbtn" onClick={() => saveItem(true)}>
                       <span>
                         Order Now — <span className="free-pump">100% Free</span>
                       </span>
+                      <span className="dot" />
+                    </button>
+                  )}
+                  {editing && (
+                    <button className="rowbtn" onClick={() => saveItem(false)}>
+                      <span>Save Changes</span>
                       <span className="dot" />
                     </button>
                   )}
