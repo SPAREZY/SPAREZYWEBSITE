@@ -185,13 +185,13 @@
   position: relative;
   height: 84px;
   border-radius: 16px;
-  padding: 9px 8px;
+  padding: 10px 11px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  text-align: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2px;
+  text-align: left;
   background: #000;
   border: 1px solid rgba(255, 255, 255, 0.14);
   color: #fff;
@@ -204,11 +204,14 @@
   border-color: rgba(255, 255, 255, 0.28);
 }
 
-/* the icon sits in a soft rounded chip tinted with the category accent */
+/* the icon sits in a soft rounded chip tinted with the category accent,
+   tucked into the bottom-right corner so the label owns the top-left */
 .cat-ico {
-  position: relative;
-  width: 36px;
-  height: 36px;
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 34px;
+  height: 34px;
   flex: none;
   display: flex;
   align-items: center;
@@ -218,23 +221,24 @@
   box-shadow: inset 0 0 0 1px rgb(var(--acc) / 0.32);
 }
 .cat-ico img {
-  width: 22px;
-  height: 22px;
+  width: 21px;
+  height: 21px;
   object-fit: contain;
 }
 
 .cat-label {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  line-height: 1.05;
+  align-items: flex-start;
+  line-height: 1.08;
+  padding-right: 6px;
 }
 .cat-eyebrow {
-  font-size: 0.54rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.52);
+  color: #fff;
 }
 .cat-name {
   margin-top: 1px;
@@ -242,6 +246,7 @@
   font-weight: 800;
   letter-spacing: -0.01em;
   white-space: nowrap;
+  color: #fff;
 }
 
 /* live / available category — brighter and lifted */
@@ -251,12 +256,11 @@
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
 }
 
-/* coming-soon teasers — muted */
+/* coming-soon teasers — muted icon only; label stays bold white */
 .cat-tile.soon {
   background: #000;
 }
-.cat-tile.soon .cat-ico,
-.cat-tile.soon .cat-name {
+.cat-tile.soon .cat-ico {
   opacity: 0.78;
 }
 .cat-soon {
