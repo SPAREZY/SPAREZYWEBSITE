@@ -400,7 +400,6 @@ export default function StoreApp() {
                     <span className="cat-eyebrow">{first}</span>
                     <span className="cat-name">{name}</span>
                   </span>
-                  {!c.live && <span className="cat-soon">Soon</span>}
                 </button>
               );
             })}
