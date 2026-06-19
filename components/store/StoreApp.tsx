@@ -396,10 +396,6 @@ export default function StoreApp() {
                     }
                   }}
                 >
-                  <span className="cat-ico" aria-hidden="true">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={c.img} alt="" />
-                  </span>
                   <span className="cat-label">
                     <span className="cat-eyebrow">{first}</span>
                     <span className="cat-name">{name}</span>

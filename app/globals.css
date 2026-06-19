@@ -174,16 +174,16 @@
 
 /* ===== header category tiles (Part Finder + coming-soon teasers) ===== */
 .cat-bar {
-  max-width: 760px;
+  max-width: 560px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  padding: 2px 24px 11px;
+  gap: 11px;
+  padding: 2px 24px 12px;
 }
 .cat-tile {
   position: relative;
-  height: 100px;
+  aspect-ratio: 1 / 1;
   border-radius: 20px;
   padding: 12px 13px;
   display: flex;
@@ -209,7 +209,7 @@
   right: 0;
   bottom: 0;
   width: 60%;
-  height: 66%;
+  height: 60%;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
@@ -229,22 +229,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  line-height: 1.08;
-  padding-right: 6px;
+  line-height: 1.06;
+  padding-right: 4px;
 }
-.cat-eyebrow {
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff;
-}
+.cat-eyebrow,
 .cat-name {
-  margin-top: 1px;
-  font-size: clamp(0.86rem, 2.5vw, 1.05rem);
+  font-size: clamp(0.92rem, 3.7vw, 1.12rem);
   font-weight: 800;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
+  letter-spacing: -0.015em;
   color: #fff;
 }
 
