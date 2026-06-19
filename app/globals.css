@@ -189,7 +189,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: rgba(255, 255, 255, 0.1);
+  background: #0c0f17;
   border: 1.5px solid rgba(255, 255, 255, 0.16);
   color: #fff;
   cursor: pointer;
@@ -200,10 +200,10 @@
   transform: translateY(-2px);
 }
 .cat-tile.active {
-  background: #fff;
-  border-color: #fff;
-  color: var(--blue);
-  box-shadow: 0 6px 16px rgba(10, 22, 52, 0.25);
+  background: #0c0f17;
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 .cat-label {
   position: relative;
@@ -218,6 +218,7 @@
 }
 .cat-line {
   display: block;
+  white-space: nowrap;
 }
 .cat-ico {
   position: absolute;
