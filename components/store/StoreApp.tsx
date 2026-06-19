@@ -513,6 +513,7 @@ export default function StoreApp() {
                   <span className="sp-div" aria-hidden="true" />
                   <span className="sp-count" aria-hidden="true">5.3K+ Parts Found</span>
                 </div>
+                {/* TEMP: "What you get" description hidden for now — to be reintroduced in a different place. Do not delete.
                 <div className="desc">
                   <p>
                     <strong>What you get:</strong> Finding car parts usually means driving into{" "}
@@ -527,6 +528,7 @@ export default function StoreApp() {
                     perfectly.
                   </p>
                 </div>
+                */}
 
                 <div className="f" ref={vinFieldRef}>
                   <label>Enter VIN / Chassis or upload a photo</label>
