@@ -1,26 +1,22 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { isValidChassis } from "@/lib/utils";
 import type { CartItem, CheckoutData, OrderRecap } from "@/lib/store-types";
 import { carLabel, vinLabel } from "@/lib/store-types";
 import { rememberOrders } from "@/lib/tracked-orders";
 import { trackAddToCart, trackInitiateCheckout, trackLead } from "@/lib/analytics";
-import { decodeVin, isVin } from "@/lib/vin";
 import BackgroundGrid from "./BackgroundGrid";
 import CheckoutView from "./CheckoutView";
 import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
 import OrdersView from "./OrdersView";
 import HelpView from "./HelpView";
-import VinHelp from "./VinHelp";
 import RotatingPlaceholder from "./RotatingPlaceholder";
 import BrandPicker from "./BrandPicker";
 
 type View = "home" | "checkout" | "confirm" | "contact" | "orders" | "help";
 
 // Rotating example placeholders that scroll until the customer types.
-const EG_VIN = ["JTEBH3FJ20K123456", "JN8AZ2NE9DT001234", "GF-BH5", "ZN6-0012345"];
 const EG_PART = [
   "Front brake pads",
   "Oil filter",
@@ -93,63 +89,19 @@ export default function StoreApp() {
   const [submitting, setSubmitting] = useState(false);
 
   // product form
-  const [vin, setVin] = useState("");
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
   const [parts, setParts] = useState<FormPart[]>([{ name: "", qty: "" }]);
-  const [photo, setPhoto] = useState("");
-  const [photoBusy, setPhotoBusy] = useState(false);
-  const [vinErr, setVinErr] = useState(false);
   const [makeErr, setMakeErr] = useState(false);
   const [partsErr, setPartsErr] = useState(false);
   const [qtyErr, setQtyErr] = useState(false);
-  const [vinDecoding, setVinDecoding] = useState(false);
-  const [vinNote, setVinNote] = useState<string | null>(null);
 
   const addBarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const homeViewRef = useRef<HTMLDivElement>(null);
-  const lastDecodedVin = useRef<string>("");
-  const vinFieldRef = useRef<HTMLDivElement>(null);
   const brandFieldRef = useRef<HTMLDivElement>(null);
-  const [vinHelpOpen, setVinHelpOpen] = useState(false);
-
-  // Auto-fill Make / Model / Year from a full 17-char VIN (free NHTSA decode,
-  // done browser-side). Debounced; only fills fields the customer hasn't
-  // already typed; fails silently so it never blocks the form. Chassis codes
-  // won't decode.
-  useEffect(() => {
-    const v = vin.trim().toUpperCase();
-    setVinNote(null);
-    if (!isVin(v)) return;
-    if (v === lastDecodedVin.current) return;
-    const curMake = make.trim();
-    const curModel = model.trim();
-    const curYear = year.trim();
-    const ctrl = new AbortController();
-    const timer = setTimeout(async () => {
-      setVinDecoding(true);
-      const d = await decodeVin(v, ctrl.signal);
-      if (ctrl.signal.aborted) return; // customer kept typing — drop this result
-      lastDecodedVin.current = v;
-      let filled = 0;
-      if (d.make && !curMake) { setMake(d.make); filled++; }
-      if (d.model && !curModel) { setModel(d.model); filled++; }
-      if (d.year && !curYear) { setYear(String(d.year)); filled++; }
-      if (filled > 0) {
-        setVinNote("Filled from your VIN — edit if anything's off.");
-      } else if (!d.make && !d.model && !d.year) {
-        setVinNote("Couldn't read this VIN automatically — no problem, just carry on.");
-      }
-      setVinDecoding(false);
-    }, 650);
-    return () => {
-      clearTimeout(timer);
-      ctrl.abort();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vin]);
+  const partsFieldRef = useRef<HTMLDivElement>(null);
 
   // load + persist cart
   useEffect(() => {
@@ -208,46 +160,22 @@ export default function StoreApp() {
 
   function resetForm() {
     setEditIndex(null);
-    setVin("");
     setMake("");
     setModel("");
     setYear("");
     setParts([{ name: "", qty: "" }]);
-    setPhoto("");
-    setVinErr(false);
     setMakeErr(false);
     setPartsErr(false);
     setQtyErr(false);
-    setVinNote(null);
-    lastDecodedVin.current = "";
   }
 
-  async function onPickPhoto(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    e.target.value = ""; // allow re-picking the same file later
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      showToast("Please choose an image file.");
-      return;
-    }
-    setPhotoBusy(true);
-    try {
-      setPhoto(await fileToCompressedDataUrl(file));
-      setVinErr(false); // a photo satisfies the "VIN or photo" requirement
-    } catch {
-      showToast("Couldn't read that image. Try a JPG or PNG.");
-    } finally {
-      setPhotoBusy(false);
-    }
-  }
-
-  // Picking a brand sets the make and glides the customer down to the VIN step.
+  // Picking a brand sets the make and glides the customer down to the parts step.
   function selectBrand(v: string) {
     setMake(v);
     if (v) {
       setMakeErr(false);
       requestAnimationFrame(() =>
-        vinFieldRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
+        partsFieldRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
       );
     }
   }
@@ -263,21 +191,17 @@ export default function StoreApp() {
   }
 
   function saveItem(direct: boolean) {
-    const vinNorm = vin.trim().toUpperCase();
     const cleanParts = parts
       .map((p) => ({ name: p.name.trim(), qty: parseInt(p.qty, 10) }))
       .filter((p) => p.name);
-    // The customer can EITHER type a VIN/chassis OR upload a photo of the
-    // registration card — only flag the VIN when neither is provided.
+    // The car is identified by brand + the parts requested.
     const badBrand = !make.trim();
-    const badVin = !isValidChassis(vinNorm) && !photo;
     const badParts = cleanParts.length === 0;
     const badQty = cleanParts.some((p) => !Number.isFinite(p.qty) || p.qty < 1);
     setMakeErr(badBrand);
-    setVinErr(badVin);
     setPartsErr(badParts);
     setQtyErr(!badParts && badQty);
-    if (badBrand || badVin || badParts || badQty) {
+    if (badBrand || badParts || badQty) {
       // Brand sits at the top, far from the buttons — guide the eye to it.
       if (badBrand) {
         brandFieldRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -285,7 +209,7 @@ export default function StoreApp() {
       return;
     }
 
-    const item: CartItem = { vin: vinNorm, make, model, year, parts: cleanParts, photo: photo || undefined };
+    const item: CartItem = { vin: "", make, model, year, parts: cleanParts };
     setCart((prev) => {
       if (editIndex !== null) {
         const copy = [...prev];
@@ -305,7 +229,6 @@ export default function StoreApp() {
   function editItem(i: number) {
     const it = cart[i];
     setEditIndex(i);
-    setVin(it.vin);
     setMake(it.make);
     setModel(it.model);
     setYear(it.year);
@@ -314,8 +237,6 @@ export default function StoreApp() {
         ? it.parts.map((p) => ({ name: p.name, qty: String(p.qty) }))
         : [{ name: "", qty: "" }],
     );
-    setPhoto(it.photo ?? "");
-    setVinErr(false);
     setMakeErr(false);
     setPartsErr(false);
     setQtyErr(false);
@@ -415,27 +336,23 @@ export default function StoreApp() {
   const editing = editIndex !== null;
 
   // Mobile form progress — every required step rewards the bar so it climbs
-  // smoothly: brand → vehicle (VIN/photo) → part → quantity. All four are
-  // required to add to cart / checkout.
+  // smoothly: brand → part → quantity. All three are required to checkout.
   const namedParts = parts.filter((p) => p.name.trim().length > 0);
-  const hasVehicle = isValidChassis(vin.trim().toUpperCase()) || !!photo;
   const hasMake = make.trim().length > 0;
   const hasPart = namedParts.length > 0;
   const hasQty = hasPart && namedParts.every((p) => parseInt(p.qty, 10) >= 1);
-  const progressSteps = [hasMake, hasVehicle, hasPart, hasQty];
+  const progressSteps = [hasMake, hasPart, hasQty];
   const formProgress = Math.round(
     (progressSteps.filter(Boolean).length / progressSteps.length) * 100,
   );
-  const isReady = hasMake && hasVehicle && hasPart && hasQty;
+  const isReady = hasMake && hasPart && hasQty;
   const progressLabel = !hasMake
     ? "Add your car"
-    : !hasVehicle
-      ? "Add your VIN / Chassis"
-      : !hasPart
-        ? "Add a part"
-        : !hasQty
-          ? "Set the quantity"
-          : "All set!";
+    : !hasPart
+      ? "Add a part"
+      : !hasQty
+        ? "Set the quantity"
+        : "All set!";
 
   return (
     <div className="store">
@@ -532,51 +449,7 @@ export default function StoreApp() {
                 </div>
                 */}
 
-                <div className="f" ref={vinFieldRef}>
-                  <label>Enter VIN / Chassis or upload a photo</label>
-                  <div className="f-field">
-                    <input
-                      className={`vin-input ${vinErr ? "err" : ""}`}
-                      maxLength={32}
-                      value={vin}
-                      onChange={(e) => {
-                        const val = e.target.value.toUpperCase();
-                        setVin(val);
-                        if (vinErr && isValidChassis(val.trim())) setVinErr(false);
-                      }}
-                    />
-                    <RotatingPlaceholder show={vin.length === 0} items={EG_VIN} />
-                  </div>
-                  {vinErr && (
-                    <div className="err-msg">
-                      Enter the VIN / chassis number or upload a VIN / chassis photo.
-                    </div>
-                  )}
-                  {vinDecoding && <div className="vin-decode">🔎 Reading your VIN…</div>}
-                  {!vinDecoding && vinNote && <div className="vin-decode ok">✓ {vinNote}</div>}
-                  {photo ? (
-                    <div className="vin-thumb">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={photo} alt="VIN / chassis photo" />
-                      <button type="button" className="vin-thumb-x" onClick={() => setPhoto("")}>✕</button>
-                    </div>
-                  ) : (
-                    <label className={`vin-upload ${photoBusy ? "busy" : ""}`}>
-                      <input type="file" accept="image/*" onChange={onPickPhoto} hidden disabled={photoBusy} />
-                      {photoBusy ? "Processing…" : "📷 Upload a photo of the chassis / VIN"}
-                    </label>
-                  )}
-                  <button
-                    type="button"
-                    className="vin-help-toggle"
-                    onClick={() => setVinHelpOpen((o) => !o)}
-                  >
-                    {vinHelpOpen ? "▲" : "▼"} Where do I find my VIN / Chassis?
-                  </button>
-                  {vinHelpOpen && <VinHelp />}
-                </div>
-
-                <div>
+                <div ref={partsFieldRef}>
                   <div className="part-row part-head">
                     <span className="ph-label">Parts needed for this car</span>
                     <span className="ph-label">Qty</span>
@@ -868,11 +741,8 @@ function buildOrderWaLink(humanIds: string[], vehicles: CartItem[], data: Checko
   msg += `City: ${[data.city, data.state, data.country].filter(Boolean).join(", ")}\n`;
   msg += `Address: ${data.address}\n`;
   vehicles.forEach((it, i) => {
-    const label = carLabel(it);
-    const vinText = it.vin && it.vin.trim() ? it.vin : "see VIN / chassis photo";
-    msg += `\nVehicle ${i + 1}${humanIds[i] ? " (" + humanIds[i] + ")" : ""} — VIN: ${vinText}${
-      label ? " (" + label + ")" : ""
-    }\n`;
+    const label = carLabel(it) || "Car";
+    msg += `\nVehicle ${i + 1}${humanIds[i] ? " (" + humanIds[i] + ")" : ""} — ${label}\n`;
     it.parts.forEach((p) => {
       msg += `• ${p.name} x${p.qty}\n`;
     });

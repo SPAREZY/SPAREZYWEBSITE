@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyCustomer } from "@/lib/notify";
-import { isValidChassis, isValidPhone, isValidEmail } from "@/lib/utils";
+import { isValidPhone, isValidEmail } from "@/lib/utils";
 import { getOrderPattern } from "@/lib/settings";
 import { renderOrderNumber } from "@/lib/order-number";
 import { logActivity } from "@/lib/activity";
@@ -39,17 +39,9 @@ export async function POST(req: Request) {
     customerNote,
   } = body as Record<string, any>;
 
-  // The customer can identify the car EITHER by typing a VIN/chassis OR by
-  // uploading a photo of the registration card. Require at least one.
+  // The car is identified by its brand + the parts requested; VIN is optional.
   const vinClean = typeof vin === "string" ? vin.trim().toUpperCase() : "";
-  const hasPhotoUrl = typeof photoUrl === "string" && photoUrl.trim().length > 0;
-  if (!isValidChassis(vinClean) && !hasPhotoUrl) {
-    return NextResponse.json(
-      { error: "A VIN / chassis number or a VIN / chassis photo is required." },
-      { status: 400 },
-    );
-  }
-  const finalVin = isValidChassis(vinClean) ? vinClean : vinClean || "SEE PHOTO";
+  const finalVin = vinClean || "—";
   if (typeof customerName !== "string" || customerName.trim().length < 2) {
     return NextResponse.json({ error: "Customer name is required." }, { status: 400 });
   }
