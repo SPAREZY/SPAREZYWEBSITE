@@ -2040,13 +2040,8 @@
   height: 34px;
   background: none;
   border: none;
-  border-radius: 9px;
-  color: #111;
+  color: #000;
   cursor: pointer;
-  transition: background 0.12s;
-}
-.brand-clear:hover {
-  background: #f1f3f8;
 }
 .brand-clear svg {
   width: 18px;
