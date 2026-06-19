@@ -28,6 +28,12 @@ const EG_PART = [
   "Shock absorber",
 ];
 
+// Rotating example models for the model search field.
+const EG_MODEL = [
+  "Land Cruiser", "Camry", "Corolla", "Patrol", "Civic",
+  "Hilux", "Pajero", "Accord", "Altima", "Prado",
+];
+
 // Header category tiles. Only the first (the live part finder) works; the
 // rest are "Soon" teasers. Icons live in /public/cat-icons.
 const HEADER_CATS = [
@@ -66,9 +72,7 @@ async function fileToCompressedDataUrl(file: File, maxDim = 1280, quality = 0.68
   ctx.drawImage(img, 0, 0, width, height);
   return canvas.toDataURL("image/jpeg", quality);
 }
-// qty is kept as a string in the form so the field can start empty (customer
-// must type it); it is parsed to a number when the item is added to the cart.
-type FormPart = { name: string; qty: string };
+type FormPart = { name: string };
 const STORAGE_KEY = "sparezy_cart_v1";
 const BUSINESS_WA = "971522250600";
 const PREF_MAP: Record<string, "whatsapp" | "call" | "email"> = {
@@ -92,10 +96,9 @@ export default function StoreApp() {
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
-  const [parts, setParts] = useState<FormPart[]>([{ name: "", qty: "" }]);
+  const [parts, setParts] = useState<FormPart[]>([{ name: "" }]);
   const [makeErr, setMakeErr] = useState(false);
   const [partsErr, setPartsErr] = useState(false);
-  const [qtyErr, setQtyErr] = useState(false);
 
   const addBarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -163,10 +166,9 @@ export default function StoreApp() {
     setMake("");
     setModel("");
     setYear("");
-    setParts([{ name: "", qty: "" }]);
+    setParts([{ name: "" }]);
     setMakeErr(false);
     setPartsErr(false);
-    setQtyErr(false);
   }
 
   // Picking a brand sets the make and glides the customer down to the parts step.
@@ -184,7 +186,7 @@ export default function StoreApp() {
     setParts((prev) => prev.map((p, idx) => (idx === i ? { ...p, ...patch } : p)));
   }
   function addPartRow() {
-    setParts((prev) => [...prev, { name: "", qty: "" }]);
+    setParts((prev) => [...prev, { name: "" }]);
   }
   function removePartRow(i: number) {
     setParts((prev) => (prev.length === 1 ? prev : prev.filter((_, idx) => idx !== i)));
@@ -192,16 +194,14 @@ export default function StoreApp() {
 
   function saveItem(direct: boolean) {
     const cleanParts = parts
-      .map((p) => ({ name: p.name.trim(), qty: parseInt(p.qty, 10) }))
+      .map((p) => ({ name: p.name.trim(), qty: 1 }))
       .filter((p) => p.name);
     // The car is identified by brand + the parts requested.
     const badBrand = !make.trim();
     const badParts = cleanParts.length === 0;
-    const badQty = cleanParts.some((p) => !Number.isFinite(p.qty) || p.qty < 1);
     setMakeErr(badBrand);
     setPartsErr(badParts);
-    setQtyErr(!badParts && badQty);
-    if (badBrand || badParts || badQty) {
+    if (badBrand || badParts) {
       // Brand sits at the top, far from the buttons — guide the eye to it.
       if (badBrand) {
         brandFieldRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -233,13 +233,10 @@ export default function StoreApp() {
     setModel(it.model);
     setYear(it.year);
     setParts(
-      it.parts.length
-        ? it.parts.map((p) => ({ name: p.name, qty: String(p.qty) }))
-        : [{ name: "", qty: "" }],
+      it.parts.length ? it.parts.map((p) => ({ name: p.name })) : [{ name: "" }],
     );
     setMakeErr(false);
     setPartsErr(false);
-    setQtyErr(false);
     closeCart();
     setView("home");
   }
@@ -250,22 +247,6 @@ export default function StoreApp() {
   function removeItem(i: number) {
     setCart((prev) => prev.filter((_, idx) => idx !== i));
     showToast("Removed");
-  }
-  function changeQty(i: number, j: number, delta: number) {
-    setCart((prev) => {
-      const copy = prev.map((it, idx) =>
-        idx === i ? { ...it, parts: it.parts.map((p) => ({ ...p })) } : it,
-      );
-      const part = copy[i].parts[j];
-      part.qty += delta;
-      if (part.qty < 1) {
-        copy[i].parts.splice(j, 1);
-        if (copy[i].parts.length === 0) {
-          copy.splice(i, 1);
-        }
-      }
-      return copy;
-    });
   }
 
   async function placeOrder(data: CheckoutData) {
@@ -336,23 +317,20 @@ export default function StoreApp() {
   const editing = editIndex !== null;
 
   // Mobile form progress — every required step rewards the bar so it climbs
-  // smoothly: brand → part → quantity. All three are required to checkout.
+  // smoothly: brand → part. Both are required to checkout.
   const namedParts = parts.filter((p) => p.name.trim().length > 0);
   const hasMake = make.trim().length > 0;
   const hasPart = namedParts.length > 0;
-  const hasQty = hasPart && namedParts.every((p) => parseInt(p.qty, 10) >= 1);
-  const progressSteps = [hasMake, hasPart, hasQty];
+  const progressSteps = [hasMake, hasPart];
   const formProgress = Math.round(
     (progressSteps.filter(Boolean).length / progressSteps.length) * 100,
   );
-  const isReady = hasMake && hasPart && hasQty;
+  const isReady = hasMake && hasPart;
   const progressLabel = !hasMake
     ? "Add your car"
     : !hasPart
       ? "Add a part"
-      : !hasQty
-        ? "Set the quantity"
-        : "All set!";
+      : "All set!";
 
   return (
     <div className="store">
@@ -415,6 +393,31 @@ export default function StoreApp() {
                   <BrandPicker value={make} onChange={selectBrand} />
                   {makeErr && <div className="err-msg">Please select your car brand.</div>}
                 </div>
+
+                <div className="model-field">
+                  <label className="model-label">Select your model</label>
+                  <div className="brand-search-wrap">
+                    <svg
+                      className="brand-search-ico"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                    >
+                      <circle cx="11" cy="11" r="7" />
+                      <path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <input
+                      className="model-search"
+                      value={model}
+                      onChange={(e) => setModel(e.target.value)}
+                      aria-label="Your car model"
+                      autoComplete="off"
+                    />
+                    <RotatingPlaceholder show={model.length === 0} items={EG_MODEL} prefix="Search " />
+                  </div>
+                </div>
                 {/* TEMP: tagline + rating hidden for now — to be reintroduced in a different place. Do not delete.
                 <div className="ptag-line">ANY CAR PARTS · WE HAVE IT</div>
                 <div className="social-proof" aria-label="Rated 4.6 out of 5 — 5.3K+ parts found">
@@ -447,7 +450,6 @@ export default function StoreApp() {
                 <div ref={partsFieldRef}>
                   <div className="part-row part-head">
                     <span className="ph-label">Parts needed for this car</span>
-                    <span className="ph-label">Qty</span>
                     <span />
                   </div>
                   {parts.map((p, i) => (
@@ -464,19 +466,6 @@ export default function StoreApp() {
                         />
                         <RotatingPlaceholder show={p.name.length === 0} items={EG_PART} />
                       </div>
-                      <input
-                        className="p-qty"
-                        type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        aria-label="Quantity"
-                        value={p.qty}
-                        onChange={(e) => {
-                          const v = e.target.value.replace(/[^0-9]/g, "");
-                          updatePart(i, { qty: v });
-                          if (qtyErr && v && parseInt(v) >= 1) setQtyErr(false);
-                        }}
-                      />
                       <button className="del" title="Remove" onClick={() => removePartRow(i)}>
                         ✕
                       </button>
@@ -484,7 +473,6 @@ export default function StoreApp() {
                   ))}
                 </div>
                 {partsErr && <div className="err-msg">Please describe at least one part.</div>}
-                {qtyErr && <div className="err-msg">Please enter a quantity for every part.</div>}
                 <button className="addpart" onClick={addPartRow}>
                   + Add another part
                 </button>
@@ -584,15 +572,6 @@ export default function StoreApp() {
                   {it.parts.map((p, j) => (
                     <li key={j}>
                       <span className="pn">{p.name.toUpperCase()}</span>
-                      <span className="stepper">
-                        <button onClick={() => changeQty(i, j, -1)} aria-label="Decrease">
-                          −
-                        </button>
-                        <span className="qv">{p.qty}</span>
-                        <button onClick={() => changeQty(i, j, 1)} aria-label="Increase">
-                          +
-                        </button>
-                      </span>
                     </li>
                   ))}
                 </ul>
@@ -739,7 +718,7 @@ function buildOrderWaLink(humanIds: string[], vehicles: CartItem[], data: Checko
     const label = carLabel(it) || "Car";
     msg += `\nVehicle ${i + 1}${humanIds[i] ? " (" + humanIds[i] + ")" : ""} — ${label}\n`;
     it.parts.forEach((p) => {
-      msg += `• ${p.name} x${p.qty}\n`;
+      msg += `• ${p.name}\n`;
     });
   });
   if (data.notes) msg += `\nNote: ${data.notes}\n`;
