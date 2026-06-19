@@ -178,14 +178,14 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 11px;
-  padding: 2px 24px 12px;
+  gap: 8px;
+  padding: 2px 14px 12px;
 }
 .cat-tile {
   position: relative;
   aspect-ratio: 1 / 1;
   border-radius: 20px;
-  padding: 12px 13px;
+  padding: 10px 9px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -229,12 +229,12 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  line-height: 1.06;
-  padding-right: 4px;
+  line-height: 1.08;
+  padding-right: 2px;
 }
 .cat-eyebrow,
 .cat-name {
-  font-size: clamp(0.92rem, 3.7vw, 1.12rem);
+  font-size: clamp(0.66rem, 2.7vw, 0.8rem);
   font-weight: 800;
   letter-spacing: -0.015em;
   color: #fff;
