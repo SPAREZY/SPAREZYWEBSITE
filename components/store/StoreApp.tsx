@@ -104,7 +104,6 @@ export default function StoreApp() {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const homeViewRef = useRef<HTMLDivElement>(null);
   const brandFieldRef = useRef<HTMLDivElement>(null);
-  const partsFieldRef = useRef<HTMLDivElement>(null);
 
   // load + persist cart
   useEffect(() => {
@@ -171,15 +170,10 @@ export default function StoreApp() {
     setPartsErr(false);
   }
 
-  // Picking a brand sets the make and glides the customer down to the parts step.
+  // Picking a brand just sets the make — the whole form is on one screen now.
   function selectBrand(v: string) {
     setMake(v);
-    if (v) {
-      setMakeErr(false);
-      requestAnimationFrame(() =>
-        partsFieldRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
-      );
-    }
+    if (v) setMakeErr(false);
   }
 
   function updatePart(i: number, patch: Partial<FormPart>) {
@@ -447,7 +441,7 @@ export default function StoreApp() {
                 </div>
                 */}
 
-                <div ref={partsFieldRef}>
+                <div>
                   <div className="step-head"><span className="step-num">3</span>Select your parts</div>
                   {parts.map((p, i) => (
                     <div className="part-row" key={i}>
