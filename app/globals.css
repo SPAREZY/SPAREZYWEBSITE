@@ -611,34 +611,32 @@
 .pay-banner {
   display: flex;
   align-items: center;
-  gap: 13px;
-  padding: 10px 13px;
+  gap: 14px;
+  padding: 13px 15px;
   border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 3px 12px rgba(8, 18, 45, 0.14);
+  box-shadow: 0 3px 12px rgba(8, 18, 45, 0.18);
+}
+.pay-tabby {
+  background: #5bfdae;
+}
+.pay-tamara {
+  background: linear-gradient(110deg, #f3c9ac 0%, #e2aac2 38%, #b9a9d6 70%, #97a8dd 100%);
 }
 .pay-logo-img {
-  height: 40px;
+  height: 24px;
   width: auto;
   flex: none;
 }
-.pay-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  min-width: 0;
-}
-.pay-title {
-  font-weight: 800;
-  font-size: 0.9rem;
-  line-height: 1.15;
-  color: #1a1f2b;
-}
 .pay-text {
-  font-size: 0.76rem;
-  font-weight: 500;
+  font-size: 0.84rem;
+  font-weight: 700;
   line-height: 1.2;
-  color: #8a93a6;
+}
+.pay-tabby .pay-text {
+  color: #0f3a26;
+}
+.pay-tamara .pay-text {
+  color: #221a3d;
 }
 
 .rowbtn.secondary {
