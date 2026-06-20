@@ -25,13 +25,11 @@ export default function ConfirmView({
       >
         <span className="rowbtn" style={{ display: "flex" }}>
           <span>Send This Order via WhatsApp</span>
-          <span className="dot" />
         </span>
       </a>
 
       <button className="rowbtn secondary" onClick={onBack}>
         <span>Back to Store</span>
-        <span className="dot" />
       </button>
 
       <div className="confirm-list">

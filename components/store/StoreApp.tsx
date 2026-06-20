@@ -14,6 +14,7 @@ import HelpView from "./HelpView";
 import BrandPicker from "./BrandPicker";
 import ModelPicker from "./ModelPicker";
 import PartPicker from "./PartPicker";
+import PayBanners from "./PayBanners";
 import Reviews from "./Reviews";
 
 type View = "home" | "checkout" | "confirm" | "contact" | "orders" | "help";
@@ -474,13 +475,11 @@ export default function StoreApp() {
                   {editing && (
                     <button className="rowbtn" onClick={() => saveItem(false)}>
                       <span>Save Changes</span>
-                      <span className="dot" />
                     </button>
                   )}
                   {editing && (
                     <button className="rowbtn secondary" onClick={cancelEdit}>
                       <span>Cancel Editing</span>
-                      <span className="dot" />
                     </button>
                   )}
                   {editing && (
@@ -561,7 +560,9 @@ export default function StoreApp() {
           {cart.length === 0 ? (
             <div className="drawer-empty">YOUR CART IS EMPTY</div>
           ) : (
-            cart.map((it, i) => (
+            <>
+              <PayBanners />
+              {cart.map((it, i) => (
               <div className="vrow" key={i}>
                 <div className="vh">
                   <span className="vt">VEHICLE {i + 1} — WE HAVE IT</span>
@@ -580,7 +581,8 @@ export default function StoreApp() {
                   <button onClick={() => removeItem(i)}>REMOVE</button>
                 </div>
               </div>
-            ))
+              ))}
+            </>
           )}
         </div>
         {cart.length > 0 && (
@@ -599,7 +601,6 @@ export default function StoreApp() {
               }}
             >
               <span>Checkout</span>
-              <span className="dot" />
             </button>
             <button
               className="rowbtn secondary"
@@ -610,7 +611,6 @@ export default function StoreApp() {
               }}
             >
               <span>Add Another Part</span>
-              <span className="dot" />
             </button>
           </div>
         )}

@@ -576,7 +576,7 @@
 .rowbtn {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background: var(--green);
   color: #fff;
@@ -601,13 +601,54 @@
   transform: translateY(2px);
   box-shadow: 0 2px 0 var(--green-deep);
 }
-.rowbtn .dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: #fff;
-  flex: none;
+/* ===== Buy-now-pay-later banners (tabby / tamara) in the cart ===== */
+.pay-banners {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
 }
+.pay-banner {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 13px;
+  border-radius: 12px;
+}
+.pay-logo {
+  flex: none;
+  background: #fff;
+  border-radius: 7px;
+  padding: 5px 11px;
+  font-weight: 800;
+  font-size: 0.92rem;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-transform: lowercase;
+}
+.pay-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.pay-text b {
+  font-weight: 800;
+}
+.pay-tabby {
+  background: linear-gradient(135deg, #5ce9c4 0%, #34d9a0 100%);
+  color: #0a2e23;
+}
+.pay-logo-tabby {
+  color: #0aa177;
+}
+.pay-tamara {
+  background: linear-gradient(135deg, #4a22b3 0%, #6a2bd9 100%);
+  color: #fff;
+}
+.pay-logo-tamara {
+  color: #5a23c8;
+}
+
 .rowbtn.secondary {
   background: none;
   border: 1.5px solid var(--line-strong);

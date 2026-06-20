@@ -236,7 +236,6 @@ export default function CheckoutView({
           </button>
           <button className="rowbtn co-submit" onClick={submit} disabled={submitting}>
             <span>{submitting ? "Placing…" : "Place Order"}</span>
-            <span className="dot" />
           </button>
         </div>
       </div>
