@@ -370,7 +370,7 @@ export default function StoreApp() {
                       closeCart();
                       setView("home");
                     } else {
-                      showToast(`${c.label} — coming soon`);
+                      showToast(`${c.label} - Coming Soon`);
                     }
                   }}
                 >
