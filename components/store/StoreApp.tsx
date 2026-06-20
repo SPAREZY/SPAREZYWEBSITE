@@ -310,21 +310,23 @@ export default function StoreApp() {
 
   const editing = editIndex !== null;
 
-  // Mobile form progress — every required step rewards the bar so it climbs
-  // smoothly: brand → part. Both are required to checkout.
+  // Mobile form progress — the three-step journey: car → model → part.
   const namedParts = parts.filter((p) => p.name.trim().length > 0);
   const hasMake = make.trim().length > 0;
+  const hasModel = model.trim().length > 0;
   const hasPart = namedParts.length > 0;
-  const progressSteps = [hasMake, hasPart];
+  const progressSteps = [hasMake, hasModel, hasPart];
   const formProgress = Math.round(
     (progressSteps.filter(Boolean).length / progressSteps.length) * 100,
   );
-  const isReady = hasMake && hasPart;
+  const isReady = hasMake && hasModel && hasPart;
   const progressLabel = !hasMake
     ? "Add your car"
-    : !hasPart
-      ? "Add a part"
-      : "All set!";
+    : !hasModel
+      ? "Select the model"
+      : !hasPart
+        ? "Add a part"
+        : "All set!";
 
   return (
     <div className="store">
