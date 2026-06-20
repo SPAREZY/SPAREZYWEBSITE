@@ -1930,7 +1930,8 @@
 
 /* black clear/remove ✕ docked at the right end inside a white field */
 .part-del,
-.field-clear {
+.field-clear,
+.brand-clear {
   position: absolute;
   right: 8px;
   top: 50%;
@@ -1947,7 +1948,8 @@
   padding: 0;
 }
 .part-del svg,
-.field-clear svg {
+.field-clear svg,
+.brand-clear svg {
   width: 16px;
   height: 16px;
 }
@@ -2115,30 +2117,14 @@
   background: #fff;
   border: 1.5px solid var(--green);
   border-radius: 10px;
-  padding: 10px 8px 10px 40px;
-  box-shadow: 0 0 0 3px rgba(30, 158, 90, 0.18);
+  padding: 10px 42px 10px 40px;
 }
 .brand-selected-name {
   flex: 1;
   font-weight: 800;
   font-size: 1rem;
+  line-height: 1.2;
   color: #1a1f2b;
-}
-.brand-clear {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  background: none;
-  border: none;
-  color: #000;
-  cursor: pointer;
-}
-.brand-clear svg {
-  width: 18px;
-  height: 18px;
 }
 .brand-none {
   padding: 12px 6px;
