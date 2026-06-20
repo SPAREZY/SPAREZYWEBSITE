@@ -13,6 +13,7 @@ import OrdersView from "./OrdersView";
 import HelpView from "./HelpView";
 import RotatingPlaceholder from "./RotatingPlaceholder";
 import BrandPicker from "./BrandPicker";
+import ModelPicker from "./ModelPicker";
 
 type View = "home" | "checkout" | "confirm" | "contact" | "orders" | "help";
 
@@ -26,12 +27,6 @@ const EG_PART = [
   "Radiator",
   "Timing belt",
   "Shock absorber",
-];
-
-// Rotating example models for the model search field.
-const EG_MODEL = [
-  "Land Cruiser", "Camry", "Corolla", "Patrol", "Civic",
-  "Hilux", "Pajero", "Accord", "Altima", "Prado",
 ];
 
 // Header category tiles. Only the first (the live part finder) works; the
@@ -172,9 +167,11 @@ export default function StoreApp() {
     setPartsErr(false);
   }
 
-  // Picking a brand just sets the make — the whole form is on one screen now.
+  // Picking a brand sets the make and resets the model (models depend on the brand).
   function selectBrand(v: string) {
     setMake(v);
+    setModel("");
+    setModelErr(false);
     if (v) setMakeErr(false);
   }
 
@@ -397,45 +394,15 @@ export default function StoreApp() {
 
                 <div className="model-field">
                   <div className="step-head"><span className="step-tag">Step 2 -</span> Select your model</div>
-                  <div className="brand-search-wrap">
-                    <svg
-                      className="brand-search-ico"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                    >
-                      <circle cx="11" cy="11" r="7" />
-                      <path d="m21 21-4.3-4.3" />
-                    </svg>
-                    <input
-                      className={`model-search ${modelErr ? "err" : ""}`}
-                      value={model}
-                      onChange={(e) => {
-                        setModel(e.target.value);
-                        if (modelErr && e.target.value.trim()) setModelErr(false);
-                      }}
-                      aria-label="Your car model"
-                      autoComplete="off"
-                    />
-                    <RotatingPlaceholder show={model.length === 0 && make.trim().length > 0} items={EG_MODEL} prefix="Search " />
-                    {model.trim() && (
-                      <button
-                        className="field-clear"
-                        type="button"
-                        aria-label="Clear model"
-                        onClick={() => {
-                          setModel("");
-                          setModelErr(false);
-                        }}
-                      >
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round">
-                          <path d="M6 6l12 12M18 6 6 18" />
-                        </svg>
-                      </button>
-                    )}
-                  </div>
+                  <ModelPicker
+                    brandName={make}
+                    value={model}
+                    err={modelErr}
+                    onChange={(v) => {
+                      setModel(v);
+                      if (modelErr && v.trim()) setModelErr(false);
+                    }}
+                  />
                   {modelErr && <div className="err-msg">Please enter your model.</div>}
                 </div>
                 {/* TEMP: tagline + rating hidden for now — to be reintroduced in a different place. Do not delete.
