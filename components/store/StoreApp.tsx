@@ -419,7 +419,7 @@ export default function StoreApp() {
                       aria-label="Your car model"
                       autoComplete="off"
                     />
-                    <RotatingPlaceholder show={model.length === 0} items={EG_MODEL} prefix="Search " />
+                    <RotatingPlaceholder show={model.length === 0 && make.trim().length > 0} items={EG_MODEL} prefix="Search " />
                     {model.trim() && (
                       <button
                         className="field-clear"
@@ -493,7 +493,7 @@ export default function StoreApp() {
                             if (partsErr && e.target.value.trim()) setPartsErr(false);
                           }}
                         />
-                        <RotatingPlaceholder show={p.name.length === 0} items={EG_PART} />
+                        <RotatingPlaceholder show={p.name.length === 0 && model.trim().length > 0} items={EG_PART} />
                         <button
                           className="part-del"
                           title="Remove"
