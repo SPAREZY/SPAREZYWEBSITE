@@ -395,7 +395,7 @@ export default function StoreApp() {
                 </div>
 
                 <div className="model-field">
-                  <label className="model-label">Select your model</label>
+                  <div className="step-head"><span className="step-num">2</span>Select your model</div>
                   <div className="brand-search-wrap">
                     <svg
                       className="brand-search-ico"
@@ -448,10 +448,7 @@ export default function StoreApp() {
                 */}
 
                 <div ref={partsFieldRef}>
-                  <div className="part-row part-head">
-                    <span className="ph-label">Parts needed for this car</span>
-                    <span />
-                  </div>
+                  <div className="step-head"><span className="step-num">3</span>Select your parts</div>
                   {parts.map((p, i) => (
                     <div className="part-row" key={i}>
                       <div className="f-field">
