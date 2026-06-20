@@ -545,26 +545,6 @@
   outline: none;
   border-color: var(--green);
 }
-.part-del {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  background: none;
-  border: none;
-  color: #000;
-  cursor: pointer;
-  padding: 0;
-}
-.part-del svg {
-  width: 16px;
-  height: 16px;
-}
 .part-head {
   margin-top: 22px;
   align-items: end;
@@ -1901,7 +1881,7 @@
   border-radius: 10px;
   color: #1a1f2b;
   font-weight: 700;
-  padding: 10px 12px 10px 40px;
+  padding: 10px 42px 10px 40px;
 }
 .model-search::placeholder {
   color: #8a93a6;
@@ -1910,6 +1890,33 @@
 .model-search:focus {
   outline: none;
   border-color: var(--green);
+}
+.model-search.err {
+  border-color: var(--red);
+}
+
+/* black clear/remove ✕ docked at the right end inside a white field */
+.part-del,
+.field-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  padding: 0;
+}
+.part-del svg,
+.field-clear svg {
+  width: 16px;
+  height: 16px;
 }
 .brand-heading {
   font-weight: 800;

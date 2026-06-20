@@ -98,6 +98,7 @@ export default function StoreApp() {
   const [year, setYear] = useState("");
   const [parts, setParts] = useState<FormPart[]>([{ name: "" }]);
   const [makeErr, setMakeErr] = useState(false);
+  const [modelErr, setModelErr] = useState(false);
   const [partsErr, setPartsErr] = useState(false);
 
   const addBarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -167,6 +168,7 @@ export default function StoreApp() {
     setYear("");
     setParts([{ name: "" }]);
     setMakeErr(false);
+    setModelErr(false);
     setPartsErr(false);
   }
 
@@ -192,10 +194,12 @@ export default function StoreApp() {
       .filter((p) => p.name);
     // The car is identified by brand + the parts requested.
     const badBrand = !make.trim();
+    const badModel = !model.trim();
     const badParts = cleanParts.length === 0;
     setMakeErr(badBrand);
+    setModelErr(badModel);
     setPartsErr(badParts);
-    if (badBrand || badParts) {
+    if (badBrand || badModel || badParts) {
       // Brand sits at the top, far from the buttons — guide the eye to it.
       if (badBrand) {
         brandFieldRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -230,6 +234,7 @@ export default function StoreApp() {
       it.parts.length ? it.parts.map((p) => ({ name: p.name })) : [{ name: "" }],
     );
     setMakeErr(false);
+    setModelErr(false);
     setPartsErr(false);
     closeCart();
     setView("home");
@@ -405,14 +410,33 @@ export default function StoreApp() {
                       <path d="m21 21-4.3-4.3" />
                     </svg>
                     <input
-                      className="model-search"
+                      className={`model-search ${modelErr ? "err" : ""}`}
                       value={model}
-                      onChange={(e) => setModel(e.target.value)}
+                      onChange={(e) => {
+                        setModel(e.target.value);
+                        if (modelErr && e.target.value.trim()) setModelErr(false);
+                      }}
                       aria-label="Your car model"
                       autoComplete="off"
                     />
                     <RotatingPlaceholder show={model.length === 0} items={EG_MODEL} prefix="Search " />
+                    {model.trim() && (
+                      <button
+                        className="field-clear"
+                        type="button"
+                        aria-label="Clear model"
+                        onClick={() => {
+                          setModel("");
+                          setModelErr(false);
+                        }}
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round">
+                          <path d="M6 6l12 12M18 6 6 18" />
+                        </svg>
+                      </button>
+                    )}
                   </div>
+                  {modelErr && <div className="err-msg">Please enter your model.</div>}
                 </div>
                 {/* TEMP: tagline + rating hidden for now — to be reintroduced in a different place. Do not delete.
                 <div className="ptag-line">ANY CAR PARTS · WE HAVE IT</div>
