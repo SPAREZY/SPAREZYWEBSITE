@@ -605,6 +605,7 @@
 .pay-banners {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 9px;
   margin-bottom: 16px;
 }
