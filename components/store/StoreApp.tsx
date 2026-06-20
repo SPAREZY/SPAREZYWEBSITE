@@ -445,11 +445,23 @@ export default function StoreApp() {
                   <div className="step-head"><span className="step-num">3</span>Select your parts</div>
                   {parts.map((p, i) => (
                     <div className="part-row" key={i}>
-                      <div className="f-field">
+                      <div className="brand-search-wrap">
+                        <svg
+                          className="brand-search-ico"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                          strokeLinecap="round"
+                        >
+                          <circle cx="11" cy="11" r="7" />
+                          <path d="m21 21-4.3-4.3" />
+                        </svg>
                         <input
                           className="p-name"
                           aria-label="Part name"
                           value={p.name}
+                          autoComplete="off"
                           onChange={(e) => {
                             updatePart(i, { name: e.target.value });
                             if (partsErr && e.target.value.trim()) setPartsErr(false);

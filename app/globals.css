@@ -528,25 +528,26 @@
 .part-row {
   display: grid;
   grid-template-columns: 1fr 24px;
-  gap: 18px;
-  align-items: end;
-  margin-top: 2px;
+  gap: 14px;
+  align-items: center;
+  margin-top: 8px;
 }
 .part-row input {
   width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1.5px solid var(--line);
-  color: #fff;
-  padding: 7px 0;
+  background: #ffffff;
+  border: 1.5px solid #e2e6ee;
+  border-radius: 10px;
+  color: #1a1f2b;
   font-weight: 700;
+  padding: 10px 12px 10px 40px;
 }
 .part-row input::placeholder {
-  color: #ffffff;
+  color: #8a93a6;
+  font-weight: 600;
 }
 .part-row input:focus {
   outline: none;
-  border-bottom-color: var(--line-strong);
+  border-color: var(--green);
 }
 .part-row .del {
   background: none;
