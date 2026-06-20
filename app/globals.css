@@ -1279,17 +1279,132 @@
 
 /* social proof pinned to the bottom of the white image box */
 /* rating badge — sits below the tagline, above the price (on the blue bg) */
+.store-foot {
+  padding-bottom: 90px;
+}
 .social-proof {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  margin: 0 auto 90px;
+  margin: 0 auto 18px;
   text-decoration: none;
 }
 .social-proof:hover {
   opacity: 0.92;
+}
+
+/* ===== Google reviews ===== */
+.reviews {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 4px 14px 0;
+}
+.reviews-h {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 1.02rem;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.reviews-g {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.reviews-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 2px 8px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+.reviews-row::-webkit-scrollbar {
+  display: none;
+}
+.review-card {
+  flex: 0 0 86%;
+  max-width: 320px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(8, 18, 45, 0.18);
+}
+.review-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.review-av {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+.review-av-fallback {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 800;
+}
+.review-meta {
+  min-width: 0;
+}
+.reviews .review-name {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #1a1f2b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.reviews .review-time {
+  font-size: 0.75rem;
+  color: #8a93a6;
+}
+.review-stars {
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  color: #f5a623;
+  margin-bottom: 7px;
+}
+.review-stars-dim {
+  color: #e2e6ee;
+}
+.reviews .review-text {
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: #3a4252;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.reviews-more {
+  display: inline-block;
+  margin-top: 12px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+.reviews-more:hover {
+  text-decoration: underline;
 }
 .sp-rating {
   font-family: Arial, Roboto, system-ui, sans-serif;
