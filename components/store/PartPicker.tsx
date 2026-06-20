@@ -23,6 +23,7 @@ export default function PartPicker({
 }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const term = value.trim().toLowerCase();
   const results = useMemo(
@@ -60,6 +61,7 @@ export default function PartPicker({
           <path d="m21 21-4.3-4.3" />
         </svg>
         <input
+          ref={inputRef}
           className="p-name"
           aria-label="Part name"
           value={value}
@@ -71,7 +73,22 @@ export default function PartPicker({
           onFocus={() => setOpen(true)}
         />
         <RotatingPlaceholder show={value.length === 0 && hintActive} items={EG_PART} />
-        <button className="part-del" title="Remove" aria-label="Remove part" onClick={onRemove}>
+        <button
+          className="part-del"
+          title={value.trim() ? "Clear" : "Remove"}
+          aria-label={value.trim() ? "Clear part" : "Remove part"}
+          onClick={() => {
+            if (value.trim()) {
+              // first ✕ press clears the typed text…
+              onChange("");
+              setOpen(false);
+              requestAnimationFrame(() => inputRef.current?.focus());
+            } else {
+              // …already empty → remove this part row
+              onRemove();
+            }
+          }}
+        >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round">
             <path d="M6 6l12 12M18 6 6 18" />
           </svg>
