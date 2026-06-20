@@ -6,11 +6,11 @@ export default function PayBanners() {
     <div className="pay-banners">
       <div className="pay-banner pay-tabby">
         <img className="pay-logo-img" src="/pay/tabby.png" alt="tabby" loading="lazy" />
-        <span className="pay-text">Split in up to 12 payments</span>
+        <span className="pay-text">Buy now, pay later</span>
       </div>
       <div className="pay-banner pay-tamara">
         <img className="pay-logo-img" src="/pay/tamara.png" alt="tamara" loading="lazy" />
-        <span className="pay-text">Pay in 6 payments</span>
+        <span className="pay-text">Pay in 4 payments</span>
       </div>
     </div>
   );
