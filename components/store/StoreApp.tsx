@@ -396,7 +396,7 @@ export default function StoreApp() {
                 </div>
 
                 <div className="model-field">
-                  <div className="step-head"><span className="step-num">2</span>Select your model</div>
+                  <div className="step-head"><span className="step-tag">Step 2 -</span> Select your model</div>
                   <div className="brand-search-wrap">
                     <svg
                       className="brand-search-ico"
@@ -468,7 +468,7 @@ export default function StoreApp() {
                 */}
 
                 <div>
-                  <div className="step-head"><span className="step-num">3</span>Select your parts</div>
+                  <div className="step-head"><span className="step-tag">Step 3 -</span> Select your parts</div>
                   {parts.map((p, i) => (
                     <div className="part-row" key={i}>
                       <div className="brand-search-wrap">
