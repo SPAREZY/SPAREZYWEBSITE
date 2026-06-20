@@ -622,10 +622,16 @@
 .pay-tamara {
   background: linear-gradient(110deg, #f3c9ac 0%, #e2aac2 38%, #b9a9d6 70%, #97a8dd 100%);
 }
+.pay-logo {
+  flex: none;
+  width: 94px;
+  display: flex;
+  align-items: center;
+}
 .pay-logo-img {
   height: 24px;
   width: auto;
-  flex: none;
+  display: block;
 }
 .pay-text {
   font-size: 0.84rem;
