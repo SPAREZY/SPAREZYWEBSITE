@@ -1993,9 +1993,12 @@
   overflow-x: auto;
   overflow-y: hidden;
   padding: 2px 2px 4px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
+}
+.brand-strip::-webkit-scrollbar {
+  display: none;
 }
 .brand-tile {
   flex: 0 0 auto;
