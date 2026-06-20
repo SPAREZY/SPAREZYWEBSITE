@@ -44,6 +44,7 @@ export const MODELS_BY_SLUG: Record<string, string[]> = {
   "jac": ["iEV7S","J7","JS3","JS4","JS6","Refine","S2","S3","S4","S5","S7","Sunray","T6","T8","T9"],
   "jaguar": ["Daimler","E-PACE","F-PACE","F-TYPE","I-PACE","S-Type","Sovereign","X-Type","X-type Estate","XE","XF","XJ","XJ6","XJ8","XJ12","XJR","XK","XK8 Convertible","XKR","XKR Convertible"],
   "jeep": ["Cherokee","Commander","Compass","Gladiator","Grand Cherokee","Grand Cherokee 4xe","Grand Cherokee L","Grand Wagoneer","Grand Wagoneer L","Liberty","Patriot","Recon","Renegade","Wagoneer","Wagoneer L","Wrangler","Wrangler 2 Door","Wrangler 4 Door","Wrangler 4xe","Wrangler Unlimited","Wrangler Unlimited 4xe"],
+  "jetour": ["Dashing","T1","T2","Traveller","X70","X70 Coupe","X70 EV","X70 Plus","X70 S","X90","X90 Plus","X95"],
   "kia": ["Amanti","Avella","Besta","Borrego","Cadenza","Carens","Carnival","Cee`d","Cee`d SW","Cerato","EV6","EV9","Forte","Forte Koup","Forte5","K 2500","K5","K900","Magentis","Niro","Niro EV","Niro Plug-in Hybrid","Opirus","Optima","Optima (2006.5)","Optima Hybrid","Optima Plug-in Hybrid","Picanto","Pregio","Pride","Pro Cee`d","Rio","Rio Combi","Rio sedan","Rondo","Sedona","Seltos","Sephia","Shuma","Sorento","Sorento Hybrid","Sorento Plug-in Hybrid","Soul","Soul EV","Spectra","Sportage","Sportage Hybrid","Sportage Plug-in Hybrid","Stinger","Telluride","Venga"],
   "koenigsegg": ["Agera","CC8S","CCX","Gemera","Jesko","One:1","Regera"],
   "lada": ["4x4","Granta","Kalina","Largus","Niva","Niva Legend","Priora","Vesta","XRAY"],

@@ -46,6 +46,7 @@ export const CAR_BRANDS: CarBrand[] = [
   { name: "JAC", slug: "jac", logo: true },
   { name: "Jaguar", slug: "jaguar", logo: true },
   { name: "Jeep", slug: "jeep", logo: true },
+  { name: "Jetour", slug: "jetour", logo: true },
   { name: "Kia", slug: "kia", logo: true },
   { name: "Koenigsegg", slug: "koenigsegg", logo: true },
   { name: "Lada", slug: "lada", logo: true },
