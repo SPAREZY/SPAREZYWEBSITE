@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CartItem, CheckoutData, OrderRecap } from "@/lib/store-types";
-import { carLabel, vinLabel } from "@/lib/store-types";
+import { carLabel } from "@/lib/store-types";
+import { slugForBrand } from "@/lib/car-brands";
 import { rememberOrders } from "@/lib/tracked-orders";
 import { trackAddToCart, trackInitiateCheckout, trackLead } from "@/lib/analytics";
 import BackgroundGrid from "./BackgroundGrid";
@@ -562,26 +563,59 @@ export default function StoreApp() {
           ) : (
             <>
               <PayBanners />
-              {cart.map((it, i) => (
-              <div className="vrow" key={i}>
-                <div className="vh">
-                  <span className="vt">VEHICLE {i + 1} — WE HAVE IT</span>
-                  <span className="vin">{vinLabel(it)}</span>
-                </div>
-                {carLabel(it) && <div className="car">{carLabel(it).toUpperCase()}</div>}
-                <ul>
-                  {it.parts.map((p, j) => (
-                    <li key={j}>
-                      <span className="pn">{p.name.toUpperCase()}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="vlinks">
-                  <button onClick={() => editItem(i)}>EDIT</button>
-                  <button onClick={() => removeItem(i)}>REMOVE</button>
-                </div>
-              </div>
-              ))}
+              {cart.map((it, i) => {
+                const slug = slugForBrand(it.make);
+                return (
+                  <div className="vrow" key={i}>
+                    <div className="vrow-media">
+                      <div className="vrow-img">
+                        {slug ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={`/brand-logos/${slug}.png`} alt={it.make} loading="lazy" />
+                        ) : (
+                          <span className="vrow-img-fallback">
+                            {(it.make || "?").charAt(0).toUpperCase()}
+                          </span>
+                        )}
+                      </div>
+                      <div className="vrow-ctrls">
+                        <button
+                          className="vrow-ctrl"
+                          onClick={() => removeItem(i)}
+                          aria-label="Remove vehicle"
+                        >
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5" />
+                          </svg>
+                        </button>
+                        <span className="vrow-ctrl-div" aria-hidden="true" />
+                        <button
+                          className="vrow-ctrl"
+                          onClick={() => editItem(i)}
+                          aria-label="Add another part"
+                        >
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 5v14M5 12h14" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div className="vrow-info">
+                      <div className="vrow-title">
+                        Vehicle {i + 1} — {[it.make, it.model].filter(Boolean).join(" ")}
+                      </div>
+                      <div className="vrow-plabel">Parts requested</div>
+                      <div className="vrow-parts">
+                        {it.parts.map((p, j) => (
+                          <span className="vrow-part" key={j}>
+                            {p.name}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </>
           )}
         </div>
@@ -590,7 +624,7 @@ export default function StoreApp() {
             <div className="drawer-subtotal">
               <span>Subtotal</span>
               <span className="sub-price">
-                <s>AED 287</s> <b className="free">FREE</b>
+                <b className="free">FREE</b>
               </span>
             </div>
             <button

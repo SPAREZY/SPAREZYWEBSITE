@@ -94,3 +94,9 @@ export const CAR_BRANDS: CarBrand[] = [
 
 // Brands surfaced as tiles before the customer searches (UAE-popular).
 export const POPULAR_SLUGS = ["toyota","nissan","mitsubishi","honda","lexus","mercedes-benz","hyundai","ford"];
+
+// Look up a brand's logo slug from its display name (e.g. "Toyota" -> "toyota").
+const SLUG_BY_NAME = new Map(CAR_BRANDS.map((b) => [b.name.trim().toLowerCase(), b.slug] as const));
+export function slugForBrand(name: string): string | undefined {
+  return name ? SLUG_BY_NAME.get(name.trim().toLowerCase()) : undefined;
+}
