@@ -1912,7 +1912,7 @@
 .model-menu li {
   list-style: none;
 }
-.model-opt {
+.model-menu .model-opt {
   width: 100%;
   text-align: left;
   background: none;
@@ -1924,7 +1924,7 @@
   font-weight: 700;
   font-size: 0.92rem;
 }
-.model-opt:hover {
+.model-menu .model-opt:hover {
   background: #f1f5fb;
 }
 
