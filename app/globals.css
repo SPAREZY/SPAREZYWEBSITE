@@ -1951,6 +1951,13 @@
   width: 16px;
   height: 16px;
 }
+/* the global `.store button { color: inherit }` would turn these ✕s white —
+   override it so the clear buttons stay black on their white fields */
+.store .part-del,
+.store .field-clear,
+.store .brand-clear {
+  color: #000;
+}
 .brand-heading {
   font-weight: 800;
   font-size: 1.2rem;
