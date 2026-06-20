@@ -606,6 +606,9 @@
 .rowbtn:hover {
   background: #179150;
 }
+.rowbtn.find-btn {
+  justify-content: center;
+}
 .rowbtn:active {
   transform: translateY(2px);
   box-shadow: 0 2px 0 var(--green-deep);

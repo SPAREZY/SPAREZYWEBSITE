@@ -482,11 +482,10 @@ export default function StoreApp() {
                       vehicle and opens the cart. In edit mode we instead show
                       Save Changes / Cancel for the vehicle being edited. */}
                   {!editing && (
-                    <button className="rowbtn" onClick={() => saveItem(true)}>
+                    <button className="rowbtn find-btn" onClick={() => saveItem(true)}>
                       <span>
-                        Order Now — <span className="free-pump">100% Free</span>
+                        FIND MY PART — <span className="free-pump">100% Free</span>
                       </span>
-                      <span className="dot" />
                     </button>
                   )}
                   {editing && (
