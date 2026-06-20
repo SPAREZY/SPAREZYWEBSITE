@@ -611,14 +611,14 @@
 .pay-banner {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 9px 12px;
+  gap: 13px;
+  padding: 10px 13px;
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 3px 12px rgba(8, 18, 45, 0.14);
 }
 .pay-logo-img {
-  height: 32px;
+  height: 40px;
   width: auto;
   flex: none;
 }
