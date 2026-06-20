@@ -3,8 +3,27 @@
 import { useState, type FormEvent } from "react";
 import type { CartItem, CheckoutData } from "@/lib/store-types";
 import { carLabel, vinLabel } from "@/lib/store-types";
-import { isValidPhone, isValidEmail } from "@/lib/utils";
-import { COUNTRIES, DEFAULT_COUNTRY, dialFor } from "@/lib/countries";
+import { isValidUaePhone, isValidEmail } from "@/lib/utils";
+
+// The store serves the UAE only — fixed country + the seven emirates.
+const EMIRATES = [
+  "Abu Dhabi",
+  "Dubai",
+  "Sharjah",
+  "Ajman",
+  "Umm Al Quwain",
+  "Ras Al Khaimah",
+  "Fujairah",
+];
+
+// Reduce any UAE number the customer types to its 9-digit subscriber form
+// (drops +971 / 971 / leading 0), so we can prepend a single +971.
+function uaeLocal(raw: string): string {
+  let d = raw.replace(/\D/g, "");
+  if (d.startsWith("971")) d = d.slice(3);
+  if (d.startsWith("0")) d = d.slice(1);
+  return d;
+}
 
 export default function CheckoutView({
   cart,
@@ -22,16 +41,13 @@ export default function CheckoutView({
   const [phone, setPhone] = useState("");
   const [wa, setWa] = useState("");
   const [sameWa, setSameWa] = useState(false);
-  const [country, setCountry] = useState(DEFAULT_COUNTRY);
-  const [stateRegion, setStateRegion] = useState("");
+  const [emirate, setEmirate] = useState("");
   const [city, setCity] = useState("");
   const [pref, setPref] = useState("WhatsApp");
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
   const [hp, setHp] = useState(""); // honeypot
   const [err, setErr] = useState<Record<string, string>>({});
-
-  const dial = dialFor(country);
 
   // Address / notes grow with their content so, when empty, they sit on a
   // single line flush with the other fields (no big gap to the underline).
@@ -43,17 +59,18 @@ export default function CheckoutView({
 
   function submit() {
     if (hp) return; // bot caught by honeypot — silently drop
-    const phoneLocal = phone.trim();
-    const waLocal = (sameWa ? phone : wa).trim();
-    const fullPhone = phoneLocal ? `${dial} ${phoneLocal}`.trim() : "";
-    const fullWa = waLocal ? `${dial} ${waLocal}`.trim() : "";
+    const local = uaeLocal(phone);
+    const waLocal = uaeLocal(sameWa ? phone : wa);
+    const fullPhone = local ? `+971 ${local}` : "";
+    const fullWa = waLocal ? `+971 ${waLocal}` : "";
 
     const e: Record<string, string> = {};
     if (!name.trim()) e.name = "Please enter your name.";
-    if (!country) e.country = "Please choose your country.";
-    if (!city.trim()) e.city = "Please enter your city.";
-    if (!phoneLocal) e.phone = "Please enter your phone number.";
-    else if (!isValidPhone(fullPhone)) e.phone = "Enter a valid phone number for the selected country.";
+    if (!emirate) e.emirate = "Please select your emirate.";
+    if (!city.trim()) e.city = "Please enter your city / area.";
+    if (!local) e.phone = "Please enter your phone number.";
+    else if (!isValidUaePhone(`+971${local}`))
+      e.phone = "Enter a valid UAE mobile number (e.g. 50 123 4567).";
     if (!email.trim()) e.email = "Please enter your email.";
     else if (!isValidEmail(email)) e.email = "That email doesn't look right.";
     if (!address.trim()) e.address = "Please enter your delivery address.";
@@ -65,8 +82,8 @@ export default function CheckoutView({
       email: email.trim(),
       phone: fullPhone,
       wa: fullWa,
-      country,
-      state: stateRegion.trim(),
+      country: "United Arab Emirates",
+      state: emirate,
       city: city.trim(),
       pref,
       address: address.trim(),
@@ -97,39 +114,30 @@ export default function CheckoutView({
           </div>
         </div>
 
-        {/* Location first — the phone's country code follows the country. */}
-        <div className="f">
-          <label>Country *</label>
-          <select
-            className={err.country ? "err" : ""}
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-          >
-            {COUNTRIES.map((c) => (
-              <option key={c.name} value={c.name}>
-                {c.name} ({c.dial})
-              </option>
-            ))}
-          </select>
-          {err.country && <div className="err-msg">{err.country}</div>}
-        </div>
-
         <div className="grid2">
           <div className="f">
-            <label>State / Region</label>
-            <input
-              value={stateRegion}
-              onChange={(e) => setStateRegion(e.target.value)}
-              placeholder="State / Region"
-            />
+            <label>Emirate *</label>
+            <select
+              className={err.emirate ? "err" : ""}
+              value={emirate}
+              onChange={(e) => setEmirate(e.target.value)}
+            >
+              <option value="">Select emirate</option>
+              {EMIRATES.map((em) => (
+                <option key={em} value={em}>
+                  {em}
+                </option>
+              ))}
+            </select>
+            {err.emirate && <div className="err-msg">{err.emirate}</div>}
           </div>
           <div className="f">
-            <label>City *</label>
+            <label>City / Area *</label>
             <input
               className={err.city ? "err" : ""}
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              placeholder="City"
+              placeholder="e.g. Musaffah, Deira"
             />
             {err.city && <div className="err-msg">{err.city}</div>}
           </div>
@@ -139,7 +147,7 @@ export default function CheckoutView({
           <div className="f">
             <label>Phone *</label>
             <div className={`phone-field ${err.phone ? "err" : ""}`}>
-              <span className="phone-dial">{dial}</span>
+              <span className="phone-dial">+971</span>
               <input
                 type="tel"
                 inputMode="tel"
@@ -153,7 +161,7 @@ export default function CheckoutView({
           <div className="f">
             <label>WhatsApp</label>
             <div className="phone-field">
-              <span className="phone-dial">{dial}</span>
+              <span className="phone-dial">+971</span>
               <input
                 type="tel"
                 inputMode="tel"

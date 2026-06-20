@@ -5,22 +5,22 @@ import { useState } from "react";
 const STEPS = [
   {
     t: "Tell us your car & parts",
-    d: "Select your car brand, enter your VIN / chassis (or upload a VIN / chassis photo), then list the parts you need and the quantity.",
+    d: "Select your car brand and model, then list the parts you need.",
   },
   {
     t: "We send you the price",
     d: "We find the exact match for your car and send you the price — with genuine, OEM or aftermarket options.",
   },
   {
-    t: "Confirm & we ship",
-    d: "You only pay once you're happy with the quote. Then we ship worldwide, right to your door.",
+    t: "Confirm & we deliver",
+    d: "You only pay once you're happy with the quote. Then we deliver across the UAE, right to your door.",
   },
 ];
 
 const FAQS = [
   {
     q: "Is it really free?",
-    a: "Yes — using The Finder to request parts is completely free. You only ever pay for the parts you confirm.",
+    a: "Yes — requesting parts is completely free. You only ever pay for the parts you confirm.",
   },
   {
     q: "How fast will I hear back?",
@@ -32,11 +32,11 @@ const FAQS = [
   },
   {
     q: "I don't have the part number — can you still help?",
-    a: "Absolutely. Just enter your VIN / chassis (or upload a VIN / chassis photo) and describe the part. We match the exact one for your car.",
+    a: "Absolutely. Just pick your car's brand and model and describe the part. We match the exact one for your car.",
   },
   {
     q: "Where do you deliver?",
-    a: "Worldwide. We're based in M7, Musaffah Industrial, Abu Dhabi, and ship across the UAE and internationally.",
+    a: "Across the UAE. We're based in M7, Musaffah Industrial, Abu Dhabi, and deliver to all seven emirates.",
   },
   {
     q: "How and when do I pay?",
@@ -44,7 +44,7 @@ const FAQS = [
   },
   {
     q: "What if the part isn't right?",
-    a: "Because we match by your VIN / chassis, mismatches are rare. If anything's off, message us and we'll make it right.",
+    a: "Because we match by your exact car brand and model, mismatches are rare. If anything's off, message us and we'll make it right.",
   },
 ];
 
