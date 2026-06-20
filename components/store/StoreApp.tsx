@@ -132,6 +132,32 @@ export default function StoreApp() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
+  // ----- browser back/forward navigation -----
+  // The store is a single-page app (one URL), so without this the browser back
+  // button would leave the site. Mirror the current view + cart-drawer state
+  // into the History API so back/forward step through in-app screens instead.
+  // (We merge into the existing history.state to leave Next.js's router state
+  // intact, and keep the same URL so no route change is triggered.)
+  const skipHistoryPush = useRef(true);
+  useEffect(() => {
+    window.history.replaceState({ ...window.history.state, spView: "home", spCart: false }, "");
+    const onPop = (e: PopStateEvent) => {
+      const s = (e.state ?? {}) as { spView?: View; spCart?: boolean };
+      skipHistoryPush.current = true;
+      setView(s.spView ?? "home");
+      setCartOpen(!!s.spCart);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+  useEffect(() => {
+    if (skipHistoryPush.current) {
+      skipHistoryPush.current = false;
+      return;
+    }
+    window.history.pushState({ ...window.history.state, spView: view, spCart: cartOpen }, "");
+  }, [view, cartOpen]);
+
   // Fire a checkout-funnel event whenever the customer reaches the checkout view.
   useEffect(() => {
     if (view === "checkout") trackInitiateCheckout();
