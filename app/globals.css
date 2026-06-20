@@ -526,6 +526,7 @@
 
 /* parts rows */
 .part-row {
+  position: relative;
   margin-top: 8px;
 }
 .part-row input {

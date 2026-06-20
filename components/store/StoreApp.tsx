@@ -11,23 +11,11 @@ import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
 import OrdersView from "./OrdersView";
 import HelpView from "./HelpView";
-import RotatingPlaceholder from "./RotatingPlaceholder";
 import BrandPicker from "./BrandPicker";
 import ModelPicker from "./ModelPicker";
+import PartPicker from "./PartPicker";
 
 type View = "home" | "checkout" | "confirm" | "contact" | "orders" | "help";
-
-// Rotating example placeholders that scroll until the customer types.
-const EG_PART = [
-  "Front brake pads",
-  "Oil filter",
-  "Headlight",
-  "Alternator",
-  "Side mirror",
-  "Radiator",
-  "Timing belt",
-  "Shock absorber",
-];
 
 // Header category tiles. Only the first (the live part finder) works; the
 // rest are "Soon" teasers. Icons live in /public/cat-icons.
@@ -454,42 +442,16 @@ export default function StoreApp() {
                 <div>
                   <div className="step-head"><span className="step-tag">Step 3 -</span> Select your parts</div>
                   {parts.map((p, i) => (
-                    <div className="part-row" key={i}>
-                      <div className="brand-search-wrap">
-                        <svg
-                          className="brand-search-ico"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                        >
-                          <circle cx="11" cy="11" r="7" />
-                          <path d="m21 21-4.3-4.3" />
-                        </svg>
-                        <input
-                          className="p-name"
-                          aria-label="Part name"
-                          value={p.name}
-                          autoComplete="off"
-                          onChange={(e) => {
-                            updatePart(i, { name: e.target.value });
-                            if (partsErr && e.target.value.trim()) setPartsErr(false);
-                          }}
-                        />
-                        <RotatingPlaceholder show={p.name.length === 0 && model.trim().length > 0} items={EG_PART} />
-                        <button
-                          className="part-del"
-                          title="Remove"
-                          aria-label="Remove part"
-                          onClick={() => removePartRow(i)}
-                        >
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round">
-                            <path d="M6 6l12 12M18 6 6 18" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
+                    <PartPicker
+                      key={i}
+                      value={p.name}
+                      hintActive={model.trim().length > 0}
+                      onChange={(v) => {
+                        updatePart(i, { name: v });
+                        if (partsErr && v.trim()) setPartsErr(false);
+                      }}
+                      onRemove={() => removePartRow(i)}
+                    />
                   ))}
                 </div>
                 {partsErr && <div className="err-msg">Please describe at least one part.</div>}
