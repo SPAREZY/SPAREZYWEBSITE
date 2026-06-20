@@ -1283,7 +1283,11 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 9px;
-  margin-top: 12px;
+  margin-bottom: 14px;
+  text-decoration: none;
+}
+.social-proof:hover {
+  opacity: 0.92;
 }
 .sp-rating {
   font-family: Arial, Roboto, system-ui, sans-serif;
@@ -1308,7 +1312,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 92%;
+  width: 100%;
   overflow: hidden;
   color: #f5a623;
 }

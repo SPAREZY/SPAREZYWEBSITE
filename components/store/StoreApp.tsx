@@ -387,6 +387,21 @@ export default function StoreApp() {
           <div ref={homeViewRef} className={`view view-home ${view === "home" ? "active" : ""}`}>
             <div className="pdp">
               <div className="info">
+                <a
+                  className="social-proof"
+                  href="https://maps.app.goo.gl/LDPovtM4EmaZGwwA7?g_st=ic"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Rated 5.0 out of 5 on Google — 5.9K+ parts found"
+                >
+                  <span className="sp-rating" aria-hidden="true">5.0</span>
+                  <span className="sp-meter" aria-hidden="true">
+                    <span className="sp-meter-base">★★★★★</span>
+                    <span className="sp-meter-fill">★★★★★</span>
+                  </span>
+                  <span className="sp-div" aria-hidden="true" />
+                  <span className="sp-count" aria-hidden="true">5.9K+ Parts Found</span>
+                </a>
                 <div className="brand-field" ref={brandFieldRef}>
                   <BrandPicker value={make} onChange={selectBrand} />
                   {makeErr && <div className="err-msg">Please select your car brand.</div>}
@@ -405,17 +420,8 @@ export default function StoreApp() {
                   />
                   {modelErr && <div className="err-msg">Please enter your model.</div>}
                 </div>
-                {/* TEMP: tagline + rating hidden for now — to be reintroduced in a different place. Do not delete.
+                {/* TEMP: tagline hidden for now — to be reintroduced in a different place. Do not delete.
                 <div className="ptag-line">ANY CAR PARTS · WE HAVE IT</div>
-                <div className="social-proof" aria-label="Rated 4.6 out of 5 — 5.3K+ parts found">
-                  <span className="sp-rating" aria-hidden="true">4.6</span>
-                  <span className="sp-meter" aria-hidden="true">
-                    <span className="sp-meter-base">★★★★★</span>
-                    <span className="sp-meter-fill">★★★★★</span>
-                  </span>
-                  <span className="sp-div" aria-hidden="true" />
-                  <span className="sp-count" aria-hidden="true">5.3K+ Parts Found</span>
-                </div>
                 */}
                 {/* TEMP: "What you get" description hidden for now — to be reintroduced in a different place. Do not delete.
                 <div className="desc">
