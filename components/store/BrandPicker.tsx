@@ -49,14 +49,17 @@ export default function BrandPicker({
 
       {selected ? (
         <div className="brand-selected">
-          <span className="brand-chip">
-            {selected.logo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={`/brand-logos/${selected.slug}.png`} alt="" className="brand-logo" />
-            ) : (
-              <span className="brand-logo-fallback">{selected.name[0]}</span>
-            )}
-          </span>
+          <svg
+            className="brand-search-ico"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
           <span className="brand-selected-name">{selected.name}</span>
           <button
             type="button"
