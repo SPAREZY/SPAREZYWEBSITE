@@ -31,6 +31,7 @@ export const CAR_BRANDS: CarBrand[] = [
   { name: "Fiat", slug: "fiat", logo: true },
   { name: "Ford", slug: "ford", logo: true },
   { name: "Foton", slug: "foton", logo: true },
+  { name: "GAC", slug: "gac", logo: false },
   { name: "Geely", slug: "geely", logo: true },
   { name: "Genesis", slug: "genesis", logo: true },
   { name: "GMC", slug: "gmc", logo: true },
@@ -44,6 +45,7 @@ export const CAR_BRANDS: CarBrand[] = [
   { name: "Infiniti", slug: "infiniti", logo: true },
   { name: "Isuzu", slug: "isuzu", logo: true },
   { name: "JAC", slug: "jac", logo: true },
+  { name: "Jaecoo", slug: "jaecoo", logo: false },
   { name: "Jaguar", slug: "jaguar", logo: true },
   { name: "Jeep", slug: "jeep", logo: true },
   { name: "Jetour", slug: "jetour", logo: true },
@@ -56,6 +58,7 @@ export const CAR_BRANDS: CarBrand[] = [
   { name: "Lexus", slug: "lexus", logo: true },
   { name: "Lincoln", slug: "lincoln", logo: true },
   { name: "Lotus", slug: "lotus", logo: true },
+  { name: "Lucid", slug: "lucid", logo: false },
   { name: "Mahindra", slug: "mahindra", logo: true },
   { name: "Maserati", slug: "maserati", logo: true },
   { name: "Maybach", slug: "maybach", logo: true },
@@ -90,6 +93,7 @@ export const CAR_BRANDS: CarBrand[] = [
   { name: "Vauxhall", slug: "vauxhall", logo: true },
   { name: "Volkswagen", slug: "volkswagen", logo: true },
   { name: "Volvo", slug: "volvo", logo: true },
+  { name: "Zeekr", slug: "zeekr", logo: false },
 ];
 
 // Brands surfaced as tiles before the customer searches (UAE-popular).
