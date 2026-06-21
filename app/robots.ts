@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin", "/api"],
     },
-    sitemap: "https://sparezy.store/sitemap.xml",
-    host: "https://sparezy.store",
+    sitemap: "https://www.sparezy.store/sitemap.xml",
+    host: "https://www.sparezy.store",
   };
 }

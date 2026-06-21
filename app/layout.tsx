@@ -25,7 +25,7 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sparezy.store"),
+  metadataBase: new URL("https://www.sparezy.store"),
   title: {
     default: "Sparezy — Just Ask, We Have It | Car Parts in the UAE",
     template: "%s · Sparezy",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     title: "Sparezy — Just Ask, We Have It",
     description:
       "Source any auto part for any car in the UAE. No part number? No stress. Just ask, we have it.",
-    url: "https://sparezy.store",
+    url: "https://www.sparezy.store",
     siteName: "Sparezy",
     locale: "en_AE",
     images: ["/sparezy-logo-white.png"],
