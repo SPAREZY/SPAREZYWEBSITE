@@ -1469,6 +1469,7 @@
 }
 .reviews-row {
   display: flex;
+  align-items: flex-start; /* let each card size to its own content */
   gap: 12px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -1483,7 +1484,6 @@
 .review-card {
   flex: 0 0 84%;
   max-width: 320px;
-  height: 340px;
   background: #fff;
   border-radius: 0; /* sharp edges */
   padding: 16px;
@@ -1491,7 +1491,6 @@
   display: flex;
   flex-direction: column;
   gap: 9px;
-  overflow: hidden;
   scroll-snap-align: start;
 }
 .review-head {
@@ -1549,16 +1548,10 @@
 }
 .reviews .review-text {
   margin: 0;
-  flex: 1 1 auto;
-  min-height: 0; /* allow the text to shrink so the like row is never clipped */
   font-family: Arial, Roboto, system-ui, sans-serif;
   font-size: 0.9rem;
   line-height: 1.45;
   color: #1f1f1f;
-  display: -webkit-box;
-  -webkit-line-clamp: 9;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 .review-like {
   flex: none;
