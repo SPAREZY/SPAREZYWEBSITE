@@ -338,7 +338,7 @@ export default function StoreApp() {
                 </div>
 
                 <div className="model-field">
-                  <div className="step-head"><span className="step-tag">Step 2 -</span> Select your model</div>
+                  <div className="step-head">Select your model</div>
                   <ModelPicker
                     brandName={make}
                     value={model}
@@ -371,7 +371,7 @@ export default function StoreApp() {
                 */}
 
                 <div>
-                  <div className="step-head"><span className="step-tag">Step 3 -</span> Select your parts</div>
+                  <div className="step-head">Select your parts</div>
                   {parts.map((p, i) => (
                     <PartPicker
                       key={i}
