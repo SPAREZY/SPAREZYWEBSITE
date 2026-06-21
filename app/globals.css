@@ -1129,7 +1129,15 @@
   display: flex;
   gap: 14px;
   align-items: flex-start;
-  padding: 16px 0;
+  padding: 14px;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+}
+.cart-drawer .vrow:last-of-type {
+  margin-bottom: 0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 .vrow-media {
   flex: none;
