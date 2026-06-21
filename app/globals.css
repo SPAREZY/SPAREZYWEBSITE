@@ -612,8 +612,8 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 13px 15px;
-  border-radius: 12px;
+  padding: 13px 22px;
+  border-radius: 999px; /* full pill / stadium shape */
   box-shadow: 0 3px 12px rgba(8, 18, 45, 0.18);
 }
 .pay-tabby {
