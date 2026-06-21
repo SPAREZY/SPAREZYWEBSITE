@@ -17,7 +17,7 @@ const ACTIVITY_ICON: Record<string, string> = {
 };
 
 export default function Dashboard({ data }: { data: DashboardData }) {
-  const { kpis, funnel, daily, topMakes, topParts, attention, recent } = data;
+  const { kpis, funnel, daily, topMakes, topParts, reviewLikes, attention, recent } = data;
   const maxDaily = Math.max(1, ...daily.map((d) => d.leads));
   const funnelMax = Math.max(1, ...funnel.map((f) => f.count));
 
@@ -217,10 +217,11 @@ export default function Dashboard({ data }: { data: DashboardData }) {
         </div>
       </div>
 
-      {/* Top makes / parts */}
-      <div className="mt-5 grid gap-5 sm:grid-cols-2">
+      {/* Top makes / parts / review likes */}
+      <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <TopList title="Top makes" items={topMakes} accent="bg-sky-400/70" />
         <TopList title="Top parts requested" items={topParts} accent="bg-emerald-400/70" />
+        <TopList title="Review likes · website" items={reviewLikes} accent="bg-pink-400/70" />
       </div>
     </div>
   );

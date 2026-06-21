@@ -1483,7 +1483,7 @@
 .review-card {
   flex: 0 0 84%;
   max-width: 320px;
-  height: 250px;
+  height: 274px;
   background: #fff;
   border-radius: 0; /* sharp edges */
   padding: 16px;
@@ -1533,15 +1533,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.review-gicon {
-  width: 16px;
-  height: 16px;
-  flex: none;
+.review-stars-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .review-stars {
   font-size: 0.9rem;
   letter-spacing: 1px;
   color: #f5a623;
+}
+.reviews .review-time {
+  font-size: 0.74rem;
+  color: #8a93a6;
 }
 .reviews .review-text {
   margin: 0;
@@ -1550,9 +1554,37 @@
   line-height: 1.45;
   color: #3a4252;
   display: -webkit-box;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.review-like {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 2px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #5a6271;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.review-like svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #98a0ad;
+  stroke-width: 2;
+  transition: transform 0.12s ease;
+}
+.review-like.liked svg {
+  fill: #ec4d5a;
+  stroke: #ec4d5a;
+}
+.review-like:active svg {
+  transform: scale(1.25);
 }
 .sp-rating {
   font-family: Arial, Roboto, system-ui, sans-serif;
