@@ -1483,7 +1483,7 @@
 .review-card {
   flex: 0 0 84%;
   max-width: 320px;
-  height: 274px;
+  height: 340px;
   background: #fff;
   border-radius: 0; /* sharp edges */
   padding: 16px;
@@ -1556,7 +1556,7 @@
   line-height: 1.45;
   color: #1f1f1f;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 9;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
