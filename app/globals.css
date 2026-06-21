@@ -1476,6 +1476,8 @@
   font-size: 1.02rem;
   color: #fff;
   margin-bottom: 12px;
+  text-decoration: none;
+  cursor: pointer;
 }
 .reviews-g {
   width: 18px;
@@ -1507,6 +1509,14 @@
   flex-direction: column;
   gap: 9px;
   scroll-snap-align: start;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: box-shadow 0.16s ease, transform 0.16s ease;
+}
+.review-card:hover {
+  box-shadow: 0 10px 26px rgba(8, 18, 45, 0.28);
+  transform: translateY(-2px);
 }
 .review-head {
   display: flex;
