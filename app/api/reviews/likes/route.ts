@@ -25,14 +25,16 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const body = (await req.json().catch(() => ({}))) as { id?: unknown };
+  const body = (await req.json().catch(() => ({}))) as { id?: unknown; op?: unknown };
   const id = typeof body.id === "string" ? body.id : "";
+  const op = body.op === "unlike" ? "unlike" : "like";
   if (!REVIEW_IDS.includes(id)) {
     return NextResponse.json({ error: "Unknown review" }, { status: 400 });
   }
   try {
     const likes = await readLikes();
-    likes[id] = (likes[id] ?? 0) + 1;
+    const cur = likes[id] ?? 0;
+    likes[id] = op === "unlike" ? Math.max(0, cur - 1) : cur + 1;
     await prisma.setting.upsert({
       where: { key: REVIEW_LIKES_KEY },
       create: { key: REVIEW_LIKES_KEY, value: JSON.stringify(likes) },

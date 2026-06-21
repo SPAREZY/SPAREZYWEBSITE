@@ -24,11 +24,15 @@ export default function Reviews() {
       .catch(() => {});
   }, []);
 
-  function like(id: string) {
-    if (liked[id]) return;
-    // Optimistic: bump the count and remember this device liked it.
-    setExtra((e) => ({ ...e, [id]: (e[id] ?? 0) + 1 }));
-    const nextLiked = { ...liked, [id]: true };
+  function toggleLike(id: string) {
+    const wasLiked = !!liked[id];
+    const op = wasLiked ? "unlike" : "like";
+    // Optimistic: adjust the count and remember this device's choice.
+    setExtra((e) => {
+      const cur = e[id] ?? 0;
+      return { ...e, [id]: wasLiked ? Math.max(0, cur - 1) : cur + 1 };
+    });
+    const nextLiked = { ...liked, [id]: !wasLiked };
     setLiked(nextLiked);
     try {
       localStorage.setItem(LIKED_KEY, JSON.stringify(nextLiked));
@@ -38,7 +42,7 @@ export default function Reviews() {
     fetch("/api/reviews/likes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ id, op }),
     }).catch(() => {});
   }
 
@@ -79,9 +83,9 @@ export default function Reviews() {
               <button
                 type="button"
                 className={`review-like ${isLiked ? "liked" : ""}`}
-                onClick={() => like(r.id)}
+                onClick={() => toggleLike(r.id)}
                 aria-pressed={isLiked}
-                aria-label={isLiked ? "You liked this review" : "Like this review"}
+                aria-label={isLiked ? "Remove your like" : "Like this review"}
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 21s-7.5-4.6-10-9.1C.4 8.9 1.8 5.5 5 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.2 0 4.6 3.4 3 6.4-2.5 4.5-10 9.1-10 9.1Z" />
