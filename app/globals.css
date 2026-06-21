@@ -606,14 +606,15 @@
   display: flex;
   flex-direction: column;
   gap: 9px;
-  margin: 0 -28px 16px;
+  margin-bottom: 16px;
 }
 .pay-banner {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 13px 28px;
-  border-radius: 0;
+  padding: 13px 15px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(8, 18, 45, 0.18);
 }
 .pay-tabby {
   background: #5bfdae;
