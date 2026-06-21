@@ -1207,26 +1207,27 @@
 }
 .vrow-plabel {
   margin-top: 9px;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.6);
 }
 .vrow-parts {
   margin-top: 6px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-direction: column;
+  gap: 5px;
 }
 .vrow-part {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  padding: 4px 10px;
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
   color: #fff;
+  letter-spacing: 0.01em;
+}
+.vrow-qty {
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 700;
+  margin-right: 7px;
 }
 
 /* cart part steppers */

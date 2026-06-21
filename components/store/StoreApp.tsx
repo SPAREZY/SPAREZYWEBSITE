@@ -565,6 +565,7 @@ export default function StoreApp() {
               <PayBanners />
               {cart.map((it, i) => {
                 const slug = slugForBrand(it.make);
+                const partCount = it.parts.reduce((s, p) => s + (p.qty || 1), 0);
                 return (
                   <div className="vrow" key={i}>
                     <div className="vrow-media">
@@ -604,12 +605,15 @@ export default function StoreApp() {
                       <div className="vrow-title">
                         Vehicle {i + 1} — {[it.make, it.model].filter(Boolean).join(" ")}
                       </div>
-                      <div className="vrow-plabel">Parts requested</div>
+                      <div className="vrow-plabel">
+                        Parts requested - {partCount} item{partCount === 1 ? "" : "s"}
+                      </div>
                       <div className="vrow-parts">
                         {it.parts.map((p, j) => (
-                          <span className="vrow-part" key={j}>
+                          <div className="vrow-part" key={j}>
+                            <span className="vrow-qty">{p.qty || 1} ×</span>
                             {p.name}
-                          </span>
+                          </div>
                         ))}
                       </div>
                     </div>
