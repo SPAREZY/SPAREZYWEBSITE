@@ -1469,7 +1469,7 @@
 }
 .reviews-row {
   display: flex;
-  align-items: flex-start; /* let each card size to its own content */
+  align-items: stretch; /* all cards match the tallest (the long reviews) */
   gap: 12px;
   overflow-x: auto;
   overflow-y: hidden;
