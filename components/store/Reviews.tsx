@@ -13,27 +13,102 @@ type Review = {
   uri: string;
 };
 
+// Relative "X months/years ago" label, computed at load so it never freezes.
+function relativeTime(iso: string): string {
+  const months = Math.max(
+    1,
+    Math.round((Date.now() - new Date(iso).getTime()) / (30 * 24 * 3600 * 1000)),
+  );
+  if (months < 12) return `${months} month${months === 1 ? "" : "s"} ago`;
+  const years = Math.round(months / 12);
+  return `${years} year${years === 1 ? "" : "s"} ago`;
+}
+
+// Real Google reviews shown by default. Live reviews from the Places API
+// replace these automatically once GOOGLE_PLACES_API_KEY / GOOGLE_PLACE_ID
+// are configured (and these stay as a graceful fallback if it returns none).
+const FALLBACK_REVIEWS: Review[] = [
+  {
+    author: "Ankith Issac",
+    rating: 5,
+    text: "The staff was really helpful and made sure I got the exact part I needed. What I liked most was that the pricing was very reasonable compared to other places I checked. Super smooth experience overall, I'll definitely come back here again.",
+    time: relativeTime("2025-08-20"),
+    photo: "",
+    uri: GOOGLE_URL,
+  },
+  {
+    author: "Ricky Moras",
+    rating: 5,
+    text: "If you're in Mussafah and looking for spare parts, this is the place you can count on. They're well-stocked with every item you could possibly need, and the setup is organized and professional. Excellent customer service too—definitely worth checking out.",
+    time: relativeTime("2025-09-21"),
+    photo: "",
+    uri: GOOGLE_URL,
+  },
+  {
+    author: "Rakesh Mahesh",
+    rating: 5,
+    text: "Definitely one of the best parts store in town. Friendly vibe and great service. They have access to pretty much any part you might possibly need, even if they dont have it in stock they arrange it for you within minutes. Highly recommended!",
+    time: relativeTime("2025-09-21"),
+    photo: "",
+    uri: GOOGLE_URL,
+  },
+  {
+    author: "shankar nettem",
+    rating: 5,
+    text: "This shop is under management of young entrepreneurs, great service, affordable prices for quality spare parts",
+    time: relativeTime("2025-09-21"),
+    photo: "",
+    uri: GOOGLE_URL,
+  },
+  {
+    author: "muhammed bin rosh",
+    rating: 5,
+    text: "Very well impressed with their customer service and quality of products and their behavior towards customer is really good recommended to everyone who is in need of spare parts",
+    time: relativeTime("2025-08-20"),
+    photo: "",
+    uri: GOOGLE_URL,
+  },
+  {
+    author: "Tech Ster",
+    rating: 5,
+    text: "incredible customer service, they went above and beyond to help me find what i needed",
+    time: relativeTime("2025-09-21"),
+    photo: "",
+    uri: GOOGLE_URL,
+  },
+  {
+    author: "Arsh Shiraz",
+    rating: 5,
+    text: "sooo good",
+    time: relativeTime("2025-08-20"),
+    photo: "",
+    uri: GOOGLE_URL,
+  },
+];
+
 export default function Reviews() {
-  const [reviews, setReviews] = useState<Review[] | null>(null);
+  const [reviews, setReviews] = useState<Review[]>(FALLBACK_REVIEWS);
 
   useEffect(() => {
     let alive = true;
     fetch("/api/reviews")
       .then((r) => r.json())
       .then((d) => {
-        if (alive) setReviews(Array.isArray(d.reviews) ? d.reviews : []);
+        // Only swap in live Google reviews when there are some; otherwise keep
+        // the curated fallback so the section is never empty.
+        if (alive && Array.isArray(d.reviews) && d.reviews.length > 0) {
+          setReviews(d.reviews);
+        }
       })
       .catch(() => {
-        if (alive) setReviews([]);
+        /* keep the fallback reviews */
       });
     return () => {
       alive = false;
     };
   }, []);
 
-  // Render nothing until reviews load, and nothing if there are none
-  // (e.g. before the Google Places API key is configured).
-  if (!reviews || reviews.length === 0) return null;
+  if (reviews.length === 0) return null;
 
   return (
     <section className="reviews" aria-label="Customer reviews">
