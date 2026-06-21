@@ -1551,9 +1551,10 @@
   margin: 0;
   flex: 1 1 auto;
   min-height: 0; /* allow the text to shrink so the like row is never clipped */
-  font-size: 0.86rem;
+  font-family: Arial, Roboto, system-ui, sans-serif;
+  font-size: 0.9rem;
   line-height: 1.45;
-  color: #3a4252;
+  color: #1f1f1f;
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
