@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
 import { parseParts, isOpenStatus, type Status } from "@/lib/utils";
-import { REVIEWS, REVIEW_LIKES_KEY } from "@/lib/reviews";
 
 export type DashboardData = {
   kpis: {
@@ -17,7 +16,6 @@ export type DashboardData = {
   daily: { date: string; label: string; leads: number; won: number }[];
   topMakes: { name: string; count: number }[];
   topParts: { name: string; count: number }[];
-  reviewLikes: { name: string; count: number }[];
   attention: AttentionLead[];
   recent: RecentActivity[];
 };
@@ -203,19 +201,6 @@ export async function getDashboardData(): Promise<DashboardData> {
     recent = [];
   }
 
-  // Review likes added on the website (engagement analytics), stored in the
-  // Setting key/value table as a JSON map { reviewId: count }.
-  let reviewLikes: { name: string; count: number }[];
-  try {
-    const row = await prisma.setting.findUnique({ where: { key: REVIEW_LIKES_KEY } });
-    const map = row?.value ? (JSON.parse(row.value) as Record<string, number>) : {};
-    reviewLikes = REVIEWS.map((r) => ({ name: r.author, count: Number(map[r.id] ?? 0) })).sort(
-      (a, b) => b.count - a.count,
-    );
-  } catch {
-    reviewLikes = REVIEWS.map((r) => ({ name: r.author, count: 0 }));
-  }
-
   return {
     kpis: {
       openLeads,
@@ -231,7 +216,6 @@ export async function getDashboardData(): Promise<DashboardData> {
     daily,
     topMakes,
     topParts,
-    reviewLikes,
     attention,
     recent,
   };

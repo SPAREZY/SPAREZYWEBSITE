@@ -1566,9 +1566,6 @@
   align-items: center;
   gap: 6px;
   padding: 4px 2px 0;
-  border: none;
-  background: none;
-  cursor: pointer;
   color: #3a4252;
   font-size: 0.86rem;
   font-weight: 800;
@@ -1576,17 +1573,7 @@
 .review-like svg {
   width: 18px;
   height: 18px;
-  fill: none;
-  stroke: #98a0ad;
-  stroke-width: 2;
-  transition: transform 0.12s ease;
-}
-.review-like.liked svg {
   fill: #ec4d5a;
-  stroke: #ec4d5a;
-}
-.review-like:active svg {
-  transform: scale(1.25);
 }
 .sp-rating {
   font-family: Arial, Roboto, system-ui, sans-serif;

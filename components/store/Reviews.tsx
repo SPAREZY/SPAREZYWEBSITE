@@ -1,51 +1,6 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { REVIEWS, relativeTime } from "@/lib/reviews";
 
-const LIKED_KEY = "sparezy_review_likes_v1";
-
 export default function Reviews() {
-  // Website likes added on top of the Google seed counts, keyed by review id.
-  const [extra, setExtra] = useState<Record<string, number>>({});
-  // Reviews this device has already liked (so the heart stays filled and can't
-  // be spammed). Persisted in localStorage.
-  const [liked, setLiked] = useState<Record<string, boolean>>({});
-
-  useEffect(() => {
-    try {
-      setLiked(JSON.parse(localStorage.getItem(LIKED_KEY) || "{}"));
-    } catch {
-      /* ignore */
-    }
-    fetch("/api/reviews/likes")
-      .then((r) => r.json())
-      .then((d) => setExtra(d?.likes && typeof d.likes === "object" ? d.likes : {}))
-      .catch(() => {});
-  }, []);
-
-  function toggleLike(id: string) {
-    const wasLiked = !!liked[id];
-    const op = wasLiked ? "unlike" : "like";
-    // Optimistic: adjust the count and remember this device's choice.
-    setExtra((e) => {
-      const cur = e[id] ?? 0;
-      return { ...e, [id]: wasLiked ? Math.max(0, cur - 1) : cur + 1 };
-    });
-    const nextLiked = { ...liked, [id]: !wasLiked };
-    setLiked(nextLiked);
-    try {
-      localStorage.setItem(LIKED_KEY, JSON.stringify(nextLiked));
-    } catch {
-      /* ignore */
-    }
-    fetch("/api/reviews/likes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, op }),
-    }).catch(() => {});
-  }
-
   return (
     <section className="reviews" aria-label="Customer reviews">
       <h3 className="reviews-h">
@@ -59,42 +14,32 @@ export default function Reviews() {
       </h3>
 
       <div className="reviews-row">
-        {REVIEWS.map((r) => {
-          const count = r.likes + (extra[r.id] ?? 0);
-          const isLiked = !!liked[r.id];
-          return (
-            <article className="review-card" key={r.id}>
-              <div className="review-head">
-                <span className="review-av-fallback" style={{ background: r.color }}>
-                  {r.author.charAt(0).toUpperCase()}
-                </span>
-                <div className="review-meta">
-                  <div className="review-name">{r.author}</div>
-                  <div className="review-sub">{r.sub}</div>
-                </div>
+        {REVIEWS.map((r) => (
+          <article className="review-card" key={r.id}>
+            <div className="review-head">
+              <span className="review-av-fallback" style={{ background: r.color }}>
+                {r.author.charAt(0).toUpperCase()}
+              </span>
+              <div className="review-meta">
+                <div className="review-name">{r.author}</div>
+                <div className="review-sub">{r.sub}</div>
               </div>
-              <div className="review-stars-row">
-                <span className="review-stars" aria-label="5 out of 5">
-                  ★★★★★
-                </span>
-                <span className="review-time">{relativeTime(r.date)}</span>
-              </div>
-              <p className="review-text">{r.text}</p>
-              <button
-                type="button"
-                className={`review-like ${isLiked ? "liked" : ""}`}
-                onClick={() => toggleLike(r.id)}
-                aria-pressed={isLiked}
-                aria-label={isLiked ? "Remove your like" : "Like this review"}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 21s-7.5-4.6-10-9.1C.4 8.9 1.8 5.5 5 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.2 0 4.6 3.4 3 6.4-2.5 4.5-10 9.1-10 9.1Z" />
-                </svg>
-                <span>{count}</span>
-              </button>
-            </article>
-          );
-        })}
+            </div>
+            <div className="review-stars-row">
+              <span className="review-stars" aria-label="5 out of 5">
+                ★★★★★
+              </span>
+              <span className="review-time">{relativeTime(r.date)}</span>
+            </div>
+            <p className="review-text">{r.text}</p>
+            <div className="review-like" aria-label={`${r.likes} likes`}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 21s-7.5-4.6-10-9.1C.4 8.9 1.8 5.5 5 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.2 0 4.6 3.4 3 6.4-2.5 4.5-10 9.1-10 9.1Z" />
+              </svg>
+              <span>{r.likes}</span>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

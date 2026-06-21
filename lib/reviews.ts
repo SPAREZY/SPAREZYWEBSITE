@@ -78,9 +78,6 @@ export const REVIEWS: ReviewSeed[] = [
   },
 ];
 
-export const REVIEW_IDS: string[] = REVIEWS.map((r) => r.id);
-export const REVIEW_LIKES_KEY = "review_likes";
-
 // "X months/years ago" label, computed at render so it never freezes.
 export function relativeTime(iso: string): string {
   const months = Math.max(
