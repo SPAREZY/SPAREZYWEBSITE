@@ -1,7 +1,5 @@
-// "Buy now, pay later" bars shown at the top of the cart. Each bar is filled
-// with the brand's own colours (tabby mint / tamara gradient) with the wordmark
-// and a short tagline on top. The wordmark sits in a fixed-width slot so both
-// taglines start at the same x. Presentational only.
+// "Buy now, pay later" bar shown at the top of the cart — the tabby wordmark on
+// its brand mint background with a short tagline. Presentational only.
 export default function PayBanners() {
   return (
     <div className="pay-banners">
@@ -10,12 +8,6 @@ export default function PayBanners() {
           <img className="pay-logo-img" src="/pay/tabby.png" alt="tabby" loading="lazy" />
         </span>
         <span className="pay-text">Buy now, pay later</span>
-      </div>
-      <div className="pay-banner pay-tamara">
-        <span className="pay-logo">
-          <img className="pay-logo-img" src="/pay/tamara.png" alt="tamara" loading="lazy" />
-        </span>
-        <span className="pay-text">Pay in 4 payments at 0% interest</span>
       </div>
     </div>
   );

@@ -619,45 +619,23 @@
 .pay-tabby {
   background: linear-gradient(100deg, #3bffa3 0%, #3bffc2 100%);
 }
-.pay-tamara {
-  background: linear-gradient(
-    100deg,
-    #f6ae92 0%,
-    #f9e2bf 25%,
-    #fae7b4 45%,
-    #ecc3b7 70%,
-    #ce7bae 100%
-  );
-}
 .pay-logo {
   flex: none;
-  width: 94px;
-  height: 22px; /* fixed slot so both bars stay the same height */
   display: flex;
   align-items: center;
 }
 .pay-logo-img {
+  height: 28px;
   width: auto;
   display: block;
 }
-/* Heights tuned so both wordmarks share the same letter (x-)height — tamara is
-   the wider mark, so it caps the size; tabby is sized up to match. */
-.pay-tamara .pay-logo-img {
-  height: 18px;
-}
-.pay-tabby .pay-logo-img {
-  height: 21px;
-}
 .pay-text {
-  font-size: 0.84rem;
+  font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.2;
 }
 .pay-tabby .pay-text {
   color: #0f3a26;
-}
-.pay-tamara .pay-text {
-  color: #221a3d;
 }
 
 .rowbtn.secondary {
