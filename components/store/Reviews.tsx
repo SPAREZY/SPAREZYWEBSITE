@@ -1,115 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 const GOOGLE_URL = "https://maps.app.goo.gl/LDPovtM4EmaZGwwA7?g_st=ic";
 
-type Review = {
-  author: string;
-  rating: number;
-  text: string;
-  time: string;
-  photo: string;
-  uri: string;
-};
-
-// Relative "X months/years ago" label, computed at load so it never freezes.
-function relativeTime(iso: string): string {
-  const months = Math.max(
-    1,
-    Math.round((Date.now() - new Date(iso).getTime()) / (30 * 24 * 3600 * 1000)),
-  );
-  if (months < 12) return `${months} month${months === 1 ? "" : "s"} ago`;
-  const years = Math.round(months / 12);
-  return `${years} year${years === 1 ? "" : "s"} ago`;
-}
-
-// Real Google reviews shown by default. Live reviews from the Places API
-// replace these automatically once GOOGLE_PLACES_API_KEY / GOOGLE_PLACE_ID
-// are configured (and these stay as a graceful fallback if it returns none).
-const FALLBACK_REVIEWS: Review[] = [
-  {
-    author: "Ankith Issac",
-    rating: 5,
-    text: "The staff was really helpful and made sure I got the exact part I needed. What I liked most was that the pricing was very reasonable compared to other places I checked. Super smooth experience overall, I'll definitely come back here again.",
-    time: relativeTime("2025-08-20"),
-    photo: "",
-    uri: GOOGLE_URL,
-  },
-  {
-    author: "Ricky Moras",
-    rating: 5,
-    text: "If you're in Mussafah and looking for spare parts, this is the place you can count on. They're well-stocked with every item you could possibly need, and the setup is organized and professional. Excellent customer service too—definitely worth checking out.",
-    time: relativeTime("2025-09-21"),
-    photo: "",
-    uri: GOOGLE_URL,
-  },
-  {
-    author: "Rakesh Mahesh",
-    rating: 5,
-    text: "Definitely one of the best parts store in town. Friendly vibe and great service. They have access to pretty much any part you might possibly need, even if they dont have it in stock they arrange it for you within minutes. Highly recommended!",
-    time: relativeTime("2025-09-21"),
-    photo: "",
-    uri: GOOGLE_URL,
-  },
-  {
-    author: "shankar nettem",
-    rating: 5,
-    text: "This shop is under management of young entrepreneurs, great service, affordable prices for quality spare parts",
-    time: relativeTime("2025-09-21"),
-    photo: "",
-    uri: GOOGLE_URL,
-  },
-  {
-    author: "muhammed bin rosh",
-    rating: 5,
-    text: "Very well impressed with their customer service and quality of products and their behavior towards customer is really good recommended to everyone who is in need of spare parts",
-    time: relativeTime("2025-08-20"),
-    photo: "",
-    uri: GOOGLE_URL,
-  },
-  {
-    author: "Tech Ster",
-    rating: 5,
-    text: "incredible customer service, they went above and beyond to help me find what i needed",
-    time: relativeTime("2025-09-21"),
-    photo: "",
-    uri: GOOGLE_URL,
-  },
-  {
-    author: "Arsh Shiraz",
-    rating: 5,
-    text: "sooo good",
-    time: relativeTime("2025-08-20"),
-    photo: "",
-    uri: GOOGLE_URL,
-  },
+// Real Google review screenshots, shown as social proof. Tapping one opens the
+// business listing on Google so visitors can verify them.
+const SHOTS = [
+  { src: "/reviews/review-1.jpeg", author: "Ankith Issac" },
+  { src: "/reviews/review-2.jpeg", author: "Ricky Moras" },
+  { src: "/reviews/review-3.jpeg", author: "Rakesh Mahesh" },
+  { src: "/reviews/review-4.jpeg", author: "shankar nettem" },
+  { src: "/reviews/review-5.jpeg", author: "muhammed bin rosh" },
+  { src: "/reviews/review-6.jpeg", author: "Tech Ster" },
+  { src: "/reviews/review-7.jpeg", author: "Arsh Shiraz" },
 ];
 
 export default function Reviews() {
-  const [reviews, setReviews] = useState<Review[]>(FALLBACK_REVIEWS);
-
-  useEffect(() => {
-    let alive = true;
-    fetch("/api/reviews")
-      .then((r) => r.json())
-      .then((d) => {
-        // Only swap in live Google reviews when there are some; otherwise keep
-        // the curated fallback so the section is never empty.
-        if (alive && Array.isArray(d.reviews) && d.reviews.length > 0) {
-          setReviews(d.reviews);
-        }
-      })
-      .catch(() => {
-        /* keep the fallback reviews */
-      });
-    return () => {
-      alive = false;
-    };
-  }, []);
-
-  if (reviews.length === 0) return null;
-
   return (
     <section className="reviews" aria-label="Customer reviews">
       <h3 className="reviews-h">
@@ -123,26 +28,17 @@ export default function Reviews() {
       </h3>
 
       <div className="reviews-row">
-        {reviews.map((r, i) => (
-          <article className="review-card" key={i}>
-            <div className="review-head">
-              {r.photo ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={r.photo} alt="" className="review-av" referrerPolicy="no-referrer" />
-              ) : (
-                <span className="review-av-fallback">{r.author.charAt(0).toUpperCase()}</span>
-              )}
-              <div className="review-meta">
-                <div className="review-name">{r.author}</div>
-                <div className="review-time">{r.time}</div>
-              </div>
-            </div>
-            <div className="review-stars" aria-label={`${r.rating} out of 5`}>
-              {"★★★★★".slice(0, Math.round(r.rating))}
-              <span className="review-stars-dim">{"★★★★★".slice(Math.round(r.rating))}</span>
-            </div>
-            <p className="review-text">{r.text}</p>
-          </article>
+        {SHOTS.map((r, i) => (
+          <a
+            className="review-shot"
+            key={i}
+            href={GOOGLE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={r.src} alt={`5-star Google review from ${r.author}`} loading="lazy" />
+          </a>
         ))}
       </div>
 

@@ -1488,6 +1488,21 @@
   padding: 14px;
   box-shadow: 0 6px 18px rgba(8, 18, 45, 0.18);
 }
+.review-shot {
+  flex: 0 0 86%;
+  max-width: 360px;
+  align-self: flex-start;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(8, 18, 45, 0.18);
+  scroll-snap-align: start;
+}
+.review-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .review-head {
   display: flex;
   align-items: center;
