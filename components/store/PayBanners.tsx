@@ -15,7 +15,7 @@ export default function PayBanners() {
         <span className="pay-logo">
           <img className="pay-logo-img" src="/pay/tamara.png" alt="tamara" loading="lazy" />
         </span>
-        <span className="pay-text">Pay in 4 payments</span>
+        <span className="pay-text">Pay in 4 payments at 0% interest</span>
       </div>
     </div>
   );
