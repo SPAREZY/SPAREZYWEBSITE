@@ -1,14 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { CartItem, CheckoutData, OrderRecap } from "@/lib/store-types";
+import type { CartItem } from "@/lib/store-types";
 import { carLabel } from "@/lib/store-types";
 import { slugForBrand } from "@/lib/car-brands";
-import { rememberOrders } from "@/lib/tracked-orders";
-import { trackAddToCart, trackInitiateCheckout, trackLead } from "@/lib/analytics";
+import { trackAddToCart, trackLead } from "@/lib/analytics";
 import BackgroundGrid from "./BackgroundGrid";
-import CheckoutView from "./CheckoutView";
-import ConfirmView from "./ConfirmView";
 import ContactView from "./ContactView";
 import OrdersView from "./OrdersView";
 import HelpView from "./HelpView";
@@ -18,7 +15,7 @@ import PartPicker from "./PartPicker";
 import PayBanners from "./PayBanners";
 import Reviews from "./Reviews";
 
-type View = "home" | "checkout" | "confirm" | "contact" | "orders" | "help";
+type View = "home" | "contact" | "orders" | "help";
 
 // Header category tiles. Only the first (the live part finder) works; the
 // rest are "Soon" teasers. Icons live in /public/cat-icons.
@@ -61,11 +58,6 @@ async function fileToCompressedDataUrl(file: File, maxDim = 1280, quality = 0.68
 type FormPart = { name: string };
 const STORAGE_KEY = "sparezy_cart_v1";
 const BUSINESS_WA = "971522250600";
-const PREF_MAP: Record<string, "whatsapp" | "call" | "email"> = {
-  WhatsApp: "whatsapp",
-  "Phone call": "call",
-  Email: "email",
-};
 
 export default function StoreApp() {
   const [view, setView] = useState<View>("home");
@@ -75,8 +67,6 @@ export default function StoreApp() {
   const [cartOpen, setCartOpen] = useState(false);
   const [addBar, setAddBar] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
-  const [recap, setRecap] = useState<OrderRecap | null>(null);
-  const [submitting, setSubmitting] = useState(false);
 
   // product form
   const [make, setMake] = useState("");
@@ -149,16 +139,7 @@ export default function StoreApp() {
     window.history.pushState({ ...window.history.state, spView: view, spCart: cartOpen }, "");
   }, [view, cartOpen]);
 
-  // Fire a checkout-funnel event whenever the customer reaches the checkout view.
-  useEffect(() => {
-    if (view === "checkout") trackInitiateCheckout();
-  }, [view]);
-
   function go(v: View) {
-    if (v === "checkout" && cart.length === 0) {
-      openCart();
-      return;
-    }
     setView(v);
   }
 
@@ -262,69 +243,16 @@ export default function StoreApp() {
     showToast("Removed");
   }
 
-  async function placeOrder(data: CheckoutData) {
-    const contactPref = PREF_MAP[data.pref] ?? "whatsapp";
-    setSubmitting(true);
-    try {
-      const humanIds: string[] = [];
-      for (const it of cart) {
-        const res = await fetch("/api/requests", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            vin: it.vin,
-            make: it.make || undefined,
-            model: it.model || undefined,
-            year: it.year ? Number(it.year) : undefined,
-            customerName: data.name,
-            phone: data.phone || undefined,
-            email: data.email || undefined,
-            city: data.city,
-            state: data.state || undefined,
-            country: data.country,
-            address: data.address,
-            contactPref,
-            partPreference: "any",
-            partsJson: it.parts.map((p) => ({ name: p.name, qty: p.qty, condition: "any" })),
-            photoUrl: it.photo || undefined,
-            customerNote: data.notes || undefined,
-          }),
-        });
-        const body = await res.json();
-        if (!res.ok) {
-          showToast(body?.error || "Could not place the order. Try again.");
-          setSubmitting(false);
-          return;
-        }
-        humanIds.push(body.humanId);
-      }
-
-      const snapshot = JSON.parse(JSON.stringify(cart)) as CartItem[];
-      const waLink = buildOrderWaLink(humanIds, snapshot, data);
-      // Remember these orders on this device so they appear on the Orders page.
-      rememberOrders(humanIds, data.phone);
-      // Conversion event for ad platforms (Google / Meta / TikTok).
-      trackLead({ orderIds: humanIds, count: humanIds.length });
-      setRecap({
-        humanIds,
-        vehicles: snapshot,
-        name: data.name,
-        phone: data.phone,
-        email: data.email,
-        city: data.city,
-        state: data.state,
-        country: data.country,
-        address: data.address,
-        notes: data.notes,
-        waLink,
-      });
-      setCart([]);
-      setView("confirm");
-    } catch {
-      showToast("Network error. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
+  // Place order = hand the inquiry straight to a human on WhatsApp. The cart
+  // already holds everything we need, so we pre-fill the chat with the full
+  // request and open it in one tap — no form, no extra page.
+  function placeOrder() {
+    if (cart.length === 0) return;
+    // Conversion event for ad platforms (Google / Meta / TikTok).
+    trackLead({ count: cart.length });
+    const waLink = buildCartWaLink(cart);
+    closeCart();
+    window.open(waLink, "_blank", "noopener,noreferrer");
   }
 
   const editing = editIndex !== null;
@@ -511,24 +439,6 @@ export default function StoreApp() {
             </div>
           </div>
 
-          {/* CHECKOUT */}
-          <div className={`view ${view === "checkout" ? "active" : ""}`}>
-            <CheckoutView
-              cart={cart}
-              submitting={submitting}
-              onPlaceOrder={placeOrder}
-              onReturnToCart={() => {
-                setView("home");
-                openCart();
-              }}
-            />
-          </div>
-
-          {/* CONFIRM */}
-          <div className={`view ${view === "confirm" ? "active" : ""}`}>
-            <ConfirmView recap={recap} onBack={() => go("home")} />
-          </div>
-
           {/* CONTACT */}
           <div className={`view ${view === "contact" ? "active" : ""}`}>
             <ContactView onHelp={() => go("help")} />
@@ -631,14 +541,8 @@ export default function StoreApp() {
                 <b className="free">FREE</b>
               </span>
             </div>
-            <button
-              className="rowbtn"
-              onClick={() => {
-                closeCart();
-                go("checkout");
-              }}
-            >
-              <span>Checkout</span>
+            <button className="rowbtn" onClick={placeOrder}>
+              <span>Place Order</span>
             </button>
             <button
               className="rowbtn secondary"
@@ -747,18 +651,17 @@ export default function StoreApp() {
   );
 }
 
-function buildOrderWaLink(humanIds: string[], vehicles: CartItem[], data: CheckoutData): string {
-  let msg = `NEW ORDER ${humanIds.join(", ")} — SPAREZY\n`;
-  msg += `Name: ${data.name}\nPhone: ${data.phone}\n`;
-  msg += `City: ${[data.city, data.state, data.country].filter(Boolean).join(", ")}\n`;
-  msg += `Address: ${data.address}\n`;
+// Build the WhatsApp hand-off straight from the cart — a warm, ready-to-send
+// message listing every vehicle and the parts requested.
+function buildCartWaLink(vehicles: CartItem[]): string {
+  let msg = `Hi Sparezy 👋 I'd like a quote for these parts:\n`;
   vehicles.forEach((it, i) => {
     const label = carLabel(it) || "Car";
-    msg += `\nVehicle ${i + 1}${humanIds[i] ? " (" + humanIds[i] + ")" : ""} — ${label}\n`;
+    msg += `\nVehicle ${i + 1} — ${label}\n`;
     it.parts.forEach((p) => {
-      msg += `• ${p.name}\n`;
+      const qty = p.qty && p.qty > 1 ? ` ×${p.qty}` : "";
+      msg += `• ${p.name}${qty}\n`;
     });
   });
-  if (data.notes) msg += `\nNote: ${data.notes}\n`;
   return `https://wa.me/${BUSINESS_WA}?text=${encodeURIComponent(msg)}`;
 }
