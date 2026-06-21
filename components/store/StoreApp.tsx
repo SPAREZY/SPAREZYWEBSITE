@@ -468,11 +468,11 @@ export default function StoreApp() {
           </button>
         </div>
         <div className="drawer-body">
+          <PayBanners />
           {cart.length === 0 ? (
             <div className="drawer-empty">YOUR CART IS EMPTY</div>
           ) : (
             <>
-              <PayBanners />
               {cart.map((it, i) => {
                 const slug = slugForBrand(it.make);
                 const partCount = it.parts.reduce((s, p) => s + (p.qty || 1), 0);
