@@ -1564,15 +1564,15 @@
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 2px 0;
-  color: #3a4252;
-  font-size: 0.86rem;
-  font-weight: 800;
+  gap: 7px;
+  padding-top: 2px;
+  color: #1a1f2b;
+  font-size: 0.95rem;
+  font-weight: 700;
 }
 .review-like svg {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   fill: #ec4d5a;
 }
 .sp-rating {
