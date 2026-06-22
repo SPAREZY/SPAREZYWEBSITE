@@ -624,9 +624,9 @@
   background:
     linear-gradient(
       90deg,
-      rgba(170, 212, 190, 1) 0%,
-      rgba(170, 212, 190, 1) 56%,
-      rgba(170, 212, 190, 0) 84%
+      rgba(170, 212, 190, 0.96) 0%,
+      rgba(170, 212, 190, 0.6) 40%,
+      rgba(170, 212, 190, 0) 66%
     ),
     url("/pay/tabby-tap.jpg") center / cover no-repeat;
 }
@@ -636,12 +636,12 @@
   align-items: center;
 }
 .pay-logo-img {
-  height: 28px;
+  height: 24px;
   width: auto;
   display: block;
 }
 .pay-text {
-  font-size: 0.9rem;
+  font-size: 0.74rem;
   font-weight: 700;
   line-height: 1.2;
 }
