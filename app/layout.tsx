@@ -30,8 +30,6 @@ export const metadata: Metadata = {
     default: "Sparezy Auto Spare Parts | Your All Parts Destination",
     template: "%s · Sparezy",
   },
-  description:
-    "Auto spare parts, batteries, lubricants and body parts for every car — sourced and delivered across the UAE. Common or rare, just ask. Sparezy, Musaffah, Abu Dhabi.",
   keywords: [
     "car parts UAE",
     "auto spare parts Abu Dhabi",
@@ -48,8 +46,6 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   openGraph: {
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
-    description:
-      "Spare parts, batteries, lubricants and body parts for any car in the UAE. No part number? No stress — just ask, we have it.",
     url: "https://www.sparezy.store",
     siteName: "Sparezy",
     locale: "en_AE",
@@ -59,7 +55,6 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
-    description: "Spare parts, batteries, lubricants & body parts for any car in the UAE. Just ask, we have it.",
     images: ["/sparezy-logo-white.png"],
   },
 };
