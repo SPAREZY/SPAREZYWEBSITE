@@ -1437,6 +1437,11 @@
 .store-foot {
   padding-bottom: 90px;
 }
+.store-end {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
 .social-proof {
   display: flex;
   flex-wrap: wrap;

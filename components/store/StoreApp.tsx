@@ -14,6 +14,7 @@ import ModelPicker from "./ModelPicker";
 import PartPicker from "./PartPicker";
 import PayBanners from "./PayBanners";
 import Reviews from "./Reviews";
+import SparezyLogo from "./SparezyLogo";
 
 type View = "home" | "contact" | "orders" | "help";
 
@@ -436,6 +437,9 @@ export default function StoreApp() {
                 <span className="sp-count" aria-hidden="true">5.9K+ Parts Found</span>
               </a>
               <Reviews />
+              <div className="store-end">
+                <SparezyLogo width={210} maxWidth="68%" />
+              </div>
             </div>
           </div>
 
