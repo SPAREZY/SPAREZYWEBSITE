@@ -57,6 +57,9 @@ export const metadata: Metadata = {
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
     images: ["/sparezy-logo-white.png"],
   },
+  // Transparent icon — intentionally blank so the tab shows no logo, and it
+  // sits at a new path to override browsers' cached old favicon.
+  icons: { icon: "/favicon-blank.png" },
 };
 
 export const viewport: Viewport = {
