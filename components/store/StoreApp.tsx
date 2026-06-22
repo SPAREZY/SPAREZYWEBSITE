@@ -331,6 +331,15 @@ export default function StoreApp() {
         <div className="stage">
           {/* PRODUCT */}
           <div ref={homeViewRef} className={`view view-home ${view === "home" ? "active" : ""}`}>
+            <div className="hero-row">
+              <aside className="hero-aside">
+                <SparezyLogo width={300} maxWidth="100%" />
+                <h1 className="hero-title">Any part, any car — just ask.</h1>
+                <p className="hero-sub">
+                  Spare parts, batteries, lubricants and body parts, sourced and
+                  delivered across the UAE. No part number? No stress — we have it.
+                </p>
+              </aside>
             <div className="pdp">
               <div className="info">
                 <div className="brand-field" ref={brandFieldRef}>
@@ -419,6 +428,7 @@ export default function StoreApp() {
                   )}
                 </div>
               </div>
+            </div>
             </div>
             <div className="store-foot">
               <a
