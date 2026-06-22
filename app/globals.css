@@ -619,20 +619,16 @@
   overflow: hidden; /* clip the photo panel to the pill */
 }
 .pay-tabby {
-  background: linear-gradient(100deg, #3bffa3 0%, #3bffc2 100%);
-}
-/* Payment image at the right end, faded into the bar's mint on its left. */
-.pay-art {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 44%;
-  object-fit: cover;
-  object-position: center right;
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 58%);
-  mask-image: linear-gradient(to right, transparent 0%, #000 58%);
+  /* The payment photo is the bar's background; a soft mint scrim on the left
+     (matching the photo's own green) keeps the tabby logo + tagline crisp. */
+  background:
+    linear-gradient(
+      90deg,
+      rgba(170, 212, 190, 0.97) 0%,
+      rgba(170, 212, 190, 0.62) 33%,
+      rgba(170, 212, 190, 0) 56%
+    ),
+    url("/pay/tabby-tap.jpg") center / cover no-repeat;
 }
 .pay-logo {
   flex: none;
