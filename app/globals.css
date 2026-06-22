@@ -1441,6 +1441,8 @@
   display: flex;
   justify-content: center;
   margin-top: 30px;
+  padding: 6px 0 16px;
+  overflow: hidden; /* clip the 3D sway so it can't push past the screen edge */
 }
 .social-proof {
   display: flex;

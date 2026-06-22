@@ -438,7 +438,7 @@ export default function StoreApp() {
               </a>
               <Reviews />
               <div className="store-end">
-                <SparezyLogo width={520} maxWidth="94%" />
+                <SparezyLogo width={380} maxWidth="80%" />
               </div>
             </div>
           </div>
