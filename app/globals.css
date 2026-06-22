@@ -624,9 +624,9 @@
   background:
     linear-gradient(
       90deg,
-      rgba(170, 212, 190, 0.97) 0%,
-      rgba(170, 212, 190, 0.62) 33%,
-      rgba(170, 212, 190, 0) 56%
+      rgba(170, 212, 190, 1) 0%,
+      rgba(170, 212, 190, 1) 56%,
+      rgba(170, 212, 190, 0) 84%
     ),
     url("/pay/tabby-tap.jpg") center / cover no-repeat;
 }
