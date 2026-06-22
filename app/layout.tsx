@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
   openGraph: {
-    title: "Sparezy — Just Ask, We Have It",
+    title: "Sparezy Auto Spare Parts | Your All Parts Destination",
     description:
       "Source any auto part for any car in the UAE. No part number? No stress. Just ask, we have it.",
     url: "https://www.sparezy.store",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sparezy — Just Ask, We Have It",
+    title: "Sparezy Auto Spare Parts | Your All Parts Destination",
     description: "Source any auto part for any car in the UAE. Just ask, we have it.",
     images: ["/sparezy-logo-white.png"],
   },
