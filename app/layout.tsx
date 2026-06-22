@@ -31,10 +31,13 @@ export const metadata: Metadata = {
     template: "%s · Sparezy",
   },
   description:
-    "Every auto spare part for every car, sourced and delivered across the UAE. Common or rare — just ask, we have it. Sparezy, Musaffah, Abu Dhabi.",
+    "Auto spare parts, batteries, lubricants and body parts for every car — sourced and delivered across the UAE. Common or rare, just ask. Sparezy, Musaffah, Abu Dhabi.",
   keywords: [
     "car parts UAE",
     "auto spare parts Abu Dhabi",
+    "car battery UAE",
+    "car lubricants and oil UAE",
+    "car body parts UAE",
     "spare parts Musaffah",
     "car parts by VIN",
     "genuine OEM car parts UAE",
@@ -46,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
     description:
-      "Source any auto part for any car in the UAE. No part number? No stress. Just ask, we have it.",
+      "Spare parts, batteries, lubricants and body parts for any car in the UAE. No part number? No stress — just ask, we have it.",
     url: "https://www.sparezy.store",
     siteName: "Sparezy",
     locale: "en_AE",
@@ -56,7 +59,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
-    description: "Source any auto part for any car in the UAE. Just ask, we have it.",
+    description: "Spare parts, batteries, lubricants & body parts for any car in the UAE. Just ask, we have it.",
     images: ["/sparezy-logo-white.png"],
   },
 };
