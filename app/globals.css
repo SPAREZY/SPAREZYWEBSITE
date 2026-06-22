@@ -609,15 +609,30 @@
   margin-bottom: 16px;
 }
 .pay-banner {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 13px 22px;
   border-radius: 999px; /* full pill / stadium shape */
   box-shadow: 0 3px 12px rgba(8, 18, 45, 0.18);
+  overflow: hidden; /* clip the photo panel to the pill */
 }
 .pay-tabby {
   background: linear-gradient(100deg, #3bffa3 0%, #3bffc2 100%);
+}
+/* Payment image at the right end, faded into the bar's mint on its left. */
+.pay-art {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 44%;
+  object-fit: cover;
+  object-position: center right;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 58%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 58%);
 }
 .pay-logo {
   flex: none;

@@ -8,6 +8,13 @@ export default function PayBanners() {
           <img className="pay-logo-img" src="/pay/tabby.png" alt="tabby" loading="lazy" />
         </span>
         <span className="pay-text">Buy now, pay later</span>
+        <img
+          className="pay-art"
+          src="/pay/tabby-tap.jpg"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+        />
       </div>
     </div>
   );
