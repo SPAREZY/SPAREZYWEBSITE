@@ -46,8 +46,6 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   openGraph: {
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
-    description:
-      "While others are driving around industrial areas, our customers are waiting for the doorbell.",
     url: "https://www.sparezy.store",
     siteName: "Sparezy",
     locale: "en_AE",
@@ -56,8 +54,6 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
-    description:
-      "While others are driving around industrial areas, our customers are waiting for the doorbell.",
   },
   // Transparent icon — intentionally blank so the tab shows no logo, and it
   // sits at a new path to override browsers' cached old favicon.
