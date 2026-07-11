@@ -319,89 +319,6 @@
 .hero-aside {
   display: none; /* hidden on mobile/tablet — desktop-only column */
 }
-@media (min-width: 1024px) {
-  /* One shared centered column so everything lines up header → footer. */
-  .nav,
-  .cat-bar {
-    max-width: 1140px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 30px;
-    padding-right: 30px;
-    box-sizing: border-box;
-  }
-
-  /* HEADER — nav links left, cart right */
-  .nav {
-    grid-template-columns: 1fr auto;
-    padding-top: 22px;
-    padding-bottom: 14px;
-  }
-
-  /* CATEGORY TILES — a full-width row of four, aligned to the column */
-  .cat-bar {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    padding-top: 2px;
-    padding-bottom: 22px;
-  }
-  .cat-tile {
-    aspect-ratio: auto;
-    min-height: 86px;
-    border-radius: 16px;
-    padding: 14px 18px;
-    justify-content: center;
-  }
-  .cat-eyebrow,
-  .cat-name {
-    font-size: 0.92rem;
-  }
-
-  /* MAIN — part-finder box and reviews side by side in one uniform row */
-  .view-home.active {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 44px;
-    padding: 12px 30px 0;
-  }
-  .hero-row {
-    flex: none;
-    margin: 0;
-    padding: 0;
-  }
-  .pdp {
-    flex: 0 0 480px;
-    width: 480px;
-    max-width: 480px;
-    margin: 0;
-    padding: 20px 24px 24px;
-  }
-  .store-foot {
-    flex: 0 1 590px;
-    min-width: 0;
-    margin: 0;
-    padding: 4px 0 40px;
-  }
-  .reviews {
-    max-width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .reviews-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    overflow: visible;
-    padding: 2px;
-  }
-  .review-card {
-    flex: initial;
-    max-width: none;
-    width: auto;
-  }
-
-}
 .info {
   padding-top: 0;
 }
@@ -2744,4 +2661,90 @@
 .vin-thumb-x:hover {
   background: var(--red);
   border-color: var(--red);
+}
+
+/* ===== Desktop layout overrides (≥1024px) — kept at the END of the file so they
+   win over the base (mobile) rules defined above. Mobile/tablet untouched. ===== */
+@media (min-width: 1024px) {
+  /* One shared centered column so everything lines up header → footer. */
+  .nav,
+  .cat-bar {
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
+  }
+
+  /* HEADER — nav links left, cart right */
+  .nav {
+    grid-template-columns: 1fr auto;
+    padding-top: 22px;
+    padding-bottom: 14px;
+  }
+
+  /* CATEGORY TILES — a full-width row of four, aligned to the column */
+  .cat-bar {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding-top: 2px;
+    padding-bottom: 22px;
+  }
+  .cat-tile {
+    aspect-ratio: auto;
+    min-height: 86px;
+    border-radius: 16px;
+    padding: 14px 18px;
+    justify-content: center;
+  }
+  .cat-eyebrow,
+  .cat-name {
+    font-size: 0.92rem;
+  }
+
+  /* MAIN — part-finder box and reviews side by side in one uniform row */
+  .view-home.active {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 44px;
+    padding: 12px 30px 0;
+  }
+  .hero-row {
+    flex: none;
+    margin: 0;
+    padding: 0;
+  }
+  .pdp {
+    flex: 0 0 480px;
+    width: 480px;
+    max-width: 480px;
+    margin: 0;
+    padding: 20px 24px 24px;
+  }
+  .store-foot {
+    flex: 0 1 590px;
+    min-width: 0;
+    margin: 0;
+    padding: 4px 0 40px;
+  }
+  .reviews {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .reviews-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    overflow: visible;
+    padding: 2px;
+  }
+  .review-card {
+    flex: initial;
+    max-width: none;
+    width: auto;
+  }
+
 }
