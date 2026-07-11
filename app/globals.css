@@ -2663,11 +2663,6 @@
   border-color: var(--red);
 }
 
-/* Desktop-only bottom logo — hidden on mobile/tablet. */
-.store-end-desktop {
-  display: none;
-}
-
 /* ===== Desktop layout overrides (≥1024px) — kept at the END of the file so they
    win over the base (mobile) rules defined above. Mobile/tablet untouched. ===== */
 @media (min-width: 1024px) {
@@ -2789,14 +2784,8 @@
     overflow: hidden;
   }
 
-  /* Logo: hide the in-column copy; show the full-width one under both columns */
+  /* No Sparezy logo on desktop (the mobile end-of-page logo stays mobile-only) */
   .store-end {
     display: none;
-  }
-  .store-end-desktop {
-    display: flex;
-    justify-content: center;
-    flex: 1 1 100%;
-    padding: 34px 0 40px;
   }
 }
