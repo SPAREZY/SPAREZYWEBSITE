@@ -320,44 +320,104 @@
   display: none; /* hidden on mobile/tablet — desktop-only column */
 }
 @media (min-width: 1024px) {
+  /* One shared centered column so everything lines up header → footer. */
+  .nav,
+  .cat-bar,
+  .hero-row,
+  .store-foot {
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
+  }
+
+  /* HEADER — nav links left, cart right */
+  .nav {
+    grid-template-columns: 1fr auto;
+    padding-top: 22px;
+    padding-bottom: 14px;
+  }
+
+  /* CATEGORY TILES — a full-width row of four, aligned to the column */
+  .cat-bar {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding-top: 2px;
+    padding-bottom: 22px;
+  }
+  .cat-tile {
+    aspect-ratio: auto;
+    min-height: 86px;
+    border-radius: 16px;
+    padding: 14px 18px;
+    justify-content: center;
+  }
+  .cat-eyebrow,
+  .cat-name {
+    font-size: 0.92rem;
+  }
+
+  /* HERO — branding left, part-finder right */
   .hero-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 48px;
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 6px 24px 0;
+    gap: 56px;
+    padding-top: 8px;
   }
   .hero-aside {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    flex: 0 1 420px;
+    flex: 1 1 auto;
     min-width: 0;
   }
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.7rem;
     font-weight: 800;
-    line-height: 1.07;
-    letter-spacing: -0.01em;
+    line-height: 1.06;
+    letter-spacing: -0.015em;
     color: #fff;
-    margin: 24px 0 14px;
+    margin: 26px 0 16px;
   }
   .hero-sub {
-    font-size: 1.02rem;
+    font-size: 1.05rem;
     line-height: 1.55;
     color: rgba(255, 255, 255, 0.82);
-    max-width: 40ch;
+    max-width: 42ch;
     margin: 0 auto;
   }
   .pdp {
-    flex: 0 0 460px;
-    width: 460px;
-    max-width: 460px;
+    flex: 0 0 470px;
+    width: 470px;
+    max-width: 470px;
     margin: 0;
   }
+
+  /* FOOTER — rating + reviews aligned; reviews as a clean 3-up grid */
+  .store-foot {
+    padding-top: 28px;
+  }
+  .reviews {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .reviews-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    overflow: visible;
+    padding: 2px;
+  }
+  .review-card {
+    flex: initial;
+    max-width: none;
+    width: auto;
+  }
+
   .store-end {
     display: none; /* the animated logo lives in the hero on desktop */
   }
