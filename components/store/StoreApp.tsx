@@ -400,6 +400,7 @@ export default function StoreApp() {
                       key={i}
                       value={p.name}
                       hintActive={model.trim().length > 0}
+                      hintOffset={i}
                       onChange={(v) => {
                         updatePart(i, { name: v });
                         if (partsErr && v.trim()) setPartsErr(false);

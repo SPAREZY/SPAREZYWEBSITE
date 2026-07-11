@@ -13,17 +13,26 @@ const EG_PART = [
 export default function PartPicker({
   value,
   hintActive,
+  hintOffset = 0,
   onChange,
   onRemove,
 }: {
   value: string;
   hintActive: boolean;
+  /** Row index — staggers the rotating examples so parallel rows differ. */
+  hintOffset?: number;
   onChange: (v: string) => void;
   onRemove: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Rotate the example list by 3 per row so rows never show the same hint.
+  const hintItems = useMemo(() => {
+    const shift = (hintOffset * 3) % EG_PART.length;
+    return [...EG_PART.slice(shift), ...EG_PART.slice(0, shift)];
+  }, [hintOffset]);
 
   const term = value.trim().toLowerCase();
   const results = useMemo(
@@ -72,7 +81,7 @@ export default function PartPicker({
           }}
           onFocus={() => setOpen(true)}
         />
-        <RotatingPlaceholder show={value.length === 0 && hintActive} items={EG_PART} />
+        <RotatingPlaceholder show={value.length === 0 && hintActive} items={hintItems} />
         <button
           className="part-del"
           title={value.trim() ? "Clear" : "Remove"}
