@@ -2712,13 +2712,14 @@
   .view-home.active {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: stretch; /* box matches the reviews column height */
     justify-content: center;
     gap: 0 44px;
     padding: 12px 30px 0;
   }
   .hero-row {
     flex: none;
+    display: flex;
     margin: 0;
     padding: 0;
   }
@@ -2728,6 +2729,17 @@
     max-width: 480px;
     margin: 0;
     padding: 20px 24px 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  .pdp .info {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+  .pdp .pdp-actions {
+    margin-top: auto; /* pin FIND MY PART to the bottom of the stretched box */
   }
   .store-foot {
     flex: 0 1 590px;
