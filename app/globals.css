@@ -322,9 +322,7 @@
 @media (min-width: 1024px) {
   /* One shared centered column so everything lines up header → footer. */
   .nav,
-  .cat-bar,
-  .hero-row,
-  .store-foot {
+  .cat-bar {
     max-width: 1140px;
     margin-left: auto;
     margin-right: auto;
@@ -359,23 +357,31 @@
     font-size: 0.92rem;
   }
 
-  /* HERO — part-finder centered (branding column removed) */
-  .hero-row {
+  /* MAIN — part-finder box and reviews side by side in one uniform row */
+  .view-home.active {
     display: flex;
+    align-items: flex-start;
     justify-content: center;
-    padding-top: 8px;
+    gap: 44px;
+    padding: 12px 30px 0;
+  }
+  .hero-row {
+    flex: none;
+    margin: 0;
+    padding: 0;
   }
   .pdp {
-    flex: 0 0 560px;
-    width: 560px;
-    max-width: 560px;
+    flex: 0 0 480px;
+    width: 480px;
+    max-width: 480px;
     margin: 0;
     padding: 20px 24px 24px;
   }
-
-  /* FOOTER — rating + reviews aligned; reviews as a clean 3-up grid */
   .store-foot {
-    padding-top: 28px;
+    flex: 0 1 590px;
+    min-width: 0;
+    margin: 0;
+    padding: 4px 0 40px;
   }
   .reviews {
     max-width: 100%;
@@ -384,8 +390,8 @@
   }
   .reviews-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
     overflow: visible;
     padding: 2px;
   }
