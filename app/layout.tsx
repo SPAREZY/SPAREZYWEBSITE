@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   },
   // Transparent icon — intentionally blank so the tab shows no logo, and it
   // sits at a new path to override browsers' cached old favicon.
-  icons: { icon: "/favicon-blank.png" },
+  icons: { icon: "/favicon-blank.png?v=2" },
 };
 
 export const viewport: Viewport = {
