@@ -60,6 +60,14 @@ type FormPart = { name: string };
 const STORAGE_KEY = "sparezy_cart_v1";
 const BUSINESS_WA = "971522250600";
 
+// Desktop shows three empty part rows by default so the form fills its column;
+// mobile keeps the single compact row. (SSR-safe: server renders one row.)
+function defaultParts(): FormPart[] {
+  const desktop =
+    typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches;
+  return desktop ? [{ name: "" }, { name: "" }, { name: "" }] : [{ name: "" }];
+}
+
 export default function StoreApp() {
   const [view, setView] = useState<View>("home");
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -79,6 +87,11 @@ export default function StoreApp() {
   const [partsErr, setPartsErr] = useState(false);
 
   const addBarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // On desktop, expand the pristine single part row to the three defaults.
+  useEffect(() => {
+    setParts((prev) => (prev.length === 1 && !prev[0].name ? defaultParts() : prev));
+  }, []);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const homeViewRef = useRef<HTMLDivElement>(null);
   const brandFieldRef = useRef<HTMLDivElement>(null);
@@ -160,7 +173,7 @@ export default function StoreApp() {
     setMake("");
     setModel("");
     setYear("");
-    setParts([{ name: "" }]);
+    setParts(defaultParts());
     setMakeErr(false);
     setModelErr(false);
     setPartsErr(false);
