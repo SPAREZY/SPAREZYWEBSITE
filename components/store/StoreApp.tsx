@@ -451,6 +451,11 @@ export default function StoreApp() {
                 <SparezyLogo width={380} maxWidth="80%" />
               </div>
             </div>
+            {/* Desktop-only: the logo centred at the very bottom of the page
+                (hidden on mobile, where .store-end above plays this role). */}
+            <div className="store-end-desktop" aria-hidden="true">
+              <SparezyLogo width={320} maxWidth="60%" />
+            </div>
           </div>
 
           {/* CONTACT */}
