@@ -2707,7 +2707,7 @@
   .view-home.active {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start; /* each column keeps its natural height */
+    align-items: stretch; /* box bottom lines up with the reviews bottom */
     align-content: flex-start; /* size the row to its content, not the viewport */
     justify-content: center;
     gap: 0 44px;
