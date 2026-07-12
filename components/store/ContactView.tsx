@@ -20,7 +20,7 @@ export default function ContactView({ onHelp }: { onHelp?: () => void }) {
             </svg>
           </span>
           <span className="v">
-            <a href="tel:+971522250600" aria-label="Call us">(+971) 52 225 0600</a>
+            <a href="tel:+971522250600" aria-label="Call us">+971 52 225 0600</a>
           </span>
         </div>
         <div className="cline">

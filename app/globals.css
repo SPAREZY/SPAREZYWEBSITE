@@ -863,6 +863,7 @@
 .cline .v {
   font-weight: 700;
   text-align: left;
+  text-transform: uppercase; /* caps, at the current (unchanged) sizes */
   min-width: 0;
 }
 .cline .v a {
