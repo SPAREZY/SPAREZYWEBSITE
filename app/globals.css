@@ -638,15 +638,21 @@
 .pay-tabby {
   /* The payment photo is the bar's background; a soft mint scrim on the left
      (matching the photo's own green) keeps the tabby logo + tagline crisp. */
-  background:
-    linear-gradient(
-      90deg,
-      rgba(59, 255, 157, 0.97) 0%,
-      rgba(59, 255, 157, 0.65) 40%,
-      rgba(59, 255, 157, 0) 66%
-    ),
-    url("/pay/tabby-tap.jpg") center / cover no-repeat;
-  background-color: #3bff9d; /* official tabby mint */
+  background: #3bff9d; /* official tabby mint — constant across the bar */
+}
+/* The payment photo sits at the right end at its natural scale (never
+   stretched, so it stays sharp) and dissolves into the mint over a long fade. */
+.pay-art {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 38%;
+  object-fit: cover;
+  object-position: center right;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 62%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 62%);
 }
 .pay-logo {
   flex: none;
