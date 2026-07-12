@@ -208,12 +208,12 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 46%;
-  height: 46%;
+  width: 54%;
+  height: 54%;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  padding: 0 10px 10px 0;
+  padding: 0 8px 8px 0;
   pointer-events: none;
 }
 .cat-ico img {
@@ -2699,10 +2699,16 @@
     font-size: 0.92rem;
   }
   .cat-ico {
-    width: 36%;
-    height: 66%;
+    top: 0;
+    bottom: 0;
+    height: auto; /* span the tile so the art truly centers vertically */
+    width: 40%;
     align-items: center;
-    padding: 0 16px 0 0;
+    padding: 0 14px 0 0;
+  }
+  .cat-ico img {
+    max-height: 72%;
+    object-position: center right;
   }
 
   /* MAIN — part-finder box left, sliding 2×2 reviews right, logo below both */
