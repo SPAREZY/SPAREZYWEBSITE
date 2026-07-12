@@ -9,20 +9,6 @@
       <stop offset="0" stop-color="#e7eaee"/>
       <stop offset="1" stop-color="#aab2bc"/>
     </linearGradient>
-    <!-- the grip window is a true hole: whatever is behind the jug shows through -->
-    <mask id="grip">
-      <rect x="0" y="0" width="800" height="800" fill="#fff"/>
-      <path d="M472 252
-               Q462 224 490 232
-               C530 244 560 262 578 290
-               Q590 310 586 342
-               L584 392
-               Q582 418 554 412
-               L498 398
-               Q474 392 474 368
-               Z"
-            fill="#000"/>
-    </mask>
   </defs>
 
   <!-- cap -->
@@ -35,9 +21,9 @@
   </g>
   <rect x="312" y="124" width="112" height="16" rx="8" fill="#8f99a5"/>
 
-  <g mask="url(#grip)">
-  <!-- body -->
-  <path d="M332 140
+  <!-- body — the grip window is a subpath hole (evenodd), so the background
+       shows through without any mask (masks go blurry in Safari) -->
+  <path fill-rule="evenodd" d="M332 140
            L406 140
            Q430 140 452 148
            C540 172 610 180 648 210
@@ -48,11 +34,20 @@
            Q220 712 220 668
            L220 452
            C220 340 260 240 306 158
-           Q314 140 332 140 Z"
+           Q314 140 332 140 Z
+           M472 252
+           Q462 224 490 232
+           C530 244 560 262 578 290
+           Q590 310 586 342
+           L584 392
+           Q582 418 554 412
+           L498 398
+           Q474 392 474 368
+           Z"
         fill="url(#jug)"/>
 
-  <!-- recessed label face -->
-  <path d="M300 372
+  <!-- recessed label face (same window subpath so the hole passes through it) -->
+  <path fill-rule="evenodd" d="M300 372
            C330 300 370 268 428 282
            L560 320
            Q590 330 590 362
@@ -61,7 +56,16 @@
            L300 646
            Q272 646 272 618
            L272 452
-           Q272 408 300 372 Z"
+           Q272 408 300 372 Z
+           M472 252
+           Q462 224 490 232
+           C530 244 560 262 578 290
+           Q590 310 586 342
+           L584 392
+           Q582 418 554 412
+           L498 398
+           Q474 392 474 368
+           Z"
         fill="#e8b70b" opacity="0.85"/>
 
   <!-- grip ribs on the handle strap -->
@@ -83,5 +87,4 @@
   <!-- soft highlight on the left slope -->
   <path d="M312 170 C280 236 250 320 244 420 L244 500 L272 500 L272 440 C276 344 300 260 330 196 Z"
         fill="#ffffff" opacity="0.30"/>
-  </g>
 </svg>
