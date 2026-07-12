@@ -188,9 +188,9 @@
   padding: 10px 9px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center; /* mobile: symmetric tile — label centered over icon */
   justify-content: flex-start;
-  text-align: left;
+  text-align: center;
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.09));
   border: 1px solid rgba(255, 255, 255, 0.28);
   color: #fff;
@@ -214,8 +214,24 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: 0 0 8px;
+  padding: 0 0 13px; /* lift the art off the tile's bottom edge */
   pointer-events: none;
+}
+/* Optical size balancing (mobile): round/wide shapes read bigger than tall
+   narrow ones at equal height, so each icon is nudged to FEEL equal. */
+@media (max-width: 1023px) {
+  .cat-ico img[src*="lubricant"] {
+    max-height: 100%;
+  }
+  .cat-ico img[src*="battery"] {
+    max-height: 94%;
+  }
+  .cat-ico img[src*="door"] {
+    max-height: 93%;
+  }
+  .cat-ico img[src*="brake"] {
+    max-height: 86%;
+  }
 }
 .cat-ico img {
   max-width: 100%;
@@ -229,9 +245,8 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center; /* mobile: centered label stack */
   line-height: 1.08;
-  padding-right: 2px;
 }
 .cat-eyebrow,
 .cat-name {
@@ -2694,6 +2709,11 @@
     border-radius: 16px;
     padding: 14px 18px;
     justify-content: center;
+    align-items: flex-start; /* desktop keeps left-aligned labels */
+    text-align: left;
+  }
+  .cat-label {
+    align-items: flex-start;
   }
   .cat-eyebrow,
   .cat-name {
