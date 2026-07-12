@@ -2659,6 +2659,11 @@
   border-color: var(--red);
 }
 
+/* Category tile artwork — desktop-only, so mobile tiles stay untouched. */
+.cat-ico-desktop {
+  display: none;
+}
+
 /* ===== Desktop layout overrides (≥1024px) — kept at the END of the file so they
    win over the base (mobile) rules defined above. Mobile/tablet untouched. ===== */
 @media (min-width: 1024px) {
@@ -2697,6 +2702,12 @@
   .cat-eyebrow,
   .cat-name {
     font-size: 0.92rem;
+  }
+  .cat-ico-desktop {
+    display: flex;
+    width: 46%;
+    height: 82%;
+    padding: 0 8px 4px 0;
   }
 
   /* MAIN — part-finder box left, sliding 2×2 reviews right, logo below both */

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <defs>
+    <linearGradient id="jug" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd94a"/>
+      <stop offset="0.55" stop-color="#f6c413"/>
+      <stop offset="1" stop-color="#dca708"/>
+    </linearGradient>
+    <linearGradient id="cap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e7eaee"/>
+      <stop offset="1" stop-color="#aab2bc"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ground shadow -->
+  <ellipse cx="440" cy="722" rx="250" ry="26" fill="#000" opacity="0.10"/>
+
+  <!-- cap -->
+  <rect x="318" y="70" width="100" height="62" rx="10" fill="url(#cap)"/>
+  <g stroke="#8f99a5" stroke-width="4" opacity="0.7">
+    <line x1="334" y1="76" x2="334" y2="126"/>
+    <line x1="356" y1="76" x2="356" y2="126"/>
+    <line x1="378" y1="76" x2="378" y2="126"/>
+    <line x1="400" y1="76" x2="400" y2="126"/>
+  </g>
+  <rect x="312" y="124" width="112" height="16" rx="8" fill="#8f99a5"/>
+
+  <!-- body -->
+  <path d="M332 140
+           L406 140
+           Q430 140 452 148
+           C540 172 610 180 648 210
+           Q684 238 684 300
+           L684 668
+           Q684 712 640 712
+           L262 712
+           Q220 712 220 668
+           L220 452
+           C220 340 260 240 306 158
+           Q314 140 332 140 Z"
+        fill="url(#jug)"/>
+
+  <!-- handle grip window -->
+  <path d="M472 252
+           Q462 224 490 232
+           C530 244 560 262 578 290
+           Q590 310 586 342
+           L584 392
+           Q582 418 554 412
+           L498 398
+           Q474 392 474 368
+           Z"
+        fill="#ffffff"/>
+
+  <!-- recessed label face -->
+  <path d="M300 372
+           C330 300 370 268 428 282
+           L560 320
+           Q590 330 590 362
+           L590 616
+           Q590 646 560 646
+           L300 646
+           Q272 646 272 618
+           L272 452
+           Q272 408 300 372 Z"
+        fill="#e8b70b" opacity="0.85"/>
+
+  <!-- grip ribs on the handle strap -->
+  <g fill="#dca708">
+    <rect x="548" y="196" width="46" height="15" rx="7.5" transform="rotate(30 571 203)"/>
+    <rect x="584" y="230" width="44" height="15" rx="7.5" transform="rotate(28 606 237)"/>
+    <rect x="612" y="268" width="42" height="14" rx="7" transform="rotate(20 633 275)"/>
+    <rect x="626" y="314" width="40" height="14" rx="7" transform="rotate(6 646 321)"/>
+  </g>
+
+  <!-- side ribs (lower left edge) -->
+  <g fill="#dca708">
+    <rect x="238" y="500" width="58" height="20" rx="10"/>
+    <rect x="238" y="544" width="58" height="20" rx="10"/>
+    <rect x="238" y="588" width="58" height="20" rx="10"/>
+    <rect x="238" y="632" width="58" height="20" rx="10"/>
+  </g>
+
+  <!-- soft highlight on the left slope -->
+  <path d="M312 170 C280 236 250 320 244 420 L244 500 L272 500 L272 440 C276 344 300 260 330 196 Z"
+        fill="#ffffff" opacity="0.30"/>
+</svg>
