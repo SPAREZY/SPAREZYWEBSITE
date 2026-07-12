@@ -12,14 +12,14 @@ export default function ContactView({ onHelp }: { onHelp?: () => void }) {
         <div className="cline">
           <span className="k">Email</span>
           <span className="v">
-            <a href="mailto:gotparts@sparezy.store">GOTPARTS@SPAREZY.STORE</a>
+            <a href="mailto:gotparts@sparezy.store">gotparts@sparezy.store</a>
           </span>
         </div>
         <div className="cline">
           <span className="k">Location</span>
           <span className="v">
             <a href="https://maps.app.goo.gl/jox7uguMGnN6G8mP6" target="_blank" rel="noopener noreferrer">
-              M7 — MUSAFFAH INDUSTRIAL, ABU DHABI, UAE
+              M7 — Musaffah Industrial, Abu Dhabi, UAE
             </a>
           </span>
         </div>
@@ -27,7 +27,7 @@ export default function ContactView({ onHelp }: { onHelp?: () => void }) {
           <span className="k">WhatsApp</span>
           <span className="v">
             <a href="https://wa.me/971522250600" target="_blank" rel="noopener noreferrer">
-              MESSAGE US
+              Message us
             </a>
           </span>
         </div>

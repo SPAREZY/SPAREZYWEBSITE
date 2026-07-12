@@ -852,14 +852,12 @@
 .cline .k {
   font-weight: 700;
   font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--txt-dim);
 }
 .cline .v {
   font-weight: 700;
   text-align: right;
-  text-transform: uppercase;
 }
 .cline .v a {
   color: inherit;
@@ -879,8 +877,8 @@
     padding: 15px 0;
   }
   .cline .k {
-    font-size: 0.64rem;
-    letter-spacing: 0.16em;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
     opacity: 0.65;
   }
   .cline .v {
