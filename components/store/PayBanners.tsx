@@ -7,10 +7,10 @@ export default function PayBanners() {
         <span className="pay-logo">
           <img className="pay-logo-img" src="/pay/tabby.png" alt="tabby" loading="lazy" />
         </span>
-        <span className="pay-text">Buy now, pay later</span>
-        {/* photo panel at native scale (no stretching) with a long fade into the mint */}
+        <span className="pay-text">Buy Now. Pay Later.</span>
+        {/* tabby CARD illustration at the end of the bar (transparent cutout) */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="pay-art" src="/pay/tabby-tap-hd.jpg" alt="" aria-hidden="true" loading="lazy" />
+        <img className="pay-art" src="/pay/tabby-card.png" alt="" aria-hidden="true" loading="lazy" />
       </div>
     </div>
   );

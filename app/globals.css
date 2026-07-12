@@ -640,19 +640,17 @@
      (matching the photo's own green) keeps the tabby logo + tagline crisp. */
   background: #3bff9d; /* official tabby mint — constant across the bar */
 }
-/* The payment photo sits at the right end at its natural scale (never
-   stretched, so it stays sharp) and dissolves into the mint over a long fade. */
+/* tabby CARD illustration at the end of the bar — a transparent cutout, so it
+   sits directly on the mint with no seam and stays crisp at any size. */
 .pay-art {
   position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 38%;
-  object-fit: cover;
-  object-position: center right;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  height: 92%;
+  width: auto;
+  object-fit: contain;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 62%);
-  mask-image: linear-gradient(to right, transparent 0%, #000 62%);
 }
 .pay-logo {
   flex: none;
