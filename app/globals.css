@@ -206,14 +206,15 @@
 /* character / item image — bleeds into the bottom-right corner */
 .cat-ico {
   position: absolute;
+  left: 0;
   right: 0;
   bottom: 0;
-  width: 54%;
+  width: auto; /* full tile width — art centered at the bottom */
   height: 54%;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-end;
-  padding: 0 8px 8px 0;
+  justify-content: center;
+  padding: 0 0 8px;
   pointer-events: none;
 }
 .cat-ico img {
@@ -2701,9 +2702,11 @@
   .cat-ico {
     top: 0;
     bottom: 0;
+    left: auto; /* back to right-side anchoring on desktop */
     height: auto; /* span the tile so the art truly centers vertically */
     width: 40%;
     align-items: center;
+    justify-content: flex-end;
     padding: 0 14px 0 0;
   }
   .cat-ico img {
