@@ -633,7 +633,7 @@
   padding: 13px 22px;
   border-radius: 999px; /* full pill / stadium shape */
   box-shadow: 0 3px 12px rgba(8, 18, 45, 0.18);
-  overflow: hidden; /* clip the photo panel to the pill */
+  overflow: visible; /* let the card illustration poke out of the pill */
 }
 .pay-tabby {
   /* The payment photo is the bar's background; a soft mint scrim on the left
@@ -645,12 +645,13 @@
 .pay-art {
   position: absolute;
   top: 50%;
-  right: 16px;
+  right: 18px;
   transform: translateY(-50%);
-  height: 92%;
+  height: 138%; /* playfully overflows the pill's top and bottom */
   width: auto;
   object-fit: contain;
   pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(8, 18, 45, 0.25));
 }
 .pay-logo {
   flex: none;
