@@ -138,7 +138,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Could not create the request. Please try again." }, { status: 500 });
     }
 
-    await logActivity(created.id, "CREATED", `Lead received — ${created.partName}`, "Customer");
+    const actor = (body as { source?: unknown }).source === "admin" ? "Admin" : "Customer";
+    await logActivity(created.id, "CREATED", `Lead received — ${created.partName}`, actor);
     await notifyCustomer(created, null);
 
     return NextResponse.json(

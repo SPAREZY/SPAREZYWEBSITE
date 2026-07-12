@@ -7,7 +7,6 @@ import { slugForBrand } from "@/lib/car-brands";
 import { trackAddToCart, trackLead } from "@/lib/analytics";
 import BackgroundGrid from "./BackgroundGrid";
 import ContactView from "./ContactView";
-import OrdersView from "./OrdersView";
 import HelpView from "./HelpView";
 import BrandPicker from "./BrandPicker";
 import ModelPicker from "./ModelPicker";
@@ -16,7 +15,7 @@ import PayBanners from "./PayBanners";
 import Reviews from "./Reviews";
 import SparezyLogo from "./SparezyLogo";
 
-type View = "home" | "contact" | "orders" | "help";
+type View = "home" | "contact" | "help";
 
 // Header category tiles. Only the first (the live part finder) works; the
 // rest are "Soon" teasers. Icons live in /public/cat-icons.
@@ -303,9 +302,6 @@ export default function StoreApp() {
               <button className="lnk" onClick={() => go("contact")}>
                 Contact
               </button>
-              <button className="lnk" onClick={() => go("orders")}>
-                Orders
-              </button>
             </div>
             <button className="cartlink" onClick={toggleCart}>
               Cart ( {cart.length} )
@@ -476,11 +472,6 @@ export default function StoreApp() {
           {/* CONTACT */}
           <div className={`view ${view === "contact" ? "active" : ""}`}>
             <ContactView onHelp={() => go("help")} />
-          </div>
-
-          {/* ORDERS */}
-          <div className={`view ${view === "orders" ? "active" : ""}`}>
-            <OrdersView active={view === "orders"} />
           </div>
 
           {/* HOW IT WORKS / FAQ */}
@@ -658,25 +649,6 @@ export default function StoreApp() {
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
             <span>Contact</span>
-          </button>
-          <button
-            type="button"
-            className={`botnav-item ${view === "orders" ? "active" : ""}`}
-            onClick={() => go("orders")}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
-              <rect x="9" y="3" width="6" height="4" rx="1" />
-              <path d="M9 12h6M9 16h6" />
-            </svg>
-            <span>Orders</span>
           </button>
           <button
             type="button"
