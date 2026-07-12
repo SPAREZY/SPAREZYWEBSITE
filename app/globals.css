@@ -208,12 +208,12 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 60%;
-  height: 60%;
+  width: 46%;
+  height: 46%;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  padding: 0 5px 5px 0;
+  padding: 0 10px 10px 0;
   pointer-events: none;
 }
 .cat-ico img {
@@ -2699,9 +2699,10 @@
     font-size: 0.92rem;
   }
   .cat-ico {
-    width: 46%;
-    height: 82%;
-    padding: 0 8px 4px 0;
+    width: 36%;
+    height: 66%;
+    align-items: center;
+    padding: 0 16px 0 0;
   }
 
   /* MAIN — part-finder box left, sliding 2×2 reviews right, logo below both */
