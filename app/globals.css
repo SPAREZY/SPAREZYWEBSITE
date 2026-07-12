@@ -2737,6 +2737,13 @@
   .pdp .pdp-actions {
     margin-top: auto; /* pin FIND MY PART to the bottom of the stretched box */
   }
+  /* Match mobile: the add-part link sits on the left and never underlines */
+  .pdp .addpart {
+    align-self: flex-start;
+  }
+  .addpart:hover {
+    text-decoration: none;
+  }
   .store-foot {
     flex: 0 1 590px;
     min-width: 0;
