@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <defs>
+    <radialGradient id="disc" cx="0.42" cy="0.38" r="0.75">
+      <stop offset="0" stop-color="#dfe3e8"/>
+      <stop offset="0.75" stop-color="#c3c8cf"/>
+      <stop offset="1" stop-color="#a9afb8"/>
+    </radialGradient>
+    <radialGradient id="hub" cx="0.45" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#3a3d43"/>
+      <stop offset="1" stop-color="#191b1e"/>
+    </radialGradient>
+    <linearGradient id="cal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3f6dc4"/>
+      <stop offset="0.5" stop-color="#2d54a5"/>
+      <stop offset="1" stop-color="#22417f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ground shadow -->
+  <ellipse cx="390" cy="742" rx="290" ry="26" fill="#000" opacity="0.10"/>
+
+  <!-- ===== DISC ===== -->
+  <g>
+    <circle cx="370" cy="440" r="298" fill="url(#disc)" stroke="#8f959e" stroke-width="6"/>
+    <!-- curved cooling slots -->
+    <g fill="none" stroke="#2b2e33" stroke-width="9" stroke-linecap="round">
+      <path d="M370 190 Q470 230 480 330"/>
+      <path d="M620 430 Q590 540 500 580"/>
+      <path d="M380 690 Q280 660 250 560"/>
+      <path d="M120 450 Q150 340 240 300"/>
+    </g>
+    <!-- drilled holes: outer ring -->
+    <g fill="#2b2e33">
+      <circle cx="370" cy="163" r="11"/><circle cx="509" cy="201" r="11"/>
+      <circle cx="611" cy="303" r="11"/><circle cx="647" cy="440" r="11"/>
+      <circle cx="611" cy="577" r="11"/><circle cx="509" cy="679" r="11"/>
+      <circle cx="370" cy="717" r="11"/><circle cx="231" cy="679" r="11"/>
+      <circle cx="129" cy="577" r="11"/><circle cx="93" cy="440" r="11"/>
+      <circle cx="129" cy="303" r="11"/><circle cx="231" cy="201" r="11"/>
+    </g>
+    <!-- drilled holes: inner ring -->
+    <g fill="#2b2e33">
+      <circle cx="370" cy="235" r="10"/><circle cx="515" cy="295" r="10"/>
+      <circle cx="575" cy="440" r="10"/><circle cx="515" cy="585" r="10"/>
+      <circle cx="370" cy="645" r="10"/><circle cx="225" cy="585" r="10"/>
+      <circle cx="165" cy="440" r="10"/><circle cx="225" cy="295" r="10"/>
+    </g>
+    <!-- hub -->
+    <circle cx="370" cy="440" r="132" fill="url(#hub)"/>
+    <circle cx="370" cy="440" r="60" fill="#f4f5f7"/>
+  </g>
+
+  <!-- ===== CALIPER (arc band hugging the rim, top-right) ===== -->
+  <g fill="none" stroke-linecap="round">
+    <!-- dark outline under the body -->
+    <path d="M431.3 151.4 A295 295 0 0 1 643.5 329.5" stroke="#1c356b" stroke-width="164"/>
+    <!-- blue body -->
+    <path d="M431.3 151.4 A295 295 0 0 1 643.5 329.5" stroke="url(#cal)" stroke-width="150"/>
+    <!-- pad window -->
+    <path d="M480.5 166.5 A295 295 0 0 1 620.2 283.7" stroke="#1c356b" stroke-width="74"/>
+    <!-- bronze retaining wires -->
+    <path d="M489.2 195.5 A272 272 0 0 1 590.0 266.6" stroke="#b3934d" stroke-width="7"/>
+    <path d="M509.4 154.2 A318 318 0 0 1 627.3 253.1" stroke="#b3934d" stroke-width="7"/>
+    <!-- glossy highlight along the outer edge -->
+    <path d="M463.2 115.1 A338 338 0 0 1 662.7 271.0" stroke="#ffffff" stroke-width="14" opacity="0.28"/>
+  </g>
+  <!-- bleeder + bolt at the band ends -->
+  <circle cx="431" cy="151" r="12" fill="#d7dbe1"/>
+  <circle cx="644" cy="330" r="10" fill="#d7dbe1"/>
+</svg>

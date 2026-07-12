@@ -22,7 +22,7 @@ type View = "home" | "contact" | "orders" | "help";
 // rest are "Soon" teasers. Icons live in /public/cat-icons.
 const HEADER_CATS = [
   { key: "battery", label: "Buy Battery", img: "/cat-icons/battery.png", accent: "34 197 94", art: "/cat-icons/battery-art.svg" },
-  { key: "part", label: "Buy Auto Parts", img: "/cat-icons/part.png", accent: "249 115 22", live: true },
+  { key: "part", label: "Buy Auto Parts", img: "/cat-icons/part.png", accent: "249 115 22", live: true, art: "/cat-icons/brake.svg" },
   { key: "oil", label: "Buy Lubricant", img: "/cat-icons/oil.png", accent: "40 120 255", art: "/cat-icons/lubricant.svg" },
   { key: "body", label: "Buy Body Parts", img: "/cat-icons/body.png", accent: "239 68 68", art: "/cat-icons/door.svg" },
 ];
@@ -336,7 +336,7 @@ export default function StoreApp() {
                     <span className="cat-name">{name}</span>
                   </span>
                   {"art" in c && c.art && (
-                    <span className="cat-ico cat-ico-desktop" aria-hidden="true">
+                    <span className="cat-ico" aria-hidden="true">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={c.art} alt="" loading="lazy" />
                     </span>
