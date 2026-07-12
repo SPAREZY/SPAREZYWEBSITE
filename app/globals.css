@@ -572,10 +572,6 @@
   color: var(--txt);
   text-transform: uppercase;
 }
-.addpart:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
 
 /* the green Add to Cart row */
 .rowbtn {
@@ -2737,12 +2733,9 @@
   .pdp .pdp-actions {
     margin-top: auto; /* pin FIND MY PART to the bottom of the stretched box */
   }
-  /* Match mobile: the add-part link sits on the left and never underlines */
+  /* Match mobile: the add-part link sits on the left */
   .pdp .addpart {
     align-self: flex-start;
-  }
-  .addpart:hover {
-    text-decoration: none;
   }
   .store-foot {
     flex: 0 1 590px;
