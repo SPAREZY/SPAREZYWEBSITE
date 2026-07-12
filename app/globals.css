@@ -862,8 +862,11 @@
 }
 .cline .v {
   font-weight: 700;
+  font-size: 0.88rem; /* caps render optically larger — compensate */
+  letter-spacing: 0.02em;
+  line-height: 1.35;
   text-align: left;
-  text-transform: uppercase; /* caps, at the current (unchanged) sizes */
+  text-transform: uppercase;
   min-width: 0;
 }
 .cline .v a {
@@ -886,7 +889,7 @@
     height: 20px;
   }
   .cline .v {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     line-height: 1.3;
     letter-spacing: 0.02em;
     overflow-wrap: anywhere;
