@@ -636,8 +636,6 @@
   overflow: visible; /* let the card illustration poke out of the pill */
 }
 .pay-tabby {
-  /* The payment photo is the bar's background; a soft mint scrim on the left
-     (matching the photo's own green) keeps the tabby logo + tagline crisp. */
   background: #3bff9d; /* official tabby mint — constant across the bar */
 }
 /* tabby CARD illustration at the end of the bar — a transparent cutout, so it
