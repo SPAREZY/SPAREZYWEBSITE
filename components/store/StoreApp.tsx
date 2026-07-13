@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CartItem } from "@/lib/store-types";
-import { carLabel } from "@/lib/store-types";
 import { slugForBrand } from "@/lib/car-brands";
 import { trackAddToCart, trackLead } from "@/lib/analytics";
 import BackgroundGrid from "./BackgroundGrid";
@@ -680,15 +679,38 @@ export default function StoreApp() {
 
 // Build the WhatsApp hand-off straight from the cart — a warm, ready-to-send
 // message listing every vehicle and the parts requested.
+// One part as a natural phrase: "a fuel filter", "an oil filter",
+// "brake pads" (plural → no article), "2× brake pads".
+function partPhrase(name: string, qty: number): string {
+  // lowercase the leading letter, but keep acronyms (AC, ABS, EGR…) intact
+  const n =
+    name.length > 1 && name[1] === name[1].toLowerCase()
+      ? name[0].toLowerCase() + name.slice(1)
+      : name;
+  if (qty > 1) return `${qty}× ${n}`;
+  if (/s$/i.test(n.trim())) return n; // plural-looking → no article
+  return (/^[aeiou]/i.test(n) ? "an " : "a ") + n;
+}
+
+// "a, b & c"
+function joinList(items: string[]): string {
+  if (items.length <= 1) return items[0] ?? "";
+  return `${items.slice(0, -1).join(", ")} & ${items[items.length - 1]}`;
+}
+
+// Friendly one-sentence WhatsApp ask, e.g.
+// "Hi, can you source a fuel filter & 2× brake pads for my 2019 Mitsubishi
+//  Attrage? Please share the price and availability 🙏"
 function buildCartWaLink(vehicles: CartItem[]): string {
-  let msg = `Hi Sparezy 👋 I'd like a quote for these parts:\n`;
-  vehicles.forEach((it, i) => {
-    const label = carLabel(it) || "Car";
-    msg += `\nVehicle ${i + 1} — ${label}\n`;
-    it.parts.forEach((p) => {
-      const qty = p.qty && p.qty > 1 ? ` ×${p.qty}` : "";
-      msg += `• ${p.name}${qty}\n`;
-    });
+  const clauses = vehicles.map((it) => {
+    const car = [it.year, it.make, it.model].filter(Boolean).join(" ").trim() || "car";
+    const parts = joinList(it.parts.map((p) => partPhrase(p.name, p.qty || 1)));
+    return `${parts} for my ${car}`;
   });
+  const joined =
+    clauses.length > 1
+      ? `${clauses.slice(0, -1).join(", ")}, and ${clauses[clauses.length - 1]}`
+      : clauses[0] ?? "";
+  const msg = `Hi, can you source ${joined}? Please share the price and availability 🙏`;
   return `https://wa.me/${BUSINESS_WA}?text=${encodeURIComponent(msg)}`;
 }
