@@ -664,9 +664,19 @@
   display: block;
 }
 .pay-text {
-  font-size: 0.74rem;
-  font-weight: 700;
-  line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.pay-line1 {
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.pay-line2 {
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
 }
 .pay-tabby .pay-text {
   color: #0f3a26;
