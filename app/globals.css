@@ -1274,7 +1274,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 7px 0;
+  margin: 3px 0;
   font-size: 1.05rem;
   font-weight: 800;
   line-height: 1.25;
@@ -1308,22 +1308,20 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
+/* Minimal inline stepper: just "−  2  +", no box — keeps part rows tight. */
 .stepper {
   display: inline-flex;
   align-items: center;
-  gap: 0;
-  border: 1.5px solid var(--line);
-  border-radius: 999px;
+  gap: 2px;
   flex: none;
-  margin-left: 12px;
 }
 .stepper button {
   background: none;
   border: none;
-  color: #fff;
-  width: 30px;
-  height: 30px;
-  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.75);
+  width: 24px;
+  height: 24px;
+  font-size: 1.05rem;
   font-weight: 800;
   line-height: 1;
   display: flex;
@@ -1332,11 +1330,10 @@
   padding: 0;
 }
 .stepper button:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
+  color: #fff;
 }
 .stepper .qv {
-  min-width: 22px;
+  min-width: 18px;
   text-align: center;
   font-weight: 800;
   font-size: 0.92rem;
