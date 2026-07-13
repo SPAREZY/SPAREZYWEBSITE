@@ -1,6 +1,7 @@
-// Common auto parts shown as suggestions in the "Select your parts" dropdown.
-// The field still accepts free text for anything not listed.
-export const CAR_PARTS: string[] = [
+// Part suggestions for the two inquiry tiles. Free text is always allowed.
+// "Find Auto Parts"  -> AUTO_PARTS (everything mechanical/electrical/service)
+// "Find Body Parts"  -> BODY_PARTS (exterior body & glass + interior)
+export const AUTO_PARTS: string[] = [
   // Service / filters / engine
   "Engine oil",
   "Oil filter",
@@ -104,6 +105,16 @@ export const CAR_PARTS: string[] = [
   "Catalytic converter",
   "Exhaust manifold",
   "DPF filter",
+  // Wheels / fuel
+  "Tyre",
+  "Alloy wheel",
+  "Wheel nut",
+  "TPMS sensor",
+  "Fuel tank",
+  "Fuel cap",
+];
+
+export const BODY_PARTS: string[] = [
   // Body & glass
   "Front bumper",
   "Rear bumper",
@@ -132,11 +143,8 @@ export const CAR_PARTS: string[] = [
   "Airbag",
   "Steering wheel",
   "Steering column",
-  // Wheels / fuel
-  "Tyre",
-  "Alloy wheel",
-  "Wheel nut",
-  "TPMS sensor",
-  "Fuel tank",
-  "Fuel cap",
 ];
+
+// Combined list (kept for anything that wants the full catalogue).
+export const CAR_PARTS: string[] = [...AUTO_PARTS, ...BODY_PARTS];
+
