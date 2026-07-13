@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="326 40 148 652">
+  <defs>
+    <linearGradient id="spmetal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#aab2bc"/>
+      <stop offset="0.45" stop-color="#dfe4e9"/>
+      <stop offset="1" stop-color="#6b7480"/>
+    </linearGradient>
+    <linearGradient id="spmetaldark" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#949daa"/>
+      <stop offset="0.5" stop-color="#cfd5db"/>
+      <stop offset="1" stop-color="#59626e"/>
+    </linearGradient>
+    <linearGradient id="ceramic" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.6" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e9edf1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- terminal ball + stem -->
+  <circle cx="400" cy="74" r="30" fill="url(#spmetal)" stroke="#6b7480" stroke-width="3"/>
+  <rect x="384" y="96" width="32" height="26" fill="url(#spmetaldark)"/>
+
+  <!-- gasket ring -->
+  <rect x="370" y="120" width="60" height="18" rx="8" fill="#2b2b30"/>
+
+  <!-- ceramic insulator: ribs then taper -->
+  <g fill="url(#ceramic)" stroke="#d4dae0" stroke-width="2.5">
+    <rect x="356" y="138" width="88" height="30" rx="15"/>
+    <rect x="362" y="168" width="76" height="14" rx="7"/>
+    <rect x="352" y="182" width="96" height="30" rx="15"/>
+    <rect x="362" y="212" width="76" height="14" rx="7"/>
+    <rect x="348" y="226" width="104" height="32" rx="16"/>
+    <rect x="366" y="258" width="68" height="118" rx="14"/>
+  </g>
+  <!-- ceramic highlight -->
+  <rect x="372" y="146" width="10" height="220" rx="5" fill="#ffffff" opacity="0.8"/>
+
+  <!-- hex nut -->
+  <g>
+    <rect x="330" y="376" width="140" height="62" rx="8" fill="url(#spmetaldark)" stroke="#6b7480" stroke-width="3"/>
+    <rect x="376" y="376" width="48" height="62" fill="#f7f9fb" opacity="0.65"/>
+    <rect x="446" y="376" width="24" height="62" fill="#6f7883" opacity="0.5"/>
+  </g>
+  <!-- washer -->
+  <rect x="344" y="438" width="112" height="20" rx="8" fill="url(#spmetal)" stroke="#6b7480" stroke-width="2.5"/>
+
+  <!-- threaded shank -->
+  <rect x="356" y="458" width="88" height="158" fill="url(#spmetaldark)" stroke="#6b7480" stroke-width="3"/>
+  <g stroke="#6b7480" stroke-width="5" stroke-linecap="round" opacity="0.85">
+    <line x1="360" y1="474" x2="440" y2="468"/>
+    <line x1="360" y1="494" x2="440" y2="488"/>
+    <line x1="360" y1="514" x2="440" y2="508"/>
+    <line x1="360" y1="534" x2="440" y2="528"/>
+    <line x1="360" y1="554" x2="440" y2="548"/>
+    <line x1="360" y1="574" x2="440" y2="568"/>
+    <line x1="360" y1="594" x2="440" y2="588"/>
+  </g>
+
+  <!-- centre electrode + ground strap -->
+  <rect x="390" y="616" width="20" height="38" fill="#c7ccd3" stroke="#6b7480" stroke-width="2.5"/>
+  <path d="M446 616 L446 668 Q446 682 432 682 L404 682"
+        fill="none" stroke="#6f7883" stroke-width="14" stroke-linecap="round"/>
+</svg>
