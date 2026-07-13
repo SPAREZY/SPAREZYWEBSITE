@@ -19,9 +19,9 @@ type View = "home" | "contact" | "help";
 // Header category tiles. Only the first (the live part finder) works; the
 // rest are "Soon" teasers. Icons live in /public/cat-icons.
 const HEADER_CATS = [
-  { key: "part", label: "Find Auto Parts", img: "/cat-icons/part.png", accent: "249 115 22", live: true, art: "/cat-icons/brake.svg" },
   { key: "battery", label: "Buy Battery", img: "/cat-icons/battery.png", accent: "34 197 94", art: "/cat-icons/battery-art.svg" },
   { key: "oil", label: "Buy Lubricant", img: "/cat-icons/oil.png", accent: "40 120 255", art: "/cat-icons/lubricant.svg" },
+  { key: "part", label: "Find Auto Parts", img: "/cat-icons/part.png", accent: "249 115 22", live: true, art: "/cat-icons/brake.svg" },
 ];
 
 // Resize + compress a chosen image to a small JPEG data URL so the
