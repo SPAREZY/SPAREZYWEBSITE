@@ -184,11 +184,10 @@
 /* The combined Find Auto Parts tile is rectangular — double width. */
 .cat-tile--wide {
   grid-column: span 2;
-  aspect-ratio: auto !important;
 }
 .cat-tile {
   position: relative;
-  aspect-ratio: 1 / 1;
+  min-height: 100px; /* compact rows — one-line headings need no square */
   border-radius: 20px;
   padding: 10px 9px;
   display: flex;
@@ -259,6 +258,7 @@
   font-weight: 800;
   letter-spacing: -0.015em;
   color: #fff;
+  white-space: nowrap; /* headings stay on one line */
 }
 
 /* live / available category — solid white card with brand-blue text (their "All" tile) */

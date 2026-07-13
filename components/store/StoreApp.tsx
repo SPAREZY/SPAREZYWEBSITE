@@ -308,8 +308,6 @@ export default function StoreApp() {
 
           <div className="cat-bar" aria-label="Categories">
             {HEADER_CATS.map((c) => {
-              const [first, ...rest] = c.label.split(" ");
-              const name = rest.join(" ");
               return (
                 <button
                   key={c.key}
@@ -326,8 +324,7 @@ export default function StoreApp() {
                   }}
                 >
                   <span className="cat-label">
-                    <span className="cat-eyebrow">{first}</span>
-                    <span className="cat-name">{name}</span>
+                    <span className="cat-name">{c.label}</span>
                   </span>
                   {"art" in c && c.art && (
                     <span className="cat-ico" aria-hidden="true">
