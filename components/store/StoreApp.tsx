@@ -194,10 +194,21 @@ export default function StoreApp() {
     setParts((prev) => (prev.length === 1 ? prev : prev.filter((_, idx) => idx !== i)));
   }
 
+  // Merge duplicate part names into one entry with a summed quantity.
+  function mergeParts(list: { name: string; qty: number }[]): { name: string; qty: number }[] {
+    const out: { name: string; qty: number }[] = [];
+    for (const p of list) {
+      const hit = out.find((m) => m.name.toLowerCase() === p.name.toLowerCase());
+      if (hit) hit.qty += p.qty;
+      else out.push({ ...p });
+    }
+    return out;
+  }
+
   function saveItem(direct: boolean) {
-    const cleanParts = parts
-      .map((p) => ({ name: p.name.trim(), qty: 1 }))
-      .filter((p) => p.name);
+    const cleanParts = mergeParts(
+      parts.map((p) => ({ name: p.name.trim(), qty: 1 })).filter((p) => p.name),
+    );
     // The car is identified by brand + the parts requested.
     const badBrand = !make.trim();
     const badModel = !model.trim();
@@ -218,6 +229,20 @@ export default function StoreApp() {
       if (editIndex !== null) {
         const copy = [...prev];
         copy[editIndex] = item;
+        return copy;
+      }
+      // Same car already in the cart? Merge into it — repeated parts bump qty.
+      const sameCar = prev.findIndex(
+        (v) =>
+          v.make.trim().toLowerCase() === make.trim().toLowerCase() &&
+          v.model.trim().toLowerCase() === model.trim().toLowerCase(),
+      );
+      if (sameCar >= 0) {
+        const copy = [...prev];
+        copy[sameCar] = {
+          ...copy[sameCar],
+          parts: mergeParts([...copy[sameCar].parts, ...cleanParts]),
+        };
         return copy;
       }
       return [...prev, item];
@@ -683,13 +708,14 @@ export default function StoreApp() {
 // Build the WhatsApp hand-off straight from the cart — a warm, ready-to-send
 // message listing every vehicle and the parts requested.
 // One part as a natural phrase: "a fuel filter", "an oil filter",
-// "brake pads" (plural → no article).
-function partPhrase(name: string): string {
+// "brake pads" (plural → no article), "2× brake pads" when qty grew.
+function partPhrase(name: string, qty = 1): string {
   // lowercase the leading letter, but keep acronyms (AC, ABS, EGR…) intact
   const n =
     name.length > 1 && name[1] === name[1].toLowerCase()
       ? name[0].toLowerCase() + name.slice(1)
       : name;
+  if (qty > 1) return `${qty}× ${n}`;
   if (/s$/i.test(n.trim())) return n; // plural-looking → no article
   return (/^[aeiou]/i.test(n) ? "an " : "a ") + n;
 }
@@ -705,7 +731,7 @@ function joinList(items: string[]): string {
 function buildCartWaLink(vehicles: CartItem[]): string {
   const clauses = vehicles.map((it) => {
     const car = [it.make, it.model].filter(Boolean).join(" ").trim() || "car";
-    const parts = joinList(it.parts.map((p) => partPhrase(p.name)));
+    const parts = joinList(it.parts.map((p) => partPhrase(p.name, p.qty || 1)));
     return `${parts} for my ${car}`;
   });
   const joined =
