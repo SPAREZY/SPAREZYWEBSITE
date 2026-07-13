@@ -22,7 +22,7 @@ const HEADER_CATS = [
   { key: "battery", label: "Buy Battery", img: "/cat-icons/battery.png", accent: "34 197 94", art: "/cat-icons/battery-art.svg" },
   { key: "part", label: "Find Auto Parts", img: "/cat-icons/part.png", accent: "249 115 22", live: true, art: "/cat-icons/brake.svg" },
   { key: "oil", label: "Buy Lubricant", img: "/cat-icons/oil.png", accent: "40 120 255", art: "/cat-icons/lubricant.svg" },
-  { key: "body", label: "Buy Body Parts", img: "/cat-icons/body.png", accent: "239 68 68", art: "/cat-icons/door.svg" },
+  { key: "body", label: "Find Body Parts", img: "/cat-icons/body.png", accent: "239 68 68", art: "/cat-icons/door.svg" },
 ];
 
 // Resize + compress a chosen image to a small JPEG data URL so the
