@@ -255,6 +255,22 @@ export default function StoreApp() {
     else if (!wasEditing) showAddBar();
   }
 
+  // ± stepper in the cart: adjust a part's quantity in place. Going below 1
+  // removes the part, and a vehicle with no parts left leaves the cart.
+  function changeQty(vIdx: number, pIdx: number, delta: number) {
+    setCart((prev) => {
+      const copy = prev.map((v) => ({ ...v, parts: v.parts.map((p) => ({ ...p })) }));
+      const vehicle = copy[vIdx];
+      if (!vehicle || !vehicle.parts[pIdx]) return prev;
+      vehicle.parts[pIdx].qty = (vehicle.parts[pIdx].qty || 1) + delta;
+      if (vehicle.parts[pIdx].qty < 1) {
+        vehicle.parts.splice(pIdx, 1);
+        if (vehicle.parts.length === 0) copy.splice(vIdx, 1);
+      }
+      return copy;
+    });
+  }
+
   function editItem(i: number) {
     const it = cart[i];
     setEditIndex(i);
@@ -573,8 +589,24 @@ export default function StoreApp() {
                       <div className="vrow-parts">
                         {it.parts.map((p, j) => (
                           <div className="vrow-part" key={j}>
-                            <span className="vrow-qty">{p.qty || 1} ×</span>
-                            {p.name}
+                            <span className="vrow-pn">{p.name}</span>
+                            <span className="stepper">
+                              <button
+                                type="button"
+                                onClick={() => changeQty(i, j, -1)}
+                                aria-label={`Decrease ${p.name} quantity`}
+                              >
+                                −
+                              </button>
+                              <span className="qv">{p.qty || 1}</span>
+                              <button
+                                type="button"
+                                onClick={() => changeQty(i, j, 1)}
+                                aria-label={`Increase ${p.name} quantity`}
+                              >
+                                +
+                              </button>
+                            </span>
                           </div>
                         ))}
                       </div>
