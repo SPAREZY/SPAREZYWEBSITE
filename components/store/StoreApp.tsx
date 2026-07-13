@@ -699,8 +699,7 @@ function joinList(items: string[]): string {
 }
 
 // Friendly one-sentence WhatsApp ask, e.g.
-// "Hi, can you source a fuel filter & 2× brake pads for my 2019 Mitsubishi
-//  Attrage? Please share the price and availability 🙏"
+// "Hi, can you source a fuel filter & 2× brake pads for my 2019 Mitsubishi Attrage?"
 function buildCartWaLink(vehicles: CartItem[]): string {
   const clauses = vehicles.map((it) => {
     const car = [it.year, it.make, it.model].filter(Boolean).join(" ").trim() || "car";
@@ -711,6 +710,6 @@ function buildCartWaLink(vehicles: CartItem[]): string {
     clauses.length > 1
       ? `${clauses.slice(0, -1).join(", ")}, and ${clauses[clauses.length - 1]}`
       : clauses[0] ?? "";
-  const msg = `Hi, can you source ${joined}? Please share the price and availability 🙏`;
+  const msg = `Hi, can you source ${joined}?`;
   return `https://wa.me/${BUSINESS_WA}?text=${encodeURIComponent(msg)}`;
 }
