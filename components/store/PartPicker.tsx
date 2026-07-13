@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AUTO_PARTS, BODY_PARTS } from "@/lib/car-parts";
+import { CAR_PARTS } from "@/lib/car-parts";
 import RotatingPlaceholder from "./RotatingPlaceholder";
 
 // A handful of popular parts cycle through the box as an animated hint.
@@ -9,16 +9,10 @@ const EG_PART = [
   "Front brake pads", "Oil filter", "Headlight", "Alternator",
   "Fuel pump", "Radiator", "Timing belt", "Shock absorber",
 ];
-const EG_BODY = [
-  "Front bumper", "Side mirror", "Windshield", "Front door",
-  "Bonnet / hood", "Grille", "Dashboard", "Door handle",
-];
-
 export default function PartPicker({
   value,
   hintActive,
   hintOffset = 0,
-  mode = "auto",
   onChange,
   onRemove,
 }: {
@@ -26,8 +20,6 @@ export default function PartPicker({
   hintActive: boolean;
   /** Row index — staggers the rotating examples so parallel rows differ. */
   hintOffset?: number;
-  /** "auto" suggests everything except body parts; "body" suggests only body parts. */
-  mode?: "auto" | "body";
   onChange: (v: string) => void;
   onRemove: () => void;
 }) {
@@ -35,20 +27,17 @@ export default function PartPicker({
   const wrapRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const catalogue = mode === "body" ? BODY_PARTS : AUTO_PARTS;
-  const examples = mode === "body" ? EG_BODY : EG_PART;
-
   // Rotate the example list by 3 per row so rows never show the same hint.
   const hintItems = useMemo(() => {
-    const shift = (hintOffset * 3) % examples.length;
-    return [...examples.slice(shift), ...examples.slice(0, shift)];
-  }, [hintOffset, examples]);
+    const shift = (hintOffset * 3) % EG_PART.length;
+    return [...EG_PART.slice(shift), ...EG_PART.slice(0, shift)];
+  }, [hintOffset]);
 
   const term = value.trim().toLowerCase();
   const results = useMemo(
     () =>
-      (term ? catalogue.filter((p) => p.toLowerCase().includes(term)) : catalogue).slice(0, 80),
-    [term, catalogue],
+      (term ? CAR_PARTS.filter((p) => p.toLowerCase().includes(term)) : CAR_PARTS).slice(0, 80),
+    [term],
   );
 
   // close the dropdown on any outside click

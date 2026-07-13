@@ -22,7 +22,6 @@ const HEADER_CATS = [
   { key: "battery", label: "Buy Battery", img: "/cat-icons/battery.png", accent: "34 197 94", art: "/cat-icons/battery-art.svg" },
   { key: "part", label: "Find Auto Parts", img: "/cat-icons/part.png", accent: "249 115 22", live: true, art: "/cat-icons/brake.svg" },
   { key: "oil", label: "Buy Lubricant", img: "/cat-icons/oil.png", accent: "40 120 255", art: "/cat-icons/lubricant.svg" },
-  { key: "body", label: "Find Body Parts", img: "/cat-icons/body.png", accent: "239 68 68", live: true, art: "/cat-icons/door.svg" },
 ];
 
 // Resize + compress a chosen image to a small JPEG data URL so the
@@ -68,9 +67,6 @@ function defaultParts(): FormPart[] {
 
 export default function StoreApp() {
   const [view, setView] = useState<View>("home");
-  // Which inquiry tile is selected: auto parts (default) or body parts.
-  // Body mode narrows the part suggestions to exterior/interior body parts.
-  const [catMode, setCatMode] = useState<"part" | "body">("part");
   const [cart, setCart] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -318,13 +314,12 @@ export default function StoreApp() {
                 <button
                   key={c.key}
                   type="button"
-                  className={`cat-tile ${c.live ? (catMode === c.key ? "active" : "") : "soon"}`}
+                  className={`cat-tile ${c.key === "part" ? "cat-tile--wide " : ""}${c.live ? "active" : "soon"}`}
                   style={{ ["--acc" as string]: c.accent }}
                   onClick={() => {
                     if (c.live) {
                       closeCart();
                       setView("home");
-                      setCatMode(c.key as "part" | "body");
                     } else {
                       showToast(`${c.label} - Coming Soon`);
                     }
@@ -399,16 +394,13 @@ export default function StoreApp() {
                 */}
 
                 <div>
-                  <div className="step-head">
-                    {catMode === "body" ? "Select your body parts" : "Select your parts"}
-                  </div>
+                  <div className="step-head">Select your parts</div>
                   {parts.map((p, i) => (
                     <PartPicker
                       key={i}
                       value={p.name}
                       hintActive={model.trim().length > 0}
                       hintOffset={i}
-                      mode={catMode === "body" ? "body" : "auto"}
                       onChange={(v) => {
                         updatePart(i, { name: v });
                         if (partsErr && v.trim()) setPartsErr(false);

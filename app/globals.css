@@ -181,6 +181,11 @@
   gap: 8px;
   padding: 2px 14px 12px;
 }
+/* The combined Find Auto Parts tile is rectangular — double width. */
+.cat-tile--wide {
+  grid-column: span 2;
+  aspect-ratio: auto !important;
+}
 .cat-tile {
   position: relative;
   aspect-ratio: 1 / 1;
