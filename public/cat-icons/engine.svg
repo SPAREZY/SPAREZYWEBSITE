@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="109 176 614 480">
+  <defs>
+    <linearGradient id="engblock" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d5dae0"/>
+      <stop offset="0.5" stop-color="#aab2bc"/>
+      <stop offset="1" stop-color="#7a8390"/>
+    </linearGradient>
+    <linearGradient id="engcover" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef1f4"/>
+      <stop offset="1" stop-color="#b3bac3"/>
+    </linearGradient>
+    <linearGradient id="engpipe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e3e7ec"/>
+      <stop offset="1" stop-color="#8b95a1"/>
+    </linearGradient>
+    <radialGradient id="stack" cx="0.4" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#4a4a52"/>
+      <stop offset="0.7" stop-color="#2b2b30"/>
+      <stop offset="1" stop-color="#1c1c20"/>
+    </radialGradient>
+  </defs>
+
+  <!-- exhaust headers (behind block, right side) -->
+  <g fill="none" stroke="url(#engpipe)" stroke-width="20" stroke-linecap="round">
+    <path d="M560 400 C620 430 650 470 656 540"/>
+    <path d="M530 430 C596 460 628 500 636 560"/>
+    <path d="M500 460 C570 490 604 528 614 580"/>
+  </g>
+  <g fill="none" stroke="#6b7480" stroke-width="3" opacity="0.6">
+    <path d="M560 400 C620 430 650 470 656 540"/>
+    <path d="M530 430 C596 460 628 500 636 560"/>
+    <path d="M500 460 C570 490 604 528 614 580"/>
+  </g>
+  <!-- collector -->
+  <path d="M600 560 Q640 600 700 606" fill="none" stroke="url(#engpipe)" stroke-width="34" stroke-linecap="round"/>
+
+  <!-- engine block -->
+  <path d="M190 430
+           L520 290
+           Q560 274 590 300
+           L620 330
+           Q640 350 632 380
+           L600 500
+           Q592 528 560 540
+           L310 610
+           Q270 620 244 592
+           L200 480
+           Q184 456 190 430 Z"
+        fill="url(#engblock)" stroke="#6b7480" stroke-width="4"/>
+
+  <!-- valve cover (front bank) with plug bosses -->
+  <g transform="rotate(-17 430 430)">
+    <rect x="300" y="392" width="290" height="78" rx="18" fill="url(#engcover)" stroke="#6b7480" stroke-width="4"/>
+    <circle cx="348" cy="431" r="17" fill="#2b2b30"/>
+    <circle cx="418" cy="431" r="17" fill="#2b2b30"/>
+    <circle cx="488" cy="431" r="17" fill="#2b2b30"/>
+    <circle cx="558" cy="431" r="17" fill="#2b2b30"/>
+    <circle cx="348" cy="431" r="7" fill="#6b7480"/>
+    <circle cx="418" cy="431" r="7" fill="#6b7480"/>
+    <circle cx="488" cy="431" r="7" fill="#6b7480"/>
+    <circle cx="558" cy="431" r="7" fill="#6b7480"/>
+  </g>
+
+  <!-- red plug wires arcing to the stacks -->
+  <g fill="none" stroke="#d84a4a" stroke-width="8" stroke-linecap="round">
+    <path d="M334 448 C320 380 330 330 360 296"/>
+    <path d="M402 426 C392 360 404 314 432 282"/>
+    <path d="M470 405 C462 340 476 296 502 268"/>
+    <path d="M538 384 C532 324 546 282 570 256"/>
+  </g>
+
+  <!-- intake stacks along the top V -->
+  <g>
+    <ellipse cx="270" cy="330" rx="58" ry="46" fill="url(#stack)"/>
+    <ellipse cx="270" cy="312" rx="58" ry="24" fill="#3a3a42" stroke="#55555e" stroke-width="4"/>
+    <ellipse cx="352" cy="296" rx="58" ry="46" fill="url(#stack)"/>
+    <ellipse cx="352" cy="278" rx="58" ry="24" fill="#3a3a42" stroke="#55555e" stroke-width="4"/>
+    <ellipse cx="434" cy="262" rx="58" ry="46" fill="url(#stack)"/>
+    <ellipse cx="434" cy="244" rx="58" ry="24" fill="#3a3a42" stroke="#55555e" stroke-width="4"/>
+    <ellipse cx="516" cy="228" rx="58" ry="46" fill="url(#stack)"/>
+    <ellipse cx="516" cy="210" rx="58" ry="24" fill="#3a3a42" stroke="#55555e" stroke-width="4"/>
+  </g>
+
+  <!-- front pulleys + belt -->
+  <g>
+    <path d="M186 470 L150 542" stroke="#2b2b30" stroke-width="10"/>
+    <circle cx="196" cy="452" r="44" fill="url(#engcover)" stroke="#6b7480" stroke-width="5"/>
+    <circle cx="196" cy="452" r="26" fill="none" stroke="#8f99a5" stroke-width="4"/>
+    <circle cx="196" cy="452" r="9" fill="#6b7480"/>
+    <circle cx="152" cy="556" r="34" fill="url(#engcover)" stroke="#6b7480" stroke-width="5"/>
+    <circle cx="152" cy="556" r="18" fill="none" stroke="#8f99a5" stroke-width="4"/>
+    <circle cx="152" cy="556" r="7" fill="#6b7480"/>
+  </g>
+
+  <!-- oil pan hint -->
+  <path d="M300 610 L540 545 Q560 585 520 600 L340 648 Q306 654 300 610 Z"
+        fill="#8b95a1" stroke="#6b7480" stroke-width="4"/>
+</svg>
