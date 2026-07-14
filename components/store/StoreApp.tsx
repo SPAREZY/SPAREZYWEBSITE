@@ -382,10 +382,6 @@ export default function StoreApp() {
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={c.art3} alt="" loading="lazy" />
                       )}
-                      {"art4" in c && c.art4 && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={c.art4} alt="" loading="lazy" />
-                      )}
                     </span>
                   )}
                 </button>
