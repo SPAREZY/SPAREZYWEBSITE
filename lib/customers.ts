@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { normalizeWhatsappPhone, isOpenStatus } from "@/lib/utils";
 
 export type CustomerRow = {
@@ -18,6 +18,7 @@ export type CustomerRow = {
 // Roll the raw leads up into one row per customer (matched on phone, falling
 // back to email), with lifetime stats — the CRM view.
 export async function getCustomers(): Promise<CustomerRow[]> {
+  const prisma = await getPrisma();
   const rows = await prisma.partRequest.findMany({
     include: { quote: true },
     orderBy: { createdAt: "desc" },

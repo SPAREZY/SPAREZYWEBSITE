@@ -17,15 +17,15 @@ export function buildLeadWhere(searchParams: URLSearchParams): Prisma.PartReques
   if (q) {
     and.push({
       OR: [
-        { humanId: { contains: q, mode: "insensitive" } },
-        { partName: { contains: q, mode: "insensitive" } },
-        { vin: { contains: q, mode: "insensitive" } },
-        { customerName: { contains: q, mode: "insensitive" } },
-        { phone: { contains: q, mode: "insensitive" } },
-        { email: { contains: q, mode: "insensitive" } },
-        { make: { contains: q, mode: "insensitive" } },
-        { model: { contains: q, mode: "insensitive" } },
-        { city: { contains: q, mode: "insensitive" } },
+        { humanId: { contains: q } },
+        { partName: { contains: q } },
+        { vin: { contains: q } },
+        { customerName: { contains: q } },
+        { phone: { contains: q } },
+        { email: { contains: q } },
+        { make: { contains: q } },
+        { model: { contains: q } },
+        { city: { contains: q } },
       ],
     });
   }

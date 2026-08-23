@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/admin";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { getOrderPattern } from "@/lib/settings";
 import OrderNumberSettings from "@/components/admin/OrderNumberSettings";
 import DangerZone from "@/components/admin/DangerZone";
@@ -8,6 +8,7 @@ import DangerZone from "@/components/admin/DangerZone";
 export const dynamic = "force-dynamic";
 
 export default async function AdminSettingsPage() {
+  const prisma = await getPrisma();
   if (!isAdmin()) redirect("/admin/login");
 
   const pattern = await getOrderPattern();

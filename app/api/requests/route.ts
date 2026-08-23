@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { notifyCustomer } from "@/lib/notify";
 import { isValidPhone, isValidEmail } from "@/lib/utils";
 import { getOrderPattern } from "@/lib/settings";
@@ -12,6 +12,7 @@ type PartInput = { name?: string; qty?: number; condition?: string };
 const CONDITIONS = ["genuine", "oem", "aftermarket", "any"];
 
 export async function POST(req: Request) {
+  const prisma = await getPrisma();
   let body: Record<string, unknown>;
   try {
     body = await req.json();

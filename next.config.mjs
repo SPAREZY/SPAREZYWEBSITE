@@ -8,3 +8,6 @@ const nextConfig = {
 };
 
 export default nextConfig;
+
+const { initOpenNextCloudflareForDev } = await import("@opennextjs/cloudflare");
+await initOpenNextCloudflareForDev();

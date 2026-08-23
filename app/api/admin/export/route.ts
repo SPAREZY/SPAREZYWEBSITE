@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { parseParts } from "@/lib/utils";
 import { buildLeadWhere } from "@/lib/lead-query";
@@ -13,6 +13,7 @@ function csvCell(v: unknown): string {
 
 // Exports the current (optionally filtered) lead list as a CSV download.
 export async function GET(req: Request) {
+  const prisma = await getPrisma();
   if (!isAdmin()) return new Response("Unauthorized", { status: 401 });
 
   const { searchParams } = new URL(req.url);
