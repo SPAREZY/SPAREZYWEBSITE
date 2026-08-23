@@ -30,3 +30,8 @@ next-env.d.ts
 # prisma local sqlite (not used, but ignore just in case)
 *.db
 *.db-journal
+
+# cloudflare / open-next
+.open-next
+.wrangler
+.dev.vars

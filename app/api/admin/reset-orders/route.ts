@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 
 export const dynamic = "force-dynamic";
@@ -7,6 +7,7 @@ export const dynamic = "force-dynamic";
 // Deletes ALL orders (PartRequest) — quotes and activity rows cascade with
 // them. Guarded by admin auth and a typed confirmation to prevent accidents.
 export async function POST(req: Request) {
+  const prisma = await getPrisma();
   if (!isAdmin()) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json().catch(() => ({}));

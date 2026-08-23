@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { buildLeadWhere } from "@/lib/lead-query";
 import type { Prisma } from "@prisma/client";
@@ -7,6 +7,7 @@ import type { Prisma } from "@prisma/client";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
+  const prisma = await getPrisma();
   if (!isAdmin()) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { searchParams } = new URL(req.url);

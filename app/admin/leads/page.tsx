@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/admin";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import LeadsTable from "@/components/admin/LeadsTable";
 import type { Lead } from "@/components/admin/types";
 
@@ -11,6 +11,7 @@ export default async function LeadsPage({
 }: {
   searchParams: { focus?: string };
 }) {
+  const prisma = await getPrisma();
   if (!isAdmin()) redirect("/admin/login");
 
   const rows = await prisma.partRequest.findMany({

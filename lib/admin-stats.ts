@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { parseParts, isOpenStatus, type Status } from "@/lib/utils";
 
 export type DashboardData = {
@@ -54,6 +54,7 @@ function startOfDay(d: Date): Date {
 }
 
 export async function getDashboardData(): Promise<DashboardData> {
+  const prisma = await getPrisma();
   const now = new Date();
   const startYear = new Date(now.getFullYear(), 0, 1);
   const startMonth = new Date(now.getFullYear(), now.getMonth(), 1);

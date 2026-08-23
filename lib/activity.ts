@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 export type ActivityType =
   | "CREATED"
@@ -19,6 +19,7 @@ export async function logActivity(
   actor: string = "Admin",
 ): Promise<void> {
   try {
+    const prisma = await getPrisma();
     await prisma.activityLog.create({
       data: { requestId, type, message, actor },
     });

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { logActivity } from "@/lib/activity";
 import { STATUS_LABEL, PRIORITY_LABEL, type Status, type Priority } from "@/lib/utils";
@@ -17,6 +17,7 @@ const VALID = ["RECEIVED", "SOURCING", "QUOTED", "CONFIRMED", "COMPLETED", "DECL
 const VALID_PRIORITY = ["LOW", "NORMAL", "HIGH", "URGENT"];
 
 export async function GET(_req: Request, { params }: { params: { id: string } }) {
+  const prisma = await getPrisma();
   if (!isAdmin()) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const request = await prisma.partRequest.findUnique({
     where: { id: params.id },
@@ -27,6 +28,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
 }
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+  const prisma = await getPrisma();
   if (!isAdmin()) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json().catch(() => ({}));

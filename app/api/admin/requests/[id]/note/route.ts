@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { logActivity } from "@/lib/activity";
 
@@ -7,6 +7,7 @@ export const dynamic = "force-dynamic";
 
 // Append a free-text note to a lead's activity timeline.
 export async function POST(req: Request, { params }: { params: { id: string } }) {
+  const prisma = await getPrisma();
   if (!isAdmin()) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json().catch(() => ({}));

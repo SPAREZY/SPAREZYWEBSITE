@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { parseParts } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -20,6 +20,7 @@ const STATUS_LABEL: Record<string, string> = {
 // non-sensitive fields — no name, email, address or full phone — so that
 // guessing order numbers can't leak personal data.
 export async function GET(req: Request) {
+  const prisma = await getPrisma();
   const { searchParams } = new URL(req.url);
   const phone = (searchParams.get("phone") ?? "").trim();
   const idsRaw = (searchParams.get("ids") ?? "").trim();

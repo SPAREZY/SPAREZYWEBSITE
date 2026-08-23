@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { notifyCustomer } from "@/lib/notify";
 import { logActivity } from "@/lib/activity";
@@ -9,6 +9,7 @@ export const dynamic = "force-dynamic";
 const CONDITIONS = ["genuine", "oem", "aftermarket", "any"];
 
 export async function POST(req: Request, { params }: { params: { id: string } }) {
+  const prisma = await getPrisma();
   if (!isAdmin()) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json().catch(() => ({}));

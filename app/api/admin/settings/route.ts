@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { getOrderPattern, setOrderPattern } from "@/lib/settings";
 import {
@@ -11,6 +11,7 @@ import {
 export const dynamic = "force-dynamic";
 
 async function nextSeq(): Promise<number> {
+  const prisma = await getPrisma();
   const startOfYear = new Date(new Date().getFullYear(), 0, 1);
   const count = await prisma.partRequest.count({ where: { createdAt: { gte: startOfYear } } });
   return count + 1;
