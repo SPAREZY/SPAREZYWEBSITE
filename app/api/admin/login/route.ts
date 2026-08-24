@@ -4,7 +4,8 @@ import { ADMIN_COOKIE, adminPassword } from "@/lib/admin";
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const password = (body as { password?: string }).password;
-  if (typeof password !== "string" || password !== adminPassword()) {
+  const expected = adminPassword();
+  if (!expected || typeof password !== "string" || password !== expected) {
     return NextResponse.json({ error: "Wrong password." }, { status: 401 });
   }
   const res = NextResponse.json({ ok: true });
