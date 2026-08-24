@@ -9,6 +9,10 @@ const EG_PART = [
   "Front brake pads", "Oil filter", "Headlight", "Alternator",
   "Fuel pump", "Radiator", "Timing belt", "Shock absorber",
 ];
+// Rows rendered per scroll step — matches the previous cap, so the first
+// screenful of the dropdown is exactly as quick as it has always been.
+const CHUNK = 80;
+
 export default function PartPicker({
   value,
   hintActive,
@@ -34,11 +38,30 @@ export default function PartPicker({
   }, [hintOffset]);
 
   const term = value.trim().toLowerCase();
-  const results = useMemo(
-    () =>
-      (term ? CAR_PARTS.filter((p) => p.toLowerCase().includes(term)) : CAR_PARTS).slice(0, 80),
+  const matches = useMemo(
+    () => (term ? CAR_PARTS.filter((p) => p.toLowerCase().includes(term)) : CAR_PARTS),
     [term],
   );
+
+  // The catalogue runs to well over a thousand parts. Painting them all at once
+  // costs ~350ms on a mid-range phone, so render a chunk and extend as the user
+  // scrolls — the whole list is still reachable, it just arrives a screen at a
+  // time. Reset back to one chunk whenever the search term or open state changes.
+  const [limit, setLimit] = useState(CHUNK);
+  const listRef = useRef<HTMLUListElement>(null);
+  useEffect(() => {
+    setLimit(CHUNK);
+    if (listRef.current) listRef.current.scrollTop = 0;
+  }, [term, open]);
+
+  const results = matches.slice(0, limit);
+
+  function onListScroll(e: React.UIEvent<HTMLUListElement>) {
+    const el = e.currentTarget;
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 160) {
+      setLimit((n) => (n < matches.length ? n + CHUNK : n));
+    }
+  }
 
   // close the dropdown on any outside click
   useEffect(() => {
@@ -104,7 +127,7 @@ export default function PartPicker({
       </div>
 
       {open && results.length > 0 && (
-        <ul className="model-menu" role="listbox">
+        <ul className="model-menu" role="listbox" ref={listRef} onScroll={onListScroll}>
           {results.map((p) => (
             <li key={p} role="option" aria-selected={p === value}>
               <button type="button" className="model-opt" onClick={() => pick(p)}>
