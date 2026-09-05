@@ -439,6 +439,7 @@ export default function StoreApp() {
                 <div className="model-field">
                   <div className="step-head">Enter your car VIN</div>
                   <ChassisField
+                    brandName={make}
                     value={vin}
                     err={vinErr}
                     onChange={(v) => {

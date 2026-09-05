@@ -2869,7 +2869,11 @@
      display:none on mobile, so .hero-row holds the card alone. If the form is
      genuinely taller than the screen it simply scrolls, as before. */
   .view-home .hero-row {
-    min-height: 100%;
+    /* Full height minus the Google-rating line that sits directly under the
+       card (20px of text + its 18px margin), so that line lands above the
+       bottom bar instead of being sliced in half by it. */
+    --sp-row: 38px;
+    min-height: calc(100% - var(--sp-row));
     display: flex;
     flex-direction: column;
   }
