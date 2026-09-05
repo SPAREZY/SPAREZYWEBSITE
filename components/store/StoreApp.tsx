@@ -437,7 +437,7 @@ export default function StoreApp() {
                 </div>
 
                 <div className="model-field">
-                  <div className="step-head">Enter VIN</div>
+                  <div className="step-head">Enter your car VIN</div>
                   <ChassisField
                     value={vin}
                     err={vinErr}
@@ -469,7 +469,7 @@ export default function StoreApp() {
                 */}
 
                 <div>
-                  <div className="step-head">Select your parts</div>
+                  <div className="step-head">Search your car part</div>
                   {parts.map((p, i) => (
                     <PartPicker
                       key={i}

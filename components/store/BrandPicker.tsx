@@ -45,7 +45,7 @@ export default function BrandPicker({
 
   return (
     <div className="brandbox">
-      <h2 className="step-head">Select your brand</h2>
+      <h2 className="step-head">Select your car brand</h2>
 
       {selected ? (
         <div className="brand-selected">
