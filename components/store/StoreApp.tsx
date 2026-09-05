@@ -465,7 +465,7 @@ export default function StoreApp() {
                 </div>
 
                 <div className="model-field">
-                  <div className="step-head">Enter Chassis / Vin</div>
+                  <div className="step-head">Enter VIN</div>
                   <ChassisField
                     value={vin}
                     photo={photo}
