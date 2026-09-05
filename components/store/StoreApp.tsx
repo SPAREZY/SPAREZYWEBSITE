@@ -76,11 +76,8 @@ export default function StoreApp() {
 
   // product form
   const [make, setMake] = useState("");
-  // Step 2 is now "identify the car": a chassis (VIN) number, or a photo of
-  // the registration card. Either one satisfies the step.
+  // Step 2 identifies the exact car: the VIN / chassis number, entered by hand.
   const [vin, setVin] = useState("");
-  const [photo, setPhoto] = useState("");
-  const [photoBusy, setPhotoBusy] = useState(false);
   const [year, setYear] = useState("");
   const [parts, setParts] = useState<FormPart[]>([{ name: "" }]);
   const [makeErr, setMakeErr] = useState(false);
@@ -173,7 +170,6 @@ export default function StoreApp() {
     setEditIndex(null);
     setMake("");
     setVin("");
-    setPhoto("");
     setYear("");
     setParts(defaultParts());
     setMakeErr(false);
@@ -185,21 +181,6 @@ export default function StoreApp() {
   function selectBrand(v: string) {
     setMake(v);
     if (v) setMakeErr(false);
-  }
-
-  // Shrink the chosen image on-device before it ever leaves the phone, so a
-  // 4MB camera shot becomes a ~100KB JPEG we can store inline.
-  async function pickPhoto(f: File) {
-    setPhotoBusy(true);
-    try {
-      const url = await fileToCompressedDataUrl(f);
-      setPhoto(url);
-      setVinErr(false);
-    } catch {
-      showToast("Could not read that image");
-    } finally {
-      setPhotoBusy(false);
-    }
   }
 
   function updatePart(i: number, patch: Partial<FormPart>) {
@@ -227,9 +208,9 @@ export default function StoreApp() {
     const cleanParts = mergeParts(
       parts.map((p) => ({ name: p.name.trim(), qty: 1 })).filter((p) => p.name),
     );
-    // The car is identified by brand + chassis number (or a photo of it).
+    // The car is identified by brand + VIN.
     const badBrand = !make.trim();
-    const badVin = !vin.trim() && !photo;
+    const badVin = !vin.trim();
     const badParts = cleanParts.length === 0;
     setMakeErr(badBrand);
     setVinErr(badVin);
@@ -242,14 +223,7 @@ export default function StoreApp() {
       return;
     }
 
-    const item: CartItem = {
-      vin: vin.trim(),
-      make,
-      model: "",
-      year,
-      parts: cleanParts,
-      ...(photo ? { photo } : {}),
-    };
+    const item: CartItem = { vin: vin.trim(), make, model: "", year, parts: cleanParts };
     setCart((prev) => {
       if (editIndex !== null) {
         const copy = [...prev];
@@ -301,7 +275,6 @@ export default function StoreApp() {
     setEditIndex(i);
     setMake(it.make);
     setVin(it.vin ?? "");
-    setPhoto(it.photo ?? "");
     setYear(it.year);
     setParts(
       it.parts.length ? it.parts.map((p) => ({ name: p.name })) : [{ name: "" }],
@@ -331,7 +304,7 @@ export default function StoreApp() {
     const waLink = buildCartWaLink(cart);
 
     // Record each vehicle as a lead so it reaches the admin board with its
-    // chassis number and registration photo — a wa.me link carries text only.
+    // VIN and parts — a wa.me link hands over text only, nothing structured.
     // Deliberately not awaited: the WhatsApp hand-off has to happen in the
     // same tap or the browser treats it as a blocked popup. The storefront
     // has no contact form, so these land as "WhatsApp lead" and the customer's
@@ -346,7 +319,6 @@ export default function StoreApp() {
           make: it.make,
           model: it.model,
           year: it.year,
-          photoUrl: it.photo ?? "",
           partsJson: it.parts.map((p) => ({
             name: p.name,
             qty: p.qty || 1,
@@ -367,7 +339,7 @@ export default function StoreApp() {
   // Mobile form progress — the three-step journey: car → chassis → part.
   const namedParts = parts.filter((p) => p.name.trim().length > 0);
   const hasMake = make.trim().length > 0;
-  const hasVin = vin.trim().length > 0 || photo.length > 0;
+  const hasVin = vin.trim().length > 0;
   const hasPart = namedParts.length > 0;
   const progressSteps = [hasMake, hasVin, hasPart];
   const formProgress = Math.round(
@@ -377,7 +349,7 @@ export default function StoreApp() {
   const progressLabel = !hasMake
     ? "Add your car"
     : !hasVin
-      ? "Add your chassis number"
+      ? "Add your VIN"
       : !hasPart
         ? "Add a part"
         : "All set!";
@@ -468,21 +440,13 @@ export default function StoreApp() {
                   <div className="step-head">Enter VIN</div>
                   <ChassisField
                     value={vin}
-                    photo={photo}
                     err={vinErr}
-                    busy={photoBusy}
                     onChange={(v) => {
                       setVin(v);
                       if (vinErr && v.trim()) setVinErr(false);
                     }}
-                    onPickPhoto={pickPhoto}
-                    onClearPhoto={() => setPhoto("")}
                   />
-                  {vinErr && (
-                    <div className="err-msg">
-                      Enter your chassis number, or upload a photo of it.
-                    </div>
-                  )}
+                  {vinErr && <div className="err-msg">Please enter your VIN.</div>}
                 </div>
                 {/* TEMP: tagline hidden for now — to be reintroduced in a different place. Do not delete.
                 <div className="ptag-line">ANY CAR PARTS · WE HAVE IT</div>
@@ -830,8 +794,8 @@ function buildCartWaLink(vehicles: CartItem[]): string {
   const clauses = vehicles.map((it) => {
     const car = [it.make, it.model].filter(Boolean).join(" ").trim() || "car";
     const parts = joinList(it.parts.map((p) => partPhrase(p.name, p.qty || 1)));
-    // The chassis number is what makes the request sourceable, so say it.
-    const chassis = it.vin.trim() ? ` (chassis ${it.vin.trim()})` : "";
+    // The VIN is what makes the request sourceable, so say it.
+    const chassis = it.vin.trim() ? ` (VIN ${it.vin.trim()})` : "";
     return `${parts} for my ${car}${chassis}`;
   });
   const joined =
