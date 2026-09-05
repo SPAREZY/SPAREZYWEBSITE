@@ -2849,3 +2849,45 @@
     display: none;
   }
 }
+
+/* ===== step 2: chassis number + registration photo =====
+   The upload button and thumbnail reuse the existing .vin-upload / .vin-thumb
+   styles further up this file, which were written for exactly this control. */
+.chassis-combo {
+  position: relative;
+}
+
+/* ===== phones: the white card fills down to the bottom bar =====
+   Without this the outline stops wherever the form happens to end, leaving a
+   ragged gap above the fold. Stretch it and pin the CTA to its foot, the same
+   way the desktop layout already does. */
+@media (max-width: 640px) {
+  /* .view is absolute inset:0 inside .stage, so its content box already
+     measures exactly the space between the header and the bottom bar. That
+     makes it a definite height, so a percentage here resolves — the card
+     stretches to the fold on any phone with no magic numbers. .hero-aside is
+     display:none on mobile, so .hero-row holds the card alone. If the form is
+     genuinely taller than the screen it simply scrolls, as before. */
+  .view-home .hero-row {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .view-home .pdp {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .view-home .pdp .info {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+  .view-home .pdp .pdp-actions {
+    margin-top: auto;
+  }
+  /* the flex column would otherwise stretch these to full width / centre */
+  .view-home .pdp .addpart {
+    align-self: flex-start;
+  }
+}

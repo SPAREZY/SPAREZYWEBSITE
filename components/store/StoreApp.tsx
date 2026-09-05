@@ -8,7 +8,7 @@ import BackgroundGrid from "./BackgroundGrid";
 import ContactView from "./ContactView";
 import HelpView from "./HelpView";
 import BrandPicker from "./BrandPicker";
-import ModelPicker from "./ModelPicker";
+import ChassisField from "./ChassisField";
 import PartPicker from "./PartPicker";
 import PayBanners from "./PayBanners";
 import Reviews from "./Reviews";
@@ -76,11 +76,15 @@ export default function StoreApp() {
 
   // product form
   const [make, setMake] = useState("");
-  const [model, setModel] = useState("");
+  // Step 2 is now "identify the car": a chassis (VIN) number, or a photo of
+  // the registration card. Either one satisfies the step.
+  const [vin, setVin] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [photoBusy, setPhotoBusy] = useState(false);
   const [year, setYear] = useState("");
   const [parts, setParts] = useState<FormPart[]>([{ name: "" }]);
   const [makeErr, setMakeErr] = useState(false);
-  const [modelErr, setModelErr] = useState(false);
+  const [vinErr, setVinErr] = useState(false);
   const [partsErr, setPartsErr] = useState(false);
 
   const addBarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -168,20 +172,34 @@ export default function StoreApp() {
   function resetForm() {
     setEditIndex(null);
     setMake("");
-    setModel("");
+    setVin("");
+    setPhoto("");
     setYear("");
     setParts(defaultParts());
     setMakeErr(false);
-    setModelErr(false);
+    setVinErr(false);
     setPartsErr(false);
   }
 
   // Picking a brand sets the make and resets the model (models depend on the brand).
   function selectBrand(v: string) {
     setMake(v);
-    setModel("");
-    setModelErr(false);
     if (v) setMakeErr(false);
+  }
+
+  // Shrink the chosen image on-device before it ever leaves the phone, so a
+  // 4MB camera shot becomes a ~100KB JPEG we can store inline.
+  async function pickPhoto(f: File) {
+    setPhotoBusy(true);
+    try {
+      const url = await fileToCompressedDataUrl(f);
+      setPhoto(url);
+      setVinErr(false);
+    } catch {
+      showToast("Could not read that image");
+    } finally {
+      setPhotoBusy(false);
+    }
   }
 
   function updatePart(i: number, patch: Partial<FormPart>) {
@@ -209,14 +227,14 @@ export default function StoreApp() {
     const cleanParts = mergeParts(
       parts.map((p) => ({ name: p.name.trim(), qty: 1 })).filter((p) => p.name),
     );
-    // The car is identified by brand + the parts requested.
+    // The car is identified by brand + chassis number (or a photo of it).
     const badBrand = !make.trim();
-    const badModel = !model.trim();
+    const badVin = !vin.trim() && !photo;
     const badParts = cleanParts.length === 0;
     setMakeErr(badBrand);
-    setModelErr(badModel);
+    setVinErr(badVin);
     setPartsErr(badParts);
-    if (badBrand || badModel || badParts) {
+    if (badBrand || badVin || badParts) {
       // Brand sits at the top, far from the buttons — guide the eye to it.
       if (badBrand) {
         brandFieldRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -224,7 +242,14 @@ export default function StoreApp() {
       return;
     }
 
-    const item: CartItem = { vin: "", make, model, year, parts: cleanParts };
+    const item: CartItem = {
+      vin: vin.trim(),
+      make,
+      model: "",
+      year,
+      parts: cleanParts,
+      ...(photo ? { photo } : {}),
+    };
     setCart((prev) => {
       if (editIndex !== null) {
         const copy = [...prev];
@@ -235,7 +260,7 @@ export default function StoreApp() {
       const sameCar = prev.findIndex(
         (v) =>
           v.make.trim().toLowerCase() === make.trim().toLowerCase() &&
-          v.model.trim().toLowerCase() === model.trim().toLowerCase(),
+          v.vin.trim().toLowerCase() === vin.trim().toLowerCase(),
       );
       if (sameCar >= 0) {
         const copy = [...prev];
@@ -275,13 +300,14 @@ export default function StoreApp() {
     const it = cart[i];
     setEditIndex(i);
     setMake(it.make);
-    setModel(it.model);
+    setVin(it.vin ?? "");
+    setPhoto(it.photo ?? "");
     setYear(it.year);
     setParts(
       it.parts.length ? it.parts.map((p) => ({ name: p.name })) : [{ name: "" }],
     );
     setMakeErr(false);
-    setModelErr(false);
+    setVinErr(false);
     setPartsErr(false);
     closeCart();
     setView("home");
@@ -303,26 +329,55 @@ export default function StoreApp() {
     // Conversion event for ad platforms (Google / Meta / TikTok).
     trackLead({ count: cart.length });
     const waLink = buildCartWaLink(cart);
+
+    // Record each vehicle as a lead so it reaches the admin board with its
+    // chassis number and registration photo — a wa.me link carries text only.
+    // Deliberately not awaited: the WhatsApp hand-off has to happen in the
+    // same tap or the browser treats it as a blocked popup. The storefront
+    // has no contact form, so these land as "WhatsApp lead" and the customer's
+    // own message arrives moments later to be matched against them.
+    for (const it of cart) {
+      void fetch("/api/requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "storefront",
+          vin: it.vin,
+          make: it.make,
+          model: it.model,
+          year: it.year,
+          photoUrl: it.photo ?? "",
+          partsJson: it.parts.map((p) => ({
+            name: p.name,
+            qty: p.qty || 1,
+            condition: "any",
+          })),
+        }),
+      }).catch(() => {
+        /* the WhatsApp chat is the real hand-off; never block it on this */
+      });
+    }
+
     closeCart();
     window.open(waLink, "_blank", "noopener,noreferrer");
   }
 
   const editing = editIndex !== null;
 
-  // Mobile form progress — the three-step journey: car → model → part.
+  // Mobile form progress — the three-step journey: car → chassis → part.
   const namedParts = parts.filter((p) => p.name.trim().length > 0);
   const hasMake = make.trim().length > 0;
-  const hasModel = model.trim().length > 0;
+  const hasVin = vin.trim().length > 0 || photo.length > 0;
   const hasPart = namedParts.length > 0;
-  const progressSteps = [hasMake, hasModel, hasPart];
+  const progressSteps = [hasMake, hasVin, hasPart];
   const formProgress = Math.round(
     (progressSteps.filter(Boolean).length / progressSteps.length) * 100,
   );
-  const isReady = hasMake && hasModel && hasPart;
+  const isReady = hasMake && hasVin && hasPart;
   const progressLabel = !hasMake
     ? "Add your car"
-    : !hasModel
-      ? "Select the model"
+    : !hasVin
+      ? "Add your chassis number"
       : !hasPart
         ? "Add a part"
         : "All set!";
@@ -410,17 +465,24 @@ export default function StoreApp() {
                 </div>
 
                 <div className="model-field">
-                  <div className="step-head">Select your model</div>
-                  <ModelPicker
-                    brandName={make}
-                    value={model}
-                    err={modelErr}
+                  <div className="step-head">Enter chassis number</div>
+                  <ChassisField
+                    value={vin}
+                    photo={photo}
+                    err={vinErr}
+                    busy={photoBusy}
                     onChange={(v) => {
-                      setModel(v);
-                      if (modelErr && v.trim()) setModelErr(false);
+                      setVin(v);
+                      if (vinErr && v.trim()) setVinErr(false);
                     }}
+                    onPickPhoto={pickPhoto}
+                    onClearPhoto={() => setPhoto("")}
                   />
-                  {modelErr && <div className="err-msg">Please enter your model.</div>}
+                  {vinErr && (
+                    <div className="err-msg">
+                      Enter your chassis number, or upload a photo of it.
+                    </div>
+                  )}
                 </div>
                 {/* TEMP: tagline hidden for now — to be reintroduced in a different place. Do not delete.
                 <div className="ptag-line">ANY CAR PARTS · WE HAVE IT</div>
@@ -448,7 +510,7 @@ export default function StoreApp() {
                     <PartPicker
                       key={i}
                       value={p.name}
-                      hintActive={model.trim().length > 0}
+                      hintActive={hasVin}
                       hintOffset={i}
                       onChange={(v) => {
                         updatePart(i, { name: v });
@@ -768,7 +830,9 @@ function buildCartWaLink(vehicles: CartItem[]): string {
   const clauses = vehicles.map((it) => {
     const car = [it.make, it.model].filter(Boolean).join(" ").trim() || "car";
     const parts = joinList(it.parts.map((p) => partPhrase(p.name, p.qty || 1)));
-    return `${parts} for my ${car}`;
+    // The chassis number is what makes the request sourceable, so say it.
+    const chassis = it.vin.trim() ? ` (chassis ${it.vin.trim()})` : "";
+    return `${parts} for my ${car}${chassis}`;
   });
   const joined =
     clauses.length > 1
