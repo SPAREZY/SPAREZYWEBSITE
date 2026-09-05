@@ -43,20 +43,29 @@ export async function POST(req: Request) {
   // The car is identified by its brand + the parts requested; VIN is optional.
   const vinClean = typeof vin === "string" ? vin.trim().toUpperCase() : "";
   const finalVin = vinClean || "—";
-  if (typeof customerName !== "string" || customerName.trim().length < 2) {
-    return NextResponse.json({ error: "Customer name is required." }, { status: 400 });
-  }
-  if (!["whatsapp", "call", "email"].includes(contactPref)) {
-    return NextResponse.json(
-      { error: "contactPref must be whatsapp, call, or email." },
-      { status: 400 },
-    );
-  }
+
+  // The storefront has no contact form on purpose — the customer taps through
+  // to WhatsApp and the conversation carries their details. Those leads still
+  // belong on the board (car, chassis, photo, parts), so accept them without
+  // a name or number. Every other caller keeps the full requirements.
+  const fromStore = (body as { source?: unknown }).source === "storefront";
 
   const hasPhone = typeof phone === "string" && phone.trim().length > 0;
   const hasEmail = typeof email === "string" && email.trim().length > 0;
-  if (!hasPhone && !hasEmail) {
-    return NextResponse.json({ error: "At least one of phone or email is required." }, { status: 400 });
+
+  if (!fromStore) {
+    if (typeof customerName !== "string" || customerName.trim().length < 2) {
+      return NextResponse.json({ error: "Customer name is required." }, { status: 400 });
+    }
+    if (!["whatsapp", "call", "email"].includes(contactPref)) {
+      return NextResponse.json(
+        { error: "contactPref must be whatsapp, call, or email." },
+        { status: 400 },
+      );
+    }
+    if (!hasPhone && !hasEmail) {
+      return NextResponse.json({ error: "At least one of phone or email is required." }, { status: 400 });
+    }
   }
   if (hasPhone && !isValidPhone(phone)) {
     return NextResponse.json({ error: "That doesn't look like a valid phone number." }, { status: 400 });
@@ -64,10 +73,10 @@ export async function POST(req: Request) {
   if (hasEmail && !isValidEmail(email)) {
     return NextResponse.json({ error: "That doesn't look like a valid email address." }, { status: 400 });
   }
-  if ((contactPref === "whatsapp" || contactPref === "call") && !hasPhone) {
+  if (!fromStore && (contactPref === "whatsapp" || contactPref === "call") && !hasPhone) {
     return NextResponse.json({ error: "Phone is required for the chosen contact preference." }, { status: 400 });
   }
-  if (contactPref === "email" && !hasEmail) {
+  if (!fromStore && contactPref === "email" && !hasEmail) {
     return NextResponse.json({ error: "Email is required when preferred contact is email." }, { status: 400 });
   }
 
@@ -117,14 +126,19 @@ export async function POST(req: Request) {
             make: typeof make === "string" && make.trim() ? make.trim() : null,
             model: typeof model === "string" && model.trim() ? model.trim() : null,
             year: validYear,
-            customerName: customerName.trim(),
+            customerName:
+              typeof customerName === "string" && customerName.trim()
+                ? customerName.trim()
+                : "WhatsApp lead",
             phone: hasPhone ? phone.trim() : null,
             email: hasEmail ? email.trim() : null,
             city: typeof city === "string" && city.trim() ? city.trim() : null,
             state: typeof state === "string" && state.trim() ? state.trim() : null,
             country: typeof country === "string" && country.trim() ? country.trim() : null,
             address: typeof address === "string" && address.trim() ? address.trim() : null,
-            contactPref,
+            contactPref: ["whatsapp", "call", "email"].includes(contactPref)
+              ? contactPref
+              : "whatsapp",
             partPreference: pref,
           },
         });
