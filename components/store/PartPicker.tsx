@@ -17,6 +17,7 @@ export default function PartPicker({
   value,
   hintActive,
   hintOffset = 0,
+  canRemove,
   onChange,
   onRemove,
 }: {
@@ -24,6 +25,8 @@ export default function PartPicker({
   hintActive: boolean;
   /** Row index — staggers the rotating examples so parallel rows differ. */
   hintOffset?: number;
+  /** False on the only row, where there is nothing for an empty ✕ to do. */
+  canRemove: boolean;
   onChange: (v: string) => void;
   onRemove: () => void;
 }) {
@@ -104,6 +107,10 @@ export default function PartPicker({
           onFocus={() => setOpen(true)}
         />
         <RotatingPlaceholder show={value.length === 0 && hintActive} items={hintItems} />
+        {/* On the lone empty row this button could neither clear nor remove
+            anything, so it sat there doing nothing. Show it only when it has a
+            job: text to clear, or a spare row to delete. */}
+        {(value.trim().length > 0 || canRemove) && (
         <button
           className="part-del"
           title={value.trim() ? "Clear" : "Remove"}
@@ -124,6 +131,7 @@ export default function PartPicker({
             <path d="M6 6l12 12M18 6 6 18" />
           </svg>
         </button>
+        )}
       </div>
 
       {open && results.length > 0 && (

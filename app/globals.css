@@ -592,7 +592,6 @@
   margin-top: 11px;
   padding: 0;
   color: var(--txt);
-  text-transform: uppercase;
 }
 
 /* the green Add to Cart row */
@@ -1967,6 +1966,20 @@
   color: var(--txt-dim);
   animation: ph-rise 2s ease forwards;
 }
+/* ph-rise / ph-rise-strong both END at opacity 0 and are set to `forwards`, so
+   a lone suggestion showed for 2s and then vanished for good — there is no
+   second item to re-key the span and restart it. Brands with a single sample
+   VIN (Genesis, Tesla, Ferrari...) and the "type or paste" hint all hit this.
+   Hold a single item steady instead of cycling it. */
+.rot-word--static {
+  animation: none;
+  transform: none;
+  opacity: 0.35;
+}
+.brand-search-wrap .rot-word--static {
+  opacity: 1;
+}
+
 @keyframes ph-rise {
   0% {
     transform: translateY(1.1em);
@@ -2199,12 +2212,14 @@
 
 /* ===== car brand picker ===== */
 .brand-field {
-  margin-bottom: 13px;
+  /* 22 between sections vs the 8 a .step-head leaves above its own field, so
+     each label reads as attached to its box instead of floating between two. */
+  margin-bottom: 22px;
 }
 
 /* ===== model search field ===== */
 .model-field {
-  margin-bottom: 13px;
+  margin-bottom: 22px;
 }
 .model-search {
   width: 100%;
@@ -2379,6 +2394,11 @@
 }
 /* single-line horizontal logo strip — scrolls sideways, never wraps */
 .brand-strip {
+  /* ~90 brands live in here but it clipped flat, so it read as "six brands".
+     Fading the trailing edge signals there is more to swipe. Masking rather
+     than painting a gradient keeps it correct over the patterned background. */
+  -webkit-mask-image: linear-gradient(to right, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 86%, transparent 100%);
   display: flex;
   flex-wrap: nowrap;
   align-items: flex-start;

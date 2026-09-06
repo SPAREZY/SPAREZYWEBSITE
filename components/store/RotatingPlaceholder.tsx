@@ -27,9 +27,11 @@ export default function RotatingPlaceholder({
 
   return (
     <span className="rot-ph" aria-hidden="true">
-      <span key={i} className="rot-word">
+      {/* modulo: the list can shrink when it swaps (a brand with three sample
+          VINs to one with a single one) and i would otherwise point past the end */}
+      <span key={i} className={`rot-word ${items.length === 1 ? "rot-word--static" : ""}`}>
         {prefix}
-        {items[i]}
+        {items[i % items.length]}
       </span>
     </span>
   );
