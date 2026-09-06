@@ -477,6 +477,7 @@ export default function StoreApp() {
                       value={p.name}
                       hintActive={hasVin}
                       hintOffset={i}
+                      canRemove={parts.length > 1}
                       onChange={(v) => {
                         updatePart(i, { name: v });
                         if (partsErr && v.trim()) setPartsErr(false);

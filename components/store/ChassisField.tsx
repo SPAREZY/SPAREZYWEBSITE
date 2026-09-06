@@ -102,9 +102,13 @@ export default function ChassisField({
           // Uppercased on the way in so a typed and a pasted VIN look the same.
           onChange={(e) => onChange(e.target.value.toUpperCase())}
         />
-        {/* Examples only once a brand is chosen — before that they'd suggest a
-            VIN from the wrong make. */}
-        <RotatingPlaceholder show={brandPicked && value.length === 0} items={hintItems} />
+        {/* Sample VINs only once a brand is chosen — before that they'd suggest a
+            VIN from the wrong make — but say what the box wants either way, so it
+            is never just an empty white rectangle. */}
+        <RotatingPlaceholder
+          show={value.length === 0}
+          items={brandPicked ? hintItems : ["Type or paste your VIN"]}
+        />
         {value.trim().length > 0 && (
           <button
             className="part-del"
