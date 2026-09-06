@@ -2894,6 +2894,14 @@
   .view-home .pdp .addpart {
     align-self: flex-start;
   }
+  /* The reviews heading started 3px above the bottom bar, so the top of the
+     Google "G" showed as a sliver under the ratings once a brand was picked
+     and the logo row collapsed. Widen the gap below the ratings line rather
+     than resize the card: the ratings keep their position and the heading
+     lands below the fold. */
+  .social-proof {
+    margin-bottom: 30px;
+  }
   /* The page used to end ~97px below the Sparezy logo — dead blue you had to
      scroll through for nothing. .view already reserves the room the fixed
      bottom bar needs, so this padding was pure overshoot on phones; trim it so
