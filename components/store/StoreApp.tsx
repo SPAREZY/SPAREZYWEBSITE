@@ -487,9 +487,13 @@ export default function StoreApp() {
                   ))}
                 </div>
                 {partsErr && <div className="err-msg">Please describe at least one part.</div>}
-                <button className="addpart" onClick={addPartRow}>
-                  + Add another part
-                </button>
+                {/* Nothing to add a part to until a car is chosen, so keep it
+                    out of the way until the brand is picked. */}
+                {hasMake && (
+                  <button className="addpart" onClick={addPartRow}>
+                    + Add another part
+                  </button>
+                )}
 
                 <div className="pdp-actions">
                   {/* Order Now is the single conversion action — it adds the
