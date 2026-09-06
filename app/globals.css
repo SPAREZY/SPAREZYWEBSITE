@@ -303,15 +303,22 @@
   inset: 0;
   overflow-y: auto;
   display: none;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
 }
-.view::-webkit-scrollbar {
-  width: 8px;
-}
-.view::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
+/* Mouse pointers only. Defining ::-webkit-scrollbar at all opts the element out
+   of the overlay indicator that touch browsers fade in and out while scrolling,
+   leaving a permanent translucent bar down the right edge on phones. */
+@media (hover: hover) and (pointer: fine) {
+  .view {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+  }
+  .view::-webkit-scrollbar {
+    width: 8px;
+  }
+  .view::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+  }
 }
 .view.active {
   display: block;
