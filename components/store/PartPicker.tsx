@@ -35,10 +35,20 @@ export default function PartPicker({
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Rotate the example list by 3 per row so rows never show the same hint.
+  // Only the first row cycles: with several rows animating independently they
+  // ghosted through one another mid-fade (opacity dips to ~0 in every 2s
+  // cycle) and regularly drifted onto the same word. Extra rows get one steady
+  // example each instead — a single-item list renders static.
   const hintItems = useMemo(() => {
     const shift = (hintOffset * 3) % EG_PART.length;
-    return [...EG_PART.slice(shift), ...EG_PART.slice(0, shift)];
-  }, [hintOffset]);
+    const rotated = [...EG_PART.slice(shift), ...EG_PART.slice(0, shift)];
+    // A lone row keeps the cycling hint. The moment there are several, every
+    // row goes static on its own word: independent 2s cycles ghosted through
+    // each other mid-fade, and a cycling row kept drifting onto the word a
+    // static neighbour was already showing. The per-row shift keeps the eight
+    // examples distinct for the first eight rows.
+    return canRemove ? [rotated[0]] : rotated;
+  }, [hintOffset, canRemove]);
 
   const term = value.trim().toLowerCase();
   const matches = useMemo(
