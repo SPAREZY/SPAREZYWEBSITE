@@ -61,6 +61,10 @@ html {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   height: 100dvh;
+  /* viewport-fit=cover makes 100dvh include the status bar strip. Pay that back
+     as padding (border-box, so the height is unchanged) — the blue now reaches
+     up behind the status bar while the content sits where it always did. */
+  padding-top: env(safe-area-inset-top, 0px);
   overflow: hidden;
   font-weight: 700;
   position: relative;

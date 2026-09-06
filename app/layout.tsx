@@ -72,6 +72,11 @@ export const viewport: Viewport = {
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
+  // Let the page own the safe areas, so its own blue sits behind the status bar
+  // rather than iOS painting a band of its own there. .store re-inserts the top
+  // inset as padding so the content stays exactly where it was, and the
+  // safe-area paddings already in globals.css handle the bottom.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
