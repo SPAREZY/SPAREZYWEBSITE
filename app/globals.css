@@ -2894,4 +2894,11 @@
   .view-home .pdp .addpart {
     align-self: flex-start;
   }
+  /* The page used to end ~97px below the Sparezy logo — dead blue you had to
+     scroll through for nothing. .view already reserves the room the fixed
+     bottom bar needs, so this padding was pure overshoot on phones; trim it so
+     the scroll stops just past the logo. */
+  .store-foot {
+    padding-bottom: 8px;
+  }
 }
