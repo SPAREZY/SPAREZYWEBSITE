@@ -54,6 +54,17 @@ html {
   background: var(--blue);
 }
 
+/* The document itself never scrolls — .store is 100dvh with overflow hidden and
+   the scrolling happens inside .view. So the only thing dragging the page down
+   achieved was a pull-to-refresh gap, which Safari fills with a backdrop of its
+   own choosing (a dark navy band, not the page colour). No overscroll, no gap.
+   .view contains its own scroll so reaching its end can't chain out and start
+   the document rubber-banding either. */
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
 .store {
   font-family: var(--font-sans), "Helvetica Neue", sans-serif;
   color: var(--txt);
@@ -312,6 +323,7 @@ html {
   position: absolute;
   inset: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   display: none;
 }
 /* Mouse pointers only. Defining ::-webkit-scrollbar at all opts the element out
