@@ -2946,3 +2946,23 @@
     padding-bottom: 8px;
   }
 }
+
+/* ===== no scroll bars on touch =====
+   Phones get no vertical scroll bar anywhere: not the styled ones above, and
+   not the browser's own auto-hiding indicator either. Last block in the file so
+   it beats the unconditional rules on .drawer-body / .make-drop.
+   Mouse pointers are untouched and keep the styled bars. */
+@media (hover: none), (pointer: coarse) {
+  .view,
+  .drawer-body,
+  .model-menu,
+  .make-drop {
+    scrollbar-width: none;
+  }
+  .view::-webkit-scrollbar,
+  .drawer-body::-webkit-scrollbar,
+  .model-menu::-webkit-scrollbar,
+  .make-drop::-webkit-scrollbar {
+    display: none;
+  }
+}
