@@ -5,7 +5,7 @@ import { useState } from "react";
 const STEPS = [
   {
     t: "Tell us your car & parts",
-    d: "Select your car brand and model, then list the parts you need.",
+    d: "Select your car brand, enter your VIN, then list the parts you need.",
   },
   {
     t: "We send you the price",
@@ -32,7 +32,7 @@ const FAQS = [
   },
   {
     q: "I don't have the part number — can you still help?",
-    a: "Absolutely. Just pick your car's brand and model and describe the part. We match the exact one for your car.",
+    a: "Absolutely. Just pick your car's brand, enter your VIN and describe the part. We match the exact one for your car.",
   },
   {
     q: "Where do you deliver?",
@@ -44,7 +44,7 @@ const FAQS = [
   },
   {
     q: "What if the part isn't right?",
-    a: "Because we match by your exact car brand and model, mismatches are rare. If anything's off, message us and we'll make it right.",
+    a: "Because we match against your VIN, mismatches are rare. If anything's off, message us and we'll make it right.",
   },
 ];
 
