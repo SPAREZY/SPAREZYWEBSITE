@@ -61,7 +61,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#2B52A8",
+  // iOS paints the status bar from theme-color, and on a phone set to dark
+  // appearance it substitutes a darkened variant unless a dark entry is given
+  // too — which is what turned the top of the screen navy. Both entries are the
+  // page blue, and color-scheme says outright that this page is light-only.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#2B52A8" },
+    { media: "(prefers-color-scheme: dark)", color: "#2B52A8" },
+  ],
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
