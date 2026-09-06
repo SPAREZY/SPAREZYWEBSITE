@@ -177,7 +177,7 @@ export default function StoreApp() {
     setPartsErr(false);
   }
 
-  // Picking a brand sets the make and resets the model (models depend on the brand).
+  // Picking a brand just sets the make; the car is pinned down by the VIN below.
   function selectBrand(v: string) {
     setMake(v);
     if (v) setMakeErr(false);
@@ -437,7 +437,7 @@ export default function StoreApp() {
                 </div>
 
                 <div className="model-field">
-                  <div className="step-head">Enter your car VIN</div>
+                  <div className="step-head">Enter your VIN</div>
                   <ChassisField
                     brandName={make}
                     value={vin}
@@ -470,7 +470,7 @@ export default function StoreApp() {
                 */}
 
                 <div>
-                  <div className="step-head">Search your car part</div>
+                  <div className="step-head">Search for parts</div>
                   {parts.map((p, i) => (
                     <PartPicker
                       key={i}
