@@ -48,6 +48,12 @@
    Bare-element rules are scoped under .store so they never
    touch the admin. Class rules only match store DOM.
    ============================================================ */
+/* The colour phones show in the rubber-band gap above and below the page, and
+   the one Safari tints its bars with. Stated outright rather than inherited. */
+html {
+  background: var(--blue);
+}
+
 .store {
   font-family: var(--font-sans), "Helvetica Neue", sans-serif;
   color: var(--txt);
@@ -1360,11 +1366,19 @@
   font-size: 1.05rem;
   padding: 26px 16px;
   transform: translateY(-100%);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Parked out of sight, but a translate still paints. That put a 77px band of
+     --blue-darkest immediately above the viewport, which iOS exposes when you
+     pull down to refresh and then samples to tint the status bar — the top of
+     the screen went dark navy. visibility keeps it off the screen entirely;
+     the 0.4s delay lets it slide away before it disappears. */
+  visibility: hidden;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.4s;
   text-transform: uppercase;
 }
 .addbar.show {
   transform: translateY(0);
+  visibility: visible;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s;
 }
 
 /* ===== two-column checkout ===== */
