@@ -181,10 +181,18 @@ body {
     max-width: 44vw !important;
   }
 }
+/* Every phone block below carries the same two-part condition. The first part
+   is the ordinary narrow-screen case. The second keeps the phone layout on a
+   phone turned sideways: rotating makes the viewport ~930px wide, which used to
+   tip the site into its desktop layout mid-visit — bottom bar gone, top links
+   in its place, the green button pushed below the fold. A short viewport on a
+   touch screen is a rotated phone, never a desktop window or a tablet (an iPad
+   in landscape is 768px tall and rightly keeps the desktop layout). */
 /* On phones, trim the header logo so it fits cleanly inside the shorter
    mobile nav bar (52.25vw -> 44.65vw). Header only — the login logo
    isn't inside .nav-logo, so it's unaffected. */
-@media (max-width: 640px) {
+@media (max-width: 640px),
+  (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
   .nav-logo {
     max-width: 44.65vw;
   }
@@ -923,7 +931,8 @@ body {
 }
 /* On phones, stack each contact entry (label on top, value beneath,
    left-aligned) and dial the type down for a clean, professional look. */
-@media (max-width: 640px) {
+@media (max-width: 640px),
+  (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
   .sheet h2 {
     font-size: 1.1rem;
     letter-spacing: 0.08em;
@@ -1821,7 +1830,8 @@ body {
 /* Phones: move the cart drawer's Close / Cart controls to the BOTTOM so they
    sit within thumb reach, like the bottom tab bar. (Desktop keeps them on
    top.) Flex order: items first, then the actions footer, then this bar. */
-@media (max-width: 640px) {
+@media (max-width: 640px),
+  (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
   .drawer-head {
     order: 3;
     border-top: 1px solid var(--line);
@@ -1965,7 +1975,8 @@ body {
 }
 
 /* phones: keep the three nav links clear of the centered logo */
-@media (max-width: 640px) {
+@media (max-width: 640px),
+  (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
   .nav button.lnk,
   .cartlink {
     font-size: 0.66rem;
@@ -2189,7 +2200,8 @@ body {
   align-items: center;
   justify-content: center;
 }
-@media (max-width: 640px) {
+@media (max-width: 640px),
+  (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
   /* links + cart live in the bottom bar on phones; the category tiles become
      the header, so drop the now-empty top nav row */
   .nav {
@@ -2224,7 +2236,8 @@ body {
 
 /* phones: nav links live in the bottom bar, so the grid's empty side
    columns just centre the logo; trim the header padding a touch. */
-@media (max-width: 640px) {
+@media (max-width: 640px),
+  (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
   .nav {
     padding: 14px 18px;
   }
@@ -2926,7 +2939,8 @@ body {
    Without this the outline stops wherever the form happens to end, leaving a
    ragged gap above the fold. Stretch it and pin the CTA to its foot, the same
    way the desktop layout already does. */
-@media (max-width: 640px) {
+@media (max-width: 640px),
+  (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
   /* .view is absolute inset:0 inside .stage, so its content box already
      measures exactly the space between the header and the bottom bar. That
      makes it a definite height, so a percentage here resolves — the card
