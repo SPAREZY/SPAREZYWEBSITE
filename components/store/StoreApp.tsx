@@ -294,7 +294,7 @@ export default function StoreApp() {
     showToast("Removed");
   }
 
-  // Place order = hand the inquiry straight to a human on WhatsApp. The cart
+  // Get Price = hand the inquiry straight to a human on WhatsApp. The cart
   // already holds everything we need, so we pre-fill the chat with the full
   // request and open it in one tap — no form, no extra page.
   function placeOrder() {
@@ -655,14 +655,8 @@ export default function StoreApp() {
         </div>
         {cart.length > 0 && (
           <div className="drawer-foot">
-            <div className="drawer-subtotal">
-              <span>Subtotal</span>
-              <span className="sub-price">
-                <b className="free">FREE</b>
-              </span>
-            </div>
             <button className="rowbtn" onClick={placeOrder}>
-              <span>Place Order</span>
+              <span>Get Price</span>
             </button>
             <button
               className="rowbtn secondary"
