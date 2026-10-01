@@ -1171,16 +1171,6 @@ body {
   padding: 18px 14px 28px;
   border-top: 1px solid var(--line-strong);
 }
-.drawer-subtotal {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 800;
-  font-size: 1.05rem;
-  color: #fff;
-  padding: 6px 0;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
 .drawer-note {
   color: var(--txt-dim);
   font-weight: 600;
@@ -1190,20 +1180,10 @@ body {
 .drawer-foot .rowbtn {
   margin-top: 14px;
 }
-.sub-price s {
-  color: var(--txt-dim);
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-right: 8px;
-}
-.sub-price .free {
-  font-family: var(--font-display), "Arial Black", sans-serif;
-  color: #fff;
-  background: var(--green);
-  padding: 3px 12px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  letter-spacing: 0.04em;
+/* The subtotal row used to sit above this button; with it gone the footer's
+   own padding is the whole gap, so drop the separator margin. */
+.drawer-foot .rowbtn:first-child {
+  margin-top: 0;
 }
 
 /* ===== Cart item card (noon-style: brand image + controls, then details) ===== */
