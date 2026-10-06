@@ -50,10 +50,25 @@ export const metadata: Metadata = {
     siteName: "Sparezy",
     locale: "en_AE",
     type: "website",
+    // With no image named, apps scrape the page and take the first one they
+    // find — which is the Toyota tile at the head of the brand strip, so a
+    // shared link advertised Toyota. Square and small on purpose: a wide
+    // 1200x630 card makes WhatsApp render a big banner, where a square keeps
+    // the compact title-and-domain preview and just adds our own thumbnail.
+    images: [
+      {
+        url: "/og-logo.png",
+        width: 600,
+        height: 600,
+        alt: "Sparezy — Auto Spare Parts",
+      },
+    ],
   },
   twitter: {
+    // "summary" is the compact card; summary_large_image is the big banner.
     card: "summary",
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
+    images: ["/og-logo.png"],
   },
   // Transparent icon — intentionally blank so the tab shows no logo, and it
   // sits at a new path to override browsers' cached old favicon.
