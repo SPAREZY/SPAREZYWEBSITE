@@ -25,7 +25,11 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.sparezy.store"),
+  // The site answers on the bare domain; www.sparezy.store has no DNS record
+  // at all. Every absolute URL below is built from this, so pointing it at
+  // www sent crawlers to a host that does not resolve — which is why the
+  // link preview fell back to scraping the page and showed a Toyota tile.
+  metadataBase: new URL("https://sparezy.store"),
   title: {
     default: "Sparezy Auto Spare Parts | Your All Parts Destination",
     template: "%s · Sparezy",
@@ -46,7 +50,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   openGraph: {
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
-    url: "https://www.sparezy.store",
+    url: "https://sparezy.store",
     siteName: "Sparezy",
     locale: "en_AE",
     type: "website",
