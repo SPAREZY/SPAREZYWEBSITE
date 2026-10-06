@@ -24,6 +24,13 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
+// Word for word the hero line on the page, so the search snippet and the link
+// preview say what a visitor actually lands on. Without this there is no
+// description tag at all and Google and Meta each invent their own.
+const DESCRIPTION =
+  "Spare parts, batteries, lubricants and body parts, sourced and delivered " +
+  "across the UAE. No part number? No stress — we have it.";
+
 export const metadata: Metadata = {
   // The site answers on the bare domain; www.sparezy.store has no DNS record
   // at all. Every absolute URL below is built from this, so pointing it at
@@ -34,6 +41,7 @@ export const metadata: Metadata = {
     default: "Sparezy Auto Spare Parts | Your All Parts Destination",
     template: "%s · Sparezy",
   },
+  description: DESCRIPTION,
   keywords: [
     "car parts UAE",
     "auto spare parts Abu Dhabi",
@@ -50,6 +58,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   openGraph: {
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
+    description: DESCRIPTION,
     url: "https://sparezy.store",
     siteName: "Sparezy",
     locale: "en_AE",
@@ -72,6 +81,7 @@ export const metadata: Metadata = {
     // "summary" is the compact card; summary_large_image is the big banner.
     card: "summary",
     title: "Sparezy Auto Spare Parts | Your All Parts Destination",
+    description: DESCRIPTION,
     images: ["/og-logo.png"],
   },
   // Transparent icon — intentionally blank so the tab shows no logo, and it
